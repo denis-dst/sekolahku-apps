@@ -1,0 +1,112 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\TagihanSpp;
+use App\Models\PembayaranSpp;
+use App\Services\FonnteService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
+class PembayaranSppController extends Controller
+{
+    protected FonnteService $fonnte;
+
+    public function __construct(FonnteService $fonnte)
+    {
+        $this->fonnte = $fonnte;
+    }
+
+    /**
+     * Parent Upload Payment Proof (Manual QRIS / Transfer Bank)
+     */
+    public function uploadBukti(Request $request, TagihanSpp $tagihan)
+    {
+        $request->validate([
+            'metode_pembayaran' => 'required|in:Manual QRIS,Transfer Bank,Cash',
+            'nominal_bayar' => 'required|numeric|min:1',
+            'bukti_pembayaran' => 'required|image|mimes:jpeg,png,jpg,heic|max:3072',
+        ]);
+
+        $user = Auth::user();
+        $filePath = $request->file('bukti_pembayaran')->store('bukti_spp', 'public');
+
+        $pembayaran = PembayaranSpp::create([
+            'tagihan_spp_id' => $tagihan->id,
+            'school_id' => $tagihan->school_id,
+            'siswa_id' => $tagihan->siswa_id,
+            'user_id' => $user->id,
+            'tanggal_bayar' => now(),
+            'nominal_bayar' => $request->nominal_bayar,
+            'metode_pembayaran' => $request->metode_pembayaran,
+            'bukti_pembayaran' => $filePath,
+            'status_verifikasi' => 'Pending',
+        ]);
+
+        // Update tagihan status to Menunggu Verifikasi
+        $tagihan->update(['status' => 'Menunggu Verifikasi']);
+
+        return redirect()->back()->with('success', 'Bukti pembayaran berhasil diunggah. Menunggu verifikasi dari Bendahara Sekolah.');
+    }
+
+    /**
+     * Bendahara Verification Queue
+     */
+    public function verifikasiQueue()
+    {
+        $schoolId = Auth::user()->school_id;
+        $pendingPayments = PembayaranSpp::where('school_id', $schoolId)
+            ->where('status_verifikasi', 'Pending')
+            ->with(['tagihanSpp', 'siswa', 'user'])
+            ->latest()
+            ->get();
+
+        return view('spp.verifikasi', compact('pendingPayments'));
+    }
+
+    /**
+     * Bendahara Approve / Reject Payment Proof
+     */
+    public function verifikasiStore(Request $request, PembayaranSpp $pembayaran)
+    {
+        $request->validate([
+            'status_verifikasi' => 'required|in:Approved,Rejected',
+            'catatan_verifikasi' => 'nullable|string',
+        ]);
+
+        $user = Auth::user();
+        $school = $user->school;
+        $tagihan = $pembayaran->tagihanSpp;
+
+        $pembayaran->update([
+            'status_verifikasi' => $request->status_verifikasi,
+            'catatan_verifikasi' => $request->catatan_verifikasi,
+            'user_id' => $user->id, // Verifier
+        ]);
+
+        if ($request->status_verifikasi === 'Approved') {
+            $tagihan->update(['status' => 'Lunas']);
+
+            // Send Fonnte WhatsApp Digital Receipt to Parent
+            $siswa = $pembayaran->siswa;
+            if ($siswa && $siswa->no_hp_ortu) {
+                $this->fonnte->sendPaymentReceipt(
+                    $siswa->no_hp_ortu,
+                    $siswa->nama_lengkap,
+                    $tagihan->bulan . ' ' . $tagihan->tahun,
+                    $pembayaran->nominal_bayar,
+                    'LUNAS',
+                    $school->fonnte_token
+                );
+            }
+
+            $msg = 'Pembayaran SPP berhasil disetujui & ditandai Lunas! Bukti via Fonnte WA telah dikirimkan.';
+        } else {
+            $tagihan->update(['status' => 'Belum Lunas']);
+            $msg = 'Pembayaran SPP ditolak dengan alasan: ' . $request->catatan_verifikasi;
+        }
+
+        return redirect()->back()->with('success', $msg);
+    }
+}
