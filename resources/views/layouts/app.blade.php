@@ -7,18 +7,17 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- ApexCharts -->
-    <script href="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <style>
         :root {
-            --sk-primary: #4f46e5;
-            --sk-primary-hover: #4338ca;
-            --sk-secondary: #06b6d4;
+            --sk-primary: #16a34a;
+            --sk-primary-hover: #15803d;
+            --sk-primary-light: #dcfce7;
+            --sk-secondary: #0d9488;
             --sk-dark: #0f172a;
             --sk-card-bg: #ffffff;
             --sk-bg: #f8fafc;
@@ -36,24 +35,77 @@
             font-family: 'Outfit', sans-serif;
         }
 
+        .btn-primary {
+            background-color: var(--sk-primary);
+            border-color: var(--sk-primary);
+        }
+
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: var(--sk-primary-hover);
+            border-color: var(--sk-primary-hover);
+        }
+
+        .btn-outline-primary {
+            color: var(--sk-primary);
+            border-color: var(--sk-primary);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--sk-primary);
+            border-color: var(--sk-primary);
+            color: #ffffff;
+        }
+
+        .bg-primary {
+            background-color: var(--sk-primary) !important;
+        }
+
+        .text-primary {
+            color: var(--sk-primary) !important;
+        }
+
+        /* Sidebar Styling with Scrollable Overflow */
         .sidebar {
             width: 260px;
-            background: linear-gradient(180deg, #1e1b4b 0%, #0f172a 100%);
+            background: linear-gradient(180deg, #0d2818 0%, #05190e 100%);
             color: #f8fafc;
             position: fixed;
             top: 0;
             bottom: 0;
             left: 0;
             z-index: 100;
-            box-shadow: 4px 0 15px rgba(0,0,0,0.05);
+            box-shadow: 4px 0 20px rgba(0,0,0,0.15);
             transition: all 0.3s ease;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #22c55e #05190e;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: #05190e;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background-color: #22c55e;
+            border-radius: 3px;
+        }
+
+        .sidebar-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+            padding-bottom: 2rem;
         }
 
         .sidebar .nav-link {
-            color: #94a3b8;
-            padding: 0.75rem 1.25rem;
+            color: #a7f3d0;
+            padding: 0.7rem 1.1rem;
             font-weight: 500;
-            border-radius: 0.5rem;
+            border-radius: 0.6rem;
             margin: 0.2rem 0.75rem;
             display: flex;
             align-items: center;
@@ -61,14 +113,16 @@
             transition: all 0.2s ease;
         }
 
-        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+        .sidebar .nav-link:hover {
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .sidebar .nav-link.active {
-            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: #ffffff;
+            background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
+            box-shadow: 0 4px 14px rgba(22, 197, 94, 0.35);
+            font-weight: 700;
         }
 
         .main-content {
@@ -88,27 +142,6 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.06);
         }
 
-        .kpi-card {
-            border-left: 5rem solid var(--sk-primary);
-        }
-
-        .kpi-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .badge-status {
-            padding: 0.4em 0.8em;
-            border-radius: 2rem;
-            font-weight: 600;
-            font-size: 0.75rem;
-        }
-
         @media (max-width: 991.98px) {
             .sidebar {
                 margin-left: -260px;
@@ -126,119 +159,124 @@
 <body>
     <!-- Sidebar -->
     <aside class="sidebar">
-        <div class="p-3 d-flex align-items-center gap-2 border-bottom border-secondary border-opacity-25">
-            <div class="bg-primary text-white rounded-3 p-2 d-flex align-items-center justify-content-center" style="width:40px; height:40px;">
-                <i class="bi bi-mortarboard-fill fs-4"></i>
+        <div class="sidebar-wrapper">
+            <!-- Brand Header -->
+            <div class="p-3 d-flex align-items-center gap-2 border-bottom border-success border-opacity-25 mb-2">
+                <div class="bg-success text-white rounded-3 p-2 d-flex align-items-center justify-content-center shadow-sm" style="width:40px; height:40px;">
+                    <i class="bi bi-mortarboard-fill fs-4"></i>
+                </div>
+                <div>
+                    <h5 class="m-0 fw-bold text-white">SekolahKu</h5>
+                    <small class="text-xs text-success-subtle" style="font-size:0.75rem;">SaaS SIM & Finance</small>
+                </div>
             </div>
-            <div>
-                <h5 class="m-0 fw-bold text-white">SekolahKu</h5>
-                <small class="text-xs text-primary-subtle">SaaS SIM & Finance</small>
+
+            <div class="px-3 py-2 text-uppercase text-xs fw-bold text-success opacity-75 mt-1" style="font-size:0.7rem; letter-spacing:1px; color:#86efac !important;">
+                NAVIGASI UTAMA
             </div>
-        </div>
 
-        <div class="px-3 py-2 text-uppercase text-xs fw-bold text-slate-400 opacity-75 mt-2" style="font-size:0.7rem; letter-spacing:1px;">
-            NAVIGASI UTAMA
-        </div>
+            <!-- Scrollable Nav Links -->
+            <nav class="nav flex-column flex-grow-1">
+                <a class="nav-link {{ request()->is('dashboard') || request()->is('/') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                    <i class="bi bi-grid-1x2-fill"></i> Dashboard
+                </a>
 
-        <nav class="nav flex-column">
-            <a class="nav-link {{ request()->is('dashboard') || request()->is('/') ? 'active' : '' }}" href="{{ route('dashboard') }}">
-                <i class="bi bi-grid-1x2-fill"></i> Dashboard
-            </a>
+                @if(Auth::user()->hasRole('Superadmin') || Auth::user()->can('self-presensi'))
+                    <a class="nav-link {{ request()->is('presensi/mandiri') ? 'active' : '' }}" href="{{ route('presensi.mandiri') }}">
+                        <i class="bi bi-qr-code-scan"></i> Absen Mandiri
+                    </a>
+                @endif
 
-            @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasPermissionTo('self-presensi'))
-                <a class="nav-link {{ request()->is('presensi/mandiri') ? 'active' : '' }}" href="{{ route('presensi.mandiri') }}">
-                    <i class="bi bi-qr-code-scan"></i> Absen Mandiri
-                </a>
-            @endif
+                @if(Auth::user()->hasRole('Superadmin') || Auth::user()->can('manage-presensi'))
+                    <a class="nav-link {{ request()->is('presensi') && !request()->is('presensi/mandiri') ? 'active' : '' }}" href="{{ route('presensi.index') }}">
+                        <i class="bi bi-calendar-check-fill"></i> Presensi Kelas
+                    </a>
+                @endif
 
-            @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasPermissionTo('manage-presensi'))
-                <a class="nav-link {{ request()->is('presensi') && !request()->is('presensi/mandiri') ? 'active' : '' }}" href="{{ route('presensi.index') }}">
-                    <i class="bi bi-calendar-check-fill"></i> Presensi Kelas
-                </a>
-            @endif
+                @if(Auth::user()->hasRole('Superadmin') || Auth::user()->can('manage-spp') || Auth::user()->can('upload-spp-bukti'))
+                    <a class="nav-link {{ request()->is('spp*') && !request()->is('spp/verifikasi*') ? 'active' : '' }}" href="{{ route('spp.index') }}">
+                        <i class="bi bi-wallet2"></i> Pembayaran SPP
+                    </a>
+                @endif
 
-            @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasPermissionTo('manage-spp') || Auth::user()->hasPermissionTo('upload-spp-bukti'))
-                <a class="nav-link {{ request()->is('spp*') && !request()->is('spp/verifikasi*') ? 'active' : '' }}" href="{{ route('spp.index') }}">
-                    <i class="bi bi-wallet2"></i> Pembayaran SPP
-                </a>
-            @endif
+                @if(Auth::user()->hasRole('Superadmin') || Auth::user()->can('verify-spp-bukti'))
+                    <a class="nav-link {{ request()->is('spp/verifikasi*') ? 'active' : '' }}" href="{{ route('spp.verifikasi.queue') }}">
+                        <i class="bi bi-check2-circle"></i> Verifikasi SPP
+                    </a>
+                @endif
 
-            @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasPermissionTo('verify-spp-bukti'))
-                <a class="nav-link {{ request()->is('spp/verifikasi*') ? 'active' : '' }}" href="{{ route('spp.verifikasi.queue') }}">
-                    <i class="bi bi-check2-circle"></i> Verifikasi SPP
-                </a>
-            @endif
+                @if(Auth::user()->hasRole('Superadmin') || Auth::user()->can('manage-expenses') || Auth::user()->can('approve-expenses'))
+                    <a class="nav-link {{ request()->is('expenses*') ? 'active' : '' }}" href="{{ route('expenses.index') }}">
+                        <i class="bi bi-cash-stack"></i> BendaharaKu / LPJ
+                    </a>
+                @endif
 
-            @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasPermissionTo('manage-expenses') || Auth::user()->hasPermissionTo('approve-expenses'))
-                <a class="nav-link {{ request()->is('expenses*') ? 'active' : '' }}" href="{{ route('expenses.index') }}">
-                    <i class="bi bi-cash-stack"></i> BendaharaKu / LPJ
-                </a>
-            @endif
+                @if(Auth::user()->hasRole('Superadmin') || Auth::user()->can('manage-anekdot'))
+                    <a class="nav-link {{ request()->is('anekdot*') ? 'active' : '' }}" href="{{ route('anekdot.index') }}">
+                        <i class="bi bi-journal-bookmark-fill"></i> Catatan Anekdot
+                    </a>
+                @endif
 
-            @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasPermissionTo('manage-anekdot'))
-                <a class="nav-link {{ request()->is('anekdot*') ? 'active' : '' }}" href="{{ route('anekdot.index') }}">
-                    <i class="bi bi-journal-bookmark-fill"></i> Catatan Anekdot
-                </a>
-            @endif
+                @if(Auth::user()->hasRole('Superadmin') || Auth::user()->can('manage-erapor') || Auth::user()->can('manage-assessments'))
+                    <a class="nav-link {{ request()->is('erapor*') ? 'active' : '' }}" href="{{ route('erapor.index') }}">
+                        <i class="bi bi-file-earmark-pdf-fill"></i> E-Rapor Digital
+                    </a>
+                @endif
 
-            @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasPermissionTo('manage-erapor') || Auth::user()->hasPermissionTo('manage-assessments'))
-                <a class="nav-link {{ request()->is('erapor*') ? 'active' : '' }}" href="{{ route('erapor.index') }}">
-                    <i class="bi bi-file-earmark-pdf-fill"></i> E-Rapor Digital
-                </a>
-            @endif
-
-            @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasPermissionTo('manage-master-data') || Auth::user()->hasPermissionTo('manage-school'))
-                <div class="px-3 py-2 text-uppercase text-xs fw-bold text-slate-400 opacity-75 mt-3" style="font-size:0.7rem; letter-spacing:1px;">
-                    MASTER & PROFIL
-                </div>
-
-                <a class="nav-link {{ request()->is('siswa*') ? 'active' : '' }}" href="{{ route('siswa.index') }}">
-                    <i class="bi bi-people-fill"></i> Data Siswa
-                </a>
-                <a class="nav-link {{ request()->is('guru*') ? 'active' : '' }}" href="{{ route('guru.index') }}">
-                    <i class="bi bi-person-badge-fill"></i> Data Guru
-                </a>
-                <a class="nav-link {{ request()->is('rombel*') ? 'active' : '' }}" href="{{ route('rombel.index') }}">
-                    <i class="bi bi-building"></i> Rombel & Kelas
-                </a>
-                <a class="nav-link {{ request()->is('settings/school*') ? 'active' : '' }}" href="{{ route('settings.school.edit') }}">
-                    <i class="bi bi-gear-wide-connected"></i> Profil & QRIS
-                </a>
-            @endif
-
-            @role('Superadmin')
-                <div class="px-3 py-2 text-uppercase text-xs fw-bold text-amber-400 opacity-75 mt-3" style="font-size:0.7rem; letter-spacing:1px; color:#fbbf24;">
-                    SUPERADMIN SAAS
-                </div>
-                <a class="nav-link {{ request()->is('admin/plans*') ? 'active' : '' }}" href="{{ route('admin.plans.index') }}">
-                    <i class="bi bi-box-seam-fill"></i> Paket & Fitur (Plans)
-                </a>
-                <a class="nav-link {{ request()->is('admin/subscriptions*') ? 'active' : '' }}" href="{{ route('admin.subscriptions.index') }}">
-                    <i class="bi bi-patch-check-fill"></i> Langganan Sekolah
-                </a>
-                <a class="nav-link {{ request()->is('admin/roles*') ? 'active' : '' }}" href="{{ route('admin.roles.index') }}">
-                    <i class="bi bi-shield-lock-fill"></i> Role & Hak Akses (RBAC)
-                </a>
-            @endrole
-        </nav>
-
-        <div class="position-absolute bottom-0 start-0 end-0 p-3 border-top border-secondary border-opacity-25 bg-dark">
-            <div class="d-flex align-items-center justify-content-between">
-                <div class="d-flex align-items-center gap-2">
-                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width:36px; height:36px;">
-                        {{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}
+                @if(Auth::user()->hasRole('Superadmin') || Auth::user()->can('manage-master-data') || Auth::user()->can('manage-school'))
+                    <div class="px-3 py-2 text-uppercase text-xs fw-bold opacity-75 mt-3" style="font-size:0.7rem; letter-spacing:1px; color:#86efac !important;">
+                        MASTER & PROFIL
                     </div>
-                    <div class="overflow-hidden" style="max-width:130px;">
-                        <div class="fw-semibold text-white text-truncate small">{{ Auth::user()->name }}</div>
-                        <div class="text-xs text-slate-400 text-truncate" style="font-size:0.75rem;">{{ Auth::user()->roles->first()?->name ?? 'User' }}</div>
+
+                    <a class="nav-link {{ request()->is('siswa*') ? 'active' : '' }}" href="{{ route('siswa.index') }}">
+                        <i class="bi bi-people-fill"></i> Data Siswa
+                    </a>
+                    <a class="nav-link {{ request()->is('guru*') ? 'active' : '' }}" href="{{ route('guru.index') }}">
+                        <i class="bi bi-person-badge-fill"></i> Data Guru
+                    </a>
+                    <a class="nav-link {{ request()->is('rombel*') ? 'active' : '' }}" href="{{ route('rombel.index') }}">
+                        <i class="bi bi-building"></i> Rombel & Kelas
+                    </a>
+                    <a class="nav-link {{ request()->is('settings/school*') ? 'active' : '' }}" href="{{ route('settings.school.edit') }}">
+                        <i class="bi bi-gear-wide-connected"></i> Profil & QRIS
+                    </a>
+                @endif
+
+                @role('Superadmin')
+                    <div class="px-3 py-2 text-uppercase text-xs fw-bold opacity-75 mt-3" style="font-size:0.7rem; letter-spacing:1px; color:#fbbf24 !important;">
+                        SUPERADMIN SAAS
                     </div>
+                    <a class="nav-link {{ request()->is('admin/plans*') ? 'active' : '' }}" href="{{ route('admin.plans.index') }}">
+                        <i class="bi bi-box-seam-fill"></i> Paket & Fitur (Plans)
+                    </a>
+                    <a class="nav-link {{ request()->is('admin/subscriptions*') ? 'active' : '' }}" href="{{ route('admin.subscriptions.index') }}">
+                        <i class="bi bi-patch-check-fill"></i> Langganan Sekolah
+                    </a>
+                    <a class="nav-link {{ request()->is('admin/roles*') ? 'active' : '' }}" href="{{ route('admin.roles.index') }}">
+                        <i class="bi bi-shield-lock-fill"></i> Role & Hak Akses (RBAC)
+                    </a>
+                @endrole
+            </nav>
+
+            <!-- User Footer Box -->
+            <div class="p-3 border-top border-success border-opacity-25 bg-black bg-opacity-30 rounded-3 mx-2 mt-3">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold shadow-sm" style="width:36px; height:36px;">
+                            {{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}
+                        </div>
+                        <div class="overflow-hidden" style="max-width:120px;">
+                            <div class="fw-semibold text-white text-truncate small">{{ Auth::user()->name }}</div>
+                            <div class="text-xs text-success-subtle text-truncate" style="font-size:0.72rem;">{{ Auth::user()->roles->first()?->name ?? 'User' }}</div>
+                        </div>
+                    </div>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-danger border-0 rounded-2" title="Keluar">
+                            <i class="bi bi-box-arrow-right fs-5"></i>
+                        </button>
+                    </form>
                 </div>
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-sm btn-outline-danger border-0 rounded-2" title="Keluar">
-                        <i class="bi bi-box-arrow-right fs-5"></i>
-                    </button>
-                </form>
             </div>
         </div>
     </aside>
@@ -270,7 +308,7 @@
                 <span class="badge {{ $badgeBg }} px-3 py-2 rounded-pill font-monospace" style="font-size:0.8rem;">
                     <i class="bi bi-star-fill me-1"></i> {{ strtoupper($planName) }}
                 </span>
-                <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-2">
+                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-2">
                     <i class="bi bi-buildings me-1"></i> {{ Auth::user()->school->jenjang ?? 'TK/PAUD' }}
                 </span>
             </div>
@@ -302,7 +340,7 @@
     </main>
 
     <!-- Bootstrap 5 Bundle JS -->
-    <script href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     @stack('scripts')
 </body>
 </html>

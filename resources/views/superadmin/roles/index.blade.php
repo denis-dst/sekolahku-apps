@@ -62,7 +62,7 @@
                                     <div class="group-checkboxes">
                                         @foreach($groupItems as $permKey => $permLabel)
                                             @php
-                                                $hasPerm = $role->hasPermissionTo($permKey);
+                                                $hasPerm = $role->permissions->contains('name', $permKey);
                                             @endphp
                                             <div class="form-check py-1">
                                                 <input class="form-check-input perm-checkbox" type="checkbox" name="permissions[]" value="{{ $permKey }}" id="chk_{{ $role->id }}_{{ $permKey }}" {{ $hasPerm ? 'checked' : '' }}>

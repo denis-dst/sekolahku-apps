@@ -12,9 +12,6 @@ class RolePermissionController extends Controller
 {
     public function index()
     {
-        $roles = Role::with('permissions')->get();
-        $permissions = Permission::all();
-
         // Categorize permissions for clean visual matrix
         $permissionGroups = [
             'SaaS & Administrasi' => [
@@ -47,6 +44,24 @@ class RolePermissionController extends Controller
             ],
         ];
 
+        // Ensure all defined permissions exist in database (Auto-healing)
+        foreach ($permissionGroups as $groupItems) {
+            foreach ($groupItems as $permKey => $label) {
+                Permission::findOrCreate($permKey, 'web');
+            }
+        }
+
+        // Give Superadmin all permissions automatically
+        $superadminRole = Role::where('name', 'Superadmin')->first();
+        if ($superadminRole) {
+            $superadminRole->givePermissionTo(Permission::all());
+        }
+
+        app()[PermissionRegistrar::class]->forgetCachedPermissions();
+
+        $roles = Role::with('permissions')->get();
+        $permissions = Permission::all();
+
         return view('superadmin.roles.index', compact('roles', 'permissions', 'permissionGroups'));
     }
 
@@ -55,6 +70,13 @@ class RolePermissionController extends Controller
         $request->validate([
             'permissions' => 'nullable|array',
         ]);
+
+        // Ensure all requested permissions exist
+        if ($request->permissions) {
+            foreach ($request->permissions as $permName) {
+                Permission::findOrCreate($permName, 'web');
+            }
+        }
 
         // Sync permissions with the selected role
         $role->syncPermissions($request->permissions ?? []);
@@ -83,7 +105,7 @@ class RolePermissionController extends Controller
             'name' => 'required|string|max:255|unique:permissions,name',
         ]);
 
-        Permission::create(['name' => $request->name, 'guard_name' => 'web']);
+        Permission::create(['name' => strtolower(trim($request->name)), 'guard_name' => 'web']);
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         return redirect()->route('admin.roles.index')->with('success', 'Hak Akses (Permission) baru "' . $request->name . '" berhasil ditambahkan!');
