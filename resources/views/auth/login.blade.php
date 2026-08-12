@@ -10,12 +10,22 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            background: #0b2518;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 1.5rem;
+        }
+
+        .btn-primary {
+            background-color: #16a34a !important;
+            border-color: #16a34a !important;
+        }
+
+        .btn-primary:hover {
+            background-color: #15803d !important;
+            border-color: #15803d !important;
         }
 
         .login-card {

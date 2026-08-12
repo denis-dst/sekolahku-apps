@@ -67,7 +67,7 @@
         /* Sidebar Styling with Scrollable Overflow */
         .sidebar {
             width: 260px;
-            background: linear-gradient(180deg, #0d2818 0%, #05190e 100%);
+            background: #0b2518;
             color: #f8fafc;
             position: fixed;
             top: 0;
@@ -78,7 +78,7 @@
             transition: all 0.3s ease;
             overflow-y: auto;
             scrollbar-width: thin;
-            scrollbar-color: #22c55e #05190e;
+            scrollbar-color: #16a34a #0b2518;
         }
 
         .sidebar::-webkit-scrollbar {
@@ -86,11 +86,11 @@
         }
 
         .sidebar::-webkit-scrollbar-track {
-            background: #05190e;
+            background: #0b2518;
         }
 
         .sidebar::-webkit-scrollbar-thumb {
-            background-color: #22c55e;
+            background-color: #16a34a;
             border-radius: 3px;
         }
 
@@ -120,8 +120,8 @@
 
         .sidebar .nav-link.active {
             color: #ffffff;
-            background: linear-gradient(135deg, #22c55e 0%, #15803d 100%);
-            box-shadow: 0 4px 14px rgba(22, 197, 94, 0.35);
+            background: #16a34a;
+            box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35);
             font-weight: 700;
         }
 

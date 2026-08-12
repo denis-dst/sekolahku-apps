@@ -123,13 +123,13 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--green-600) 0%, var(--green-500) 100%);
+            background: var(--green-600);
             color: var(--white);
             box-shadow: var(--shadow-green);
         }
 
         .btn-primary:hover {
-            background: linear-gradient(135deg, var(--green-700) 0%, var(--green-600) 100%);
+            background: var(--green-700);
             transform: translateY(-2px);
             box-shadow: 0 14px 35px -5px rgba(22,163,74,0.35);
         }
@@ -199,7 +199,7 @@
         .navbar-logo {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, var(--green-600), var(--green-400));
+            background: var(--green-600);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -275,7 +275,7 @@
             align-items: center;
             padding: 120px 0 80px;
             overflow: hidden;
-            background: linear-gradient(175deg, var(--white) 0%, var(--green-50) 50%, var(--green-100) 100%);
+            background: var(--green-50);
         }
 
         .hero::before {
@@ -285,7 +285,7 @@
             right: -20%;
             width: 700px;
             height: 700px;
-            background: radial-gradient(circle, rgba(34,197,94,0.08) 0%, transparent 70%);
+            background: rgba(34,197,94,0.08);
             border-radius: 50%;
             pointer-events: none;
         }
@@ -297,7 +297,7 @@
             left: -10%;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(5,150,105,0.06) 0%, transparent 70%);
+            background: rgba(5,150,105,0.06);
             border-radius: 50%;
             pointer-events: none;
         }
@@ -348,10 +348,9 @@
         }
 
         .hero h1 .highlight {
-            background: linear-gradient(135deg, var(--green-600) 0%, var(--teal) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--green-600);
+            background: none;
+            -webkit-text-fill-color: var(--green-600);
         }
 
         .hero p {
@@ -438,7 +437,7 @@
 
         .mockup-body {
             padding: 24px;
-            background: linear-gradient(180deg, var(--green-50) 0%, var(--white) 100%);
+            background: var(--green-50);
             min-height: 320px;
         }
 
@@ -666,7 +665,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, var(--green-400), var(--green-600));
+            background: var(--green-600);
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.4s ease;
@@ -731,7 +730,7 @@
         /* ========== HOW IT WORKS ========== */
         .how-it-works {
             padding: 100px 0;
-            background: linear-gradient(180deg, var(--green-50) 0%, var(--white) 100%);
+            background: var(--green-50);
         }
 
         .how-header {
@@ -757,7 +756,7 @@
             left: 12%;
             right: 12%;
             height: 2px;
-            background: linear-gradient(90deg, var(--green-200), var(--green-400), var(--green-200));
+            background: var(--green-200);
             z-index: 0;
         }
 
@@ -807,7 +806,7 @@
         /* ========== STATS / SOCIAL PROOF ========== */
         .stats {
             padding: 80px 0;
-            background: linear-gradient(135deg, var(--green-700) 0%, var(--green-600) 50%, var(--emerald) 100%);
+            background: var(--green-700);
             position: relative;
             overflow: hidden;
         }
@@ -926,7 +925,7 @@
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--green-400), var(--green-600));
+            background: var(--green-600);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -949,7 +948,7 @@
         /* ========== PRICING ========== */
         .pricing {
             padding: 100px 0;
-            background: linear-gradient(180deg, var(--white) 0%, var(--green-50) 100%);
+            background: var(--green-50);
         }
 
         .pricing-header {
@@ -993,7 +992,7 @@
             left: 50%;
             transform: translateX(-50%);
             padding: 6px 20px;
-            background: linear-gradient(135deg, var(--green-600), var(--green-500));
+            background: var(--green-600);
             color: var(--white);
             font-size: 0.75rem;
             font-weight: 700;
@@ -1074,7 +1073,7 @@
         }
 
         .cta-card {
-            background: linear-gradient(135deg, var(--green-700) 0%, var(--green-600) 40%, var(--emerald) 100%);
+            background: var(--green-700);
             border-radius: 28px;
             padding: 64px;
             text-align: center;
@@ -1159,7 +1158,7 @@
         .footer-logo {
             width: 38px;
             height: 38px;
-            background: linear-gradient(135deg, var(--green-600), var(--green-400));
+            background: var(--green-600);
             border-radius: 10px;
             display: flex;
             align-items: center;
