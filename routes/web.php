@@ -12,6 +12,8 @@ use App\Http\Controllers\TagihanSppController;
 use App\Http\Controllers\PembayaranSppController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ERaporController;
+use App\Http\Controllers\Superadmin\SubscriptionPlanController;
+use App\Http\Controllers\Superadmin\TenantSubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 // Public Landing Page
@@ -30,6 +32,17 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Protected Routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Superadmin SaaS Management
+    Route::middleware(['role:Superadmin'])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/plans', [SubscriptionPlanController::class, 'index'])->name('plans.index');
+        Route::post('/plans', [SubscriptionPlanController::class, 'store'])->name('plans.store');
+        Route::put('/plans/{plan}', [SubscriptionPlanController::class, 'update'])->name('plans.update');
+
+        Route::get('/subscriptions', [TenantSubscriptionController::class, 'index'])->name('subscriptions.index');
+        Route::put('/subscriptions/{tenant}', [TenantSubscriptionController::class, 'update'])->name('subscriptions.update');
+        Route::post('/subscriptions/{tenant}/toggle', [TenantSubscriptionController::class, 'toggleStatus'])->name('subscriptions.toggle');
+    });
 
     // School Profile & QRIS Settings
     Route::get('/settings/school', [SchoolSettingsController::class, 'edit'])->name('settings.school.edit');

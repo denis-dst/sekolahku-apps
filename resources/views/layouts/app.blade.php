@@ -202,6 +202,18 @@
                     <i class="bi bi-gear-wide-connected"></i> Profil & QRIS
                 </a>
             @endhasanyrole
+
+            @role('Superadmin')
+                <div class="px-3 py-2 text-uppercase text-xs fw-bold text-amber-400 opacity-75 mt-3" style="font-size:0.7rem; letter-spacing:1px; color:#fbbf24;">
+                    SUPERADMIN SAAS
+                </div>
+                <a class="nav-link {{ request()->is('admin/plans*') ? 'active' : '' }}" href="{{ route('admin.plans.index') }}">
+                    <i class="bi bi-box-seam-fill"></i> Paket & Fitur (Plans)
+                </a>
+                <a class="nav-link {{ request()->is('admin/subscriptions*') ? 'active' : '' }}" href="{{ route('admin.subscriptions.index') }}">
+                    <i class="bi bi-patch-check-fill"></i> Langganan Sekolah
+                </a>
+            @endrole
         </nav>
 
         <div class="position-absolute bottom-0 start-0 end-0 p-3 border-top border-secondary border-opacity-25 bg-dark">
@@ -238,7 +250,20 @@
                     <p class="text-muted small m-0">{{ Auth::user()->school->name ?? 'SekolahKu Platform' }}</p>
                 </div>
             </div>
-            <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-2">
+                @php
+                    $tenant = Auth::user()->tenant ?? Auth::user()->school?->tenant;
+                    $planName = $tenant?->subscriptionPlan?->name ?? 'Free Plan';
+                    $planCode = $tenant?->subscriptionPlan?->code ?? 'free';
+                    $badgeBg = match($planCode) {
+                        'pro' => 'bg-success text-white',
+                        'enterprise' => 'bg-primary text-white',
+                        default => 'bg-secondary text-white'
+                    };
+                @endphp
+                <span class="badge {{ $badgeBg }} px-3 py-2 rounded-pill font-monospace" style="font-size:0.8rem;">
+                    <i class="bi bi-star-fill me-1"></i> {{ strtoupper($planName) }}
+                </span>
                 <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-2">
                     <i class="bi bi-buildings me-1"></i> {{ Auth::user()->school->jenjang ?? 'TK/PAUD' }}
                 </span>

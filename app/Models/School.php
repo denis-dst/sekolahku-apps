@@ -72,4 +72,33 @@ class School extends Model
     {
         return $this->hasMany(Expense::class);
     }
+
+    public function subscriptionPlan()
+    {
+        return $this->tenant ? $this->tenant->subscriptionPlan() : null;
+    }
+
+    public function isSubscriptionActive(): bool
+    {
+        return $this->tenant ? $this->tenant->isSubscriptionActive() : true;
+    }
+
+    public function hasFeature(string $featureKey): bool
+    {
+        return $this->tenant ? $this->tenant->hasFeature($featureKey) : true;
+    }
+
+    public function canAddSiswa(): bool
+    {
+        if (!$this->isSubscriptionActive()) {
+            return false;
+        }
+
+        $plan = $this->tenant?->subscriptionPlan;
+        if (!$plan || $plan->max_siswas == 0) {
+            return true; // Unlimited
+        }
+
+        return $this->siswas()->count() < $plan->max_siswas;
+    }
 }
