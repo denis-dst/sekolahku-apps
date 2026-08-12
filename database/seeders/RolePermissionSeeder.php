@@ -16,6 +16,7 @@ class RolePermissionSeeder extends Seeder
         // Create Permissions
         $permissions = [
             'manage-saas',
+            'manage-roles',
             'manage-yayasan',
             'manage-school',
             'manage-users',

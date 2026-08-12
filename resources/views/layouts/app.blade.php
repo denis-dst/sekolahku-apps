@@ -145,50 +145,53 @@
                 <i class="bi bi-grid-1x2-fill"></i> Dashboard
             </a>
 
-            @role('Siswa')
+            @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasPermissionTo('self-presensi'))
                 <a class="nav-link {{ request()->is('presensi/mandiri') ? 'active' : '' }}" href="{{ route('presensi.mandiri') }}">
                     <i class="bi bi-qr-code-scan"></i> Absen Mandiri
                 </a>
-            @endrole
+            @endif
 
-            @hasanyrole('Superadmin|School Admin|Guru')
+            @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasPermissionTo('manage-presensi'))
                 <a class="nav-link {{ request()->is('presensi') && !request()->is('presensi/mandiri') ? 'active' : '' }}" href="{{ route('presensi.index') }}">
                     <i class="bi bi-calendar-check-fill"></i> Presensi Kelas
                 </a>
-            @endhasanyrole
+            @endif
 
-            @hasanyrole('Superadmin|School Admin|Bendahara|Orang Tua|Siswa')
-                <a class="nav-link {{ request()->is('spp*') ? 'active' : '' }}" href="{{ route('spp.index') }}">
+            @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasPermissionTo('manage-spp') || Auth::user()->hasPermissionTo('upload-spp-bukti'))
+                <a class="nav-link {{ request()->is('spp*') && !request()->is('spp/verifikasi*') ? 'active' : '' }}" href="{{ route('spp.index') }}">
                     <i class="bi bi-wallet2"></i> Pembayaran SPP
                 </a>
-            @endhasanyrole
+            @endif
 
-            @hasanyrole('Superadmin|School Admin|Bendahara')
+            @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasPermissionTo('verify-spp-bukti'))
                 <a class="nav-link {{ request()->is('spp/verifikasi*') ? 'active' : '' }}" href="{{ route('spp.verifikasi.queue') }}">
                     <i class="bi bi-check2-circle"></i> Verifikasi SPP
                 </a>
-            @endhasanyrole
+            @endif
 
-            @hasanyrole('Superadmin|School Admin|Bendahara|Guru')
+            @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasPermissionTo('manage-expenses') || Auth::user()->hasPermissionTo('approve-expenses'))
                 <a class="nav-link {{ request()->is('expenses*') ? 'active' : '' }}" href="{{ route('expenses.index') }}">
                     <i class="bi bi-cash-stack"></i> BendaharaKu / LPJ
                 </a>
-            @endhasanyrole
+            @endif
 
-            @hasanyrole('Superadmin|School Admin|Guru|Orang Tua|Siswa')
+            @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasPermissionTo('manage-anekdot'))
                 <a class="nav-link {{ request()->is('anekdot*') ? 'active' : '' }}" href="{{ route('anekdot.index') }}">
                     <i class="bi bi-journal-bookmark-fill"></i> Catatan Anekdot
                 </a>
+            @endif
+
+            @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasPermissionTo('manage-erapor') || Auth::user()->hasPermissionTo('manage-assessments'))
                 <a class="nav-link {{ request()->is('erapor*') ? 'active' : '' }}" href="{{ route('erapor.index') }}">
                     <i class="bi bi-file-earmark-pdf-fill"></i> E-Rapor Digital
                 </a>
-            @endhasanyrole
+            @endif
 
-            <div class="px-3 py-2 text-uppercase text-xs fw-bold text-slate-400 opacity-75 mt-3" style="font-size:0.7rem; letter-spacing:1px;">
-                MASTER & PROFIL
-            </div>
+            @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasPermissionTo('manage-master-data') || Auth::user()->hasPermissionTo('manage-school'))
+                <div class="px-3 py-2 text-uppercase text-xs fw-bold text-slate-400 opacity-75 mt-3" style="font-size:0.7rem; letter-spacing:1px;">
+                    MASTER & PROFIL
+                </div>
 
-            @hasanyrole('Superadmin|School Admin')
                 <a class="nav-link {{ request()->is('siswa*') ? 'active' : '' }}" href="{{ route('siswa.index') }}">
                     <i class="bi bi-people-fill"></i> Data Siswa
                 </a>
@@ -201,7 +204,7 @@
                 <a class="nav-link {{ request()->is('settings/school*') ? 'active' : '' }}" href="{{ route('settings.school.edit') }}">
                     <i class="bi bi-gear-wide-connected"></i> Profil & QRIS
                 </a>
-            @endhasanyrole
+            @endif
 
             @role('Superadmin')
                 <div class="px-3 py-2 text-uppercase text-xs fw-bold text-amber-400 opacity-75 mt-3" style="font-size:0.7rem; letter-spacing:1px; color:#fbbf24;">
@@ -212,6 +215,9 @@
                 </a>
                 <a class="nav-link {{ request()->is('admin/subscriptions*') ? 'active' : '' }}" href="{{ route('admin.subscriptions.index') }}">
                     <i class="bi bi-patch-check-fill"></i> Langganan Sekolah
+                </a>
+                <a class="nav-link {{ request()->is('admin/roles*') ? 'active' : '' }}" href="{{ route('admin.roles.index') }}">
+                    <i class="bi bi-shield-lock-fill"></i> Role & Hak Akses (RBAC)
                 </a>
             @endrole
         </nav>

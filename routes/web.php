@@ -45,6 +45,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/subscriptions', [TenantSubscriptionController::class, 'index'])->name('subscriptions.index');
         Route::put('/subscriptions/{tenant}', [TenantSubscriptionController::class, 'update'])->name('subscriptions.update');
         Route::post('/subscriptions/{tenant}/toggle', [TenantSubscriptionController::class, 'toggleStatus'])->name('subscriptions.toggle');
+
+        // Role & Permission Management (Role Has Permission RBAC)
+        Route::get('/roles', [\App\Http\Controllers\Superadmin\RolePermissionController::class, 'index'])->name('roles.index');
+        Route::put('/roles/{role}', [\App\Http\Controllers\Superadmin\RolePermissionController::class, 'updateRolePermissions'])->name('roles.update');
+        Route::post('/roles', [\App\Http\Controllers\Superadmin\RolePermissionController::class, 'storeRole'])->name('roles.store');
+        Route::post('/permissions', [\App\Http\Controllers\Superadmin\RolePermissionController::class, 'storePermission'])->name('permissions.store');
     });
 
     // School Profile & QRIS Settings
