@@ -35,6 +35,9 @@ Route::middleware(['auth'])->group(function () {
 
     // Superadmin SaaS Management
     Route::middleware(['role:Superadmin'])->prefix('admin')->name('admin.')->group(function () {
+        Route::get('/', function () {
+            return redirect()->route('admin.plans.index');
+        });
         Route::get('/plans', [SubscriptionPlanController::class, 'index'])->name('plans.index');
         Route::post('/plans', [SubscriptionPlanController::class, 'store'])->name('plans.store');
         Route::put('/plans/{plan}', [SubscriptionPlanController::class, 'update'])->name('plans.update');
