@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SekolahKu-Apps — Platform SaaS manajemen sekolah all-in-one. E-Rapor, Presensi Digital, SPP QRIS, BendaharaKu LPJ BOSP, dan WhatsApp Otomatis. Oleh DnD Tech Solutions.">
-    <meta name="keywords" content="sekolahku, aplikasi sekolah, e-rapor, presensi digital, spp online, bendaharaku, lpj bosp, saas sekolah, dnd tech solutions">
+    <meta name="description"
+        content="SekolahKu-Apps — Platform SaaS manajemen sekolah all-in-one. E-Rapor, Presensi Digital, SPP QRIS, BendaharaKu LPJ BOSP, dan WhatsApp Otomatis. Oleh DnD Tech Solutions.">
+    <meta name="keywords"
+        content="sekolahku, aplikasi sekolah, e-rapor, presensi digital, spp online, bendaharaku, lpj bosp, saas sekolah, dnd tech solutions">
     <meta name="author" content="DnD Tech Solutions">
     <title>SekolahKu-Apps — Platform Cerdas Manajemen Sekolah | DnD Tech Solutions</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
         /* ========================================================
@@ -19,7 +24,7 @@
 
         :root {
             /* Primary green palette */
-            --green-50:  #f0fdf4;
+            --green-50: #f0fdf4;
             --green-100: #dcfce7;
             --green-200: #bbf7d0;
             --green-300: #86efac;
@@ -31,34 +36,42 @@
             --green-900: #14532d;
 
             /* Neutral */
-            --white:     #ffffff;
-            --gray-50:   #f8fafc;
-            --gray-100:  #f1f5f9;
-            --gray-200:  #e2e8f0;
-            --gray-300:  #cbd5e1;
-            --gray-400:  #94a3b8;
-            --gray-500:  #64748b;
-            --gray-600:  #475569;
-            --gray-700:  #334155;
-            --gray-800:  #1e293b;
-            --gray-900:  #0f172a;
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
 
             /* Accent */
-            --emerald:   #059669;
-            --teal:      #0d9488;
+            --emerald: #059669;
+            --teal: #0d9488;
 
             /* Shadows */
-            --shadow-sm:  0 1px 2px rgba(0,0,0,0.04);
-            --shadow-md:  0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -2px rgba(0,0,0,0.06);
-            --shadow-lg:  0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.06);
-            --shadow-xl:  0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.04);
-            --shadow-2xl: 0 25px 50px -12px rgba(0,0,0,0.15);
-            --shadow-green: 0 10px 30px -5px rgba(22,163,74,0.25);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.06);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            --shadow-green: 0 10px 30px -5px rgba(22, 163, 74, 0.25);
         }
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -131,7 +144,7 @@
         .btn-primary:hover {
             background: var(--green-700);
             transform: translateY(-2px);
-            box-shadow: 0 14px 35px -5px rgba(22,163,74,0.35);
+            box-shadow: 0 14px 35px -5px rgba(22, 163, 74, 0.35);
         }
 
         .btn-outline {
@@ -176,10 +189,10 @@
         }
 
         .navbar.scrolled {
-            background: rgba(255,255,255,0.92);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.03);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.03);
             padding: 10px 0;
         }
 
@@ -285,7 +298,7 @@
             right: -20%;
             width: 700px;
             height: 700px;
-            background: rgba(34,197,94,0.08);
+            background: rgba(34, 197, 94, 0.08);
             border-radius: 50%;
             pointer-events: none;
         }
@@ -297,7 +310,7 @@
             left: -10%;
             width: 500px;
             height: 500px;
-            background: rgba(5,150,105,0.06);
+            background: rgba(5, 150, 105, 0.06);
             border-radius: 50%;
             pointer-events: none;
         }
@@ -420,9 +433,17 @@
             border-radius: 50%;
         }
 
-        .mockup-dot:nth-child(1) { background: #ef4444; }
-        .mockup-dot:nth-child(2) { background: #f59e0b; }
-        .mockup-dot:nth-child(3) { background: #22c55e; }
+        .mockup-dot:nth-child(1) {
+            background: #ef4444;
+        }
+
+        .mockup-dot:nth-child(2) {
+            background: #f59e0b;
+        }
+
+        .mockup-dot:nth-child(3) {
+            background: #22c55e;
+        }
 
         .mockup-url {
             flex: 1;
@@ -818,7 +839,7 @@
             left: -20%;
             width: 500px;
             height: 500px;
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 50%;
         }
 
@@ -829,7 +850,7 @@
             right: -10%;
             width: 400px;
             height: 400px;
-            background: rgba(255,255,255,0.04);
+            background: rgba(255, 255, 255, 0.04);
             border-radius: 50%;
         }
 
@@ -962,9 +983,9 @@
 
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            align-items: start;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+            align-items: stretch;
         }
 
         .pricing-card {
@@ -974,6 +995,9 @@
             padding: 40px 32px;
             position: relative;
             transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .pricing-card:hover {
@@ -1012,6 +1036,7 @@
             font-size: 0.82rem;
             color: var(--gray-400);
             margin-bottom: 20px;
+            min-height: 38px;
         }
 
         .pricing-price {
@@ -1041,6 +1066,13 @@
         .pricing-features {
             list-style: none;
             margin-bottom: 32px;
+            flex-grow: 1;
+        }
+
+        .pricing-card .btn {
+            margin-top: auto;
+            width: 100%;
+            text-align: center;
         }
 
         .pricing-features li {
@@ -1088,7 +1120,7 @@
             right: -20%;
             width: 400px;
             height: 400px;
-            background: rgba(255,255,255,0.04);
+            background: rgba(255, 255, 255, 0.04);
             border-radius: 50%;
         }
 
@@ -1099,7 +1131,7 @@
             left: -10%;
             width: 300px;
             height: 300px;
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 50%;
         }
 
@@ -1250,23 +1282,51 @@
 
         /* ========== ANIMATIONS ========== */
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to   { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes fadeInRight {
-            from { opacity: 0; transform: translateX(40px); }
-            to   { opacity: 1; transform: translateX(0); }
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50%      { transform: translateY(-12px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50%      { opacity: 0.4; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
         }
 
         .animate-on-scroll {
@@ -1372,20 +1432,40 @@
                 text-align: center;
             }
 
-            .float-card { display: none; }
+            .float-card {
+                display: none;
+            }
 
-            .mockup-nav { display: none; }
+            .mockup-nav {
+                display: none;
+            }
         }
 
         @media (max-width: 480px) {
-            .hero h1 { font-size: 1.9rem; }
-            .hero-stats { flex-direction: column; gap: 16px; }
-            .stats-grid { grid-template-columns: 1fr; }
-            .cta-card { padding: 36px 20px; }
-            .trusted-logos { gap: 24px; }
+            .hero h1 {
+                font-size: 1.9rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-card {
+                padding: 36px 20px;
+            }
+
+            .trusted-logos {
+                gap: 24px;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <!-- ====== NAVBAR ====== -->
@@ -1406,7 +1486,8 @@
             <div class="navbar-cta">
                 <a href="{{ url('/login') }}" class="btn btn-outline btn-sm">Masuk</a>
                 <a href="#harga" class="btn btn-primary btn-sm">Coba Gratis</a>
-                <button class="hamburger" onclick="document.querySelector('.navbar-links').classList.toggle('show')" aria-label="Menu">
+                <button class="hamburger" onclick="document.querySelector('.navbar-links').classList.toggle('show')"
+                    aria-label="Menu">
                     <span></span><span></span><span></span>
                 </button>
             </div>
@@ -1427,7 +1508,8 @@
                     <span class="highlight">Cerdas & Efisien</span>
                 </h1>
 
-                <p>SekolahKu-Apps menyatukan E-Rapor, Keuangan BOSP, Presensi Digital, dan Pembayaran SPP dalam satu platform terpadu — mudah, cepat, dan terkoneksi WhatsApp.</p>
+                <p>SekolahKu-Apps menyatukan E-Rapor, Keuangan BOSP, Presensi Digital, dan Pembayaran SPP dalam satu
+                    platform terpadu — mudah, cepat, dan terkoneksi WhatsApp.</p>
 
                 <div class="hero-actions">
                     <a href="#harga" class="btn btn-primary">
@@ -1512,11 +1594,16 @@
                                 <div class="mockup-chart">
                                     <div class="mockup-chart-title">Kehadiran Mingguan</div>
                                     <div class="mockup-chart-bars">
-                                        <div class="mockup-bar" style="height: 75%; background: var(--green-200);"></div>
-                                        <div class="mockup-bar" style="height: 90%; background: var(--green-300);"></div>
-                                        <div class="mockup-bar" style="height: 65%; background: var(--green-200);"></div>
-                                        <div class="mockup-bar" style="height: 100%; background: var(--green-500);"></div>
-                                        <div class="mockup-bar" style="height: 85%; background: var(--green-400);"></div>
+                                        <div class="mockup-bar" style="height: 75%; background: var(--green-200);">
+                                        </div>
+                                        <div class="mockup-bar" style="height: 90%; background: var(--green-300);">
+                                        </div>
+                                        <div class="mockup-bar" style="height: 65%; background: var(--green-200);">
+                                        </div>
+                                        <div class="mockup-bar" style="height: 100%; background: var(--green-500);">
+                                        </div>
+                                        <div class="mockup-bar" style="height: 85%; background: var(--green-400);">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1546,50 +1633,58 @@
         <div class="container">
             <div class="features-header animate-on-scroll">
                 <div class="section-badge"><i class="bi bi-stars"></i> Fitur Unggulan</div>
-                <h2 class="section-title" style="margin-top: 16px;">Semua yang Sekolah Butuhkan,<br>dalam Satu Platform</h2>
-                <p class="section-subtitle">Terintegrasi penuh — dari presensi pagi hingga laporan keuangan akhir semester, SekolahKu-Apps mengotomatisasi seluruh alur kerja sekolah Anda.</p>
+                <h2 class="section-title" style="margin-top: 16px;">Semua yang Sekolah Butuhkan,<br>dalam Satu Platform
+                </h2>
+                <p class="section-subtitle">Terintegrasi penuh — dari presensi pagi hingga laporan keuangan akhir
+                    semester, SekolahKu-Apps mengotomatisasi seluruh alur kerja sekolah Anda.</p>
             </div>
 
             <div class="features-grid">
                 <div class="feature-card animate-on-scroll">
                     <div class="feature-icon"><i class="bi bi-file-earmark-text-fill"></i></div>
                     <h3>E-Rapor Digital</h3>
-                    <p>Penilaian narasi, capaian per elemen kurikulum, dan unduh rapor resmi dalam format PDF — sesuai regulasi Kurikulum Merdeka.</p>
+                    <p>Penilaian narasi, capaian per elemen kurikulum, dan unduh rapor resmi dalam format PDF — sesuai
+                        regulasi Kurikulum Merdeka.</p>
                     <span class="feature-tag">Kurikulum Merdeka Ready</span>
                 </div>
 
                 <div class="feature-card animate-on-scroll">
                     <div class="feature-icon"><i class="bi bi-person-check-fill"></i></div>
                     <h3>Presensi Dual Mode</h3>
-                    <p>Guru isi presensi kelas dari grid pagi hari, atau siswa absen mandiri lewat akun masing-masing — notifikasi WhatsApp otomatis ke orang tua.</p>
+                    <p>Guru isi presensi kelas dari grid pagi hari, atau siswa absen mandiri lewat akun masing-masing —
+                        notifikasi WhatsApp otomatis ke orang tua.</p>
                     <span class="feature-tag">Otomatis WA ke Ortu</span>
                 </div>
 
                 <div class="feature-card animate-on-scroll">
                     <div class="feature-icon"><i class="bi bi-qr-code-scan"></i></div>
                     <h3>SPP & Pembayaran QRIS</h3>
-                    <p>Generate tagihan SPP massal, orang tua scan QRIS sekolah & upload bukti bayar, bendahara tinggal verifikasi satu klik.</p>
+                    <p>Generate tagihan SPP massal, orang tua scan QRIS sekolah & upload bukti bayar, bendahara tinggal
+                        verifikasi satu klik.</p>
                     <span class="feature-tag">Tanpa Payment Gateway</span>
                 </div>
 
                 <div class="feature-card animate-on-scroll">
                     <div class="feature-icon"><i class="bi bi-cash-stack"></i></div>
                     <h3>BendaharaKu & LPJ BOSP</h3>
-                    <p>Catat pengeluaran talangan pribadi dalam &lt;30 detik, lampirkan foto nota, ajukan reimburse, dan cetak rekap LPJ BOSP resmi.</p>
+                    <p>Catat pengeluaran talangan pribadi dalam &lt;30 detik, lampirkan foto nota, ajukan reimburse, dan
+                        cetak rekap LPJ BOSP resmi.</p>
                     <span class="feature-tag">Laporan Dinas-Ready</span>
                 </div>
 
                 <div class="feature-card animate-on-scroll">
                     <div class="feature-icon"><i class="bi bi-journal-bookmark-fill"></i></div>
                     <h3>Catatan Anekdot</h3>
-                    <p>Dokumentasi peristiwa & capaian perkembangan siswa dalam timeline visual — lengkap dengan lampiran foto dan analisis capaian.</p>
+                    <p>Dokumentasi peristiwa & capaian perkembangan siswa dalam timeline visual — lengkap dengan
+                        lampiran foto dan analisis capaian.</p>
                     <span class="feature-tag">6 Elemen Perkembangan</span>
                 </div>
 
                 <div class="feature-card animate-on-scroll">
                     <div class="feature-icon"><i class="bi bi-whatsapp"></i></div>
-                    <h3>WhatsApp Otomatis (Fonnte)</h3>
-                    <p>Notifikasi ketidakhadiran, pengingat tagihan SPP, dan kuitansi digital langsung ke nomor WhatsApp orang tua — tanpa SMS, tanpa biaya ekstra.</p>
+                    <h3>WhatsApp Otomatis</h3>
+                    <p>Notifikasi ketidakhadiran, pengingat tagihan SPP, dan kuitansi digital langsung ke nomor WhatsApp
+                        orang tua — tanpa SMS, tanpa biaya ekstra.</p>
                     <span class="feature-tag">Fonnte API Terintegrasi</span>
                 </div>
             </div>
@@ -1602,7 +1697,8 @@
             <div class="how-header animate-on-scroll">
                 <div class="section-badge"><i class="bi bi-lightning-fill"></i> Mulai dalam Hitungan Menit</div>
                 <h2 class="section-title" style="margin-top: 16px;">Cara Kerja SekolahKu-Apps</h2>
-                <p class="section-subtitle">Empat langkah sederhana untuk mentransformasi manajemen sekolah Anda menjadi serba digital dan efisien.</p>
+                <p class="section-subtitle">Empat langkah sederhana untuk mentransformasi manajemen sekolah Anda menjadi
+                    serba digital dan efisien.</p>
             </div>
 
             <div class="how-steps">
@@ -1662,16 +1758,20 @@
         <div class="container">
             <div class="testimonials-header animate-on-scroll">
                 <div class="section-badge"><i class="bi bi-chat-quote-fill"></i> Kata Mereka</div>
-                <h2 class="section-title" style="margin-top: 16px;">Dipercaya Ratusan Sekolah<br>di Seluruh Indonesia</h2>
-                <p class="section-subtitle">Dengarkan langsung dari para kepala sekolah, guru, dan bendahara yang sudah merasakan manfaat SekolahKu-Apps.</p>
+                <h2 class="section-title" style="margin-top: 16px;">Dipercaya Ratusan Sekolah<br>di Seluruh Indonesia
+                </h2>
+                <p class="section-subtitle">Dengarkan langsung dari para kepala sekolah, guru, dan bendahara yang sudah
+                    merasakan manfaat SekolahKu-Apps.</p>
             </div>
 
             <div class="testimonials-grid">
                 <div class="testimonial-card animate-on-scroll">
                     <div class="testimonial-stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                            class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                     </div>
-                    <blockquote>"Sejak pakai SekolahKu-Apps, laporan LPJ BOSP kami tidak pernah terlambat lagi. Pencatatan talangan sangat cepat, tinggal foto nota langsung tercatat. Luar biasa!"</blockquote>
+                    <blockquote>"Sejak pakai SekolahKu-Apps, laporan LPJ BOSP kami tidak pernah terlambat lagi.
+                        Pencatatan talangan sangat cepat, tinggal foto nota langsung tercatat. Luar biasa!"</blockquote>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">SA</div>
                         <div>
@@ -1683,9 +1783,11 @@
 
                 <div class="testimonial-card animate-on-scroll">
                     <div class="testimonial-stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                            class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                     </div>
-                    <blockquote>"Fitur WhatsApp otomatis ke orang tua sangat membantu. Mereka langsung tahu kalau anaknya tidak hadir, tanpa harus telepon satu per satu. Efisiensi luar biasa."</blockquote>
+                    <blockquote>"Fitur WhatsApp otomatis ke orang tua sangat membantu. Mereka langsung tahu kalau
+                        anaknya tidak hadir, tanpa harus telepon satu per satu. Efisiensi luar biasa."</blockquote>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">BR</div>
                         <div>
@@ -1697,9 +1799,11 @@
 
                 <div class="testimonial-card animate-on-scroll">
                     <div class="testimonial-stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                            class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
                     </div>
-                    <blockquote>"E-Rapor langsung bisa didownload PDF, lengkap dengan narasi per elemen kurikulum. Saya tidak perlu lagi ketik manual di Word. Guru-guru di sekolah kami sangat terbantu."</blockquote>
+                    <blockquote>"E-Rapor langsung bisa didownload PDF, lengkap dengan narasi per elemen kurikulum. Saya
+                        tidak perlu lagi ketik manual di Word. Guru-guru di sekolah kami sangat terbantu."</blockquote>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">NW</div>
                         <div>
@@ -1713,79 +1817,75 @@
     </section>
 
     <!-- ====== PRICING ====== -->
+    @php
+        $plans = $plans ?? \App\Models\SubscriptionPlan::where('is_active', true)->get();
+        $availableFeatures = \App\Models\SubscriptionPlan::availableFeatures();
+    @endphp
     <section class="pricing" id="harga">
         <div class="container">
             <div class="pricing-header animate-on-scroll">
                 <div class="section-badge"><i class="bi bi-tag-fill"></i> Paket Harga</div>
                 <h2 class="section-title" style="margin-top: 16px;">Harga Terjangkau,<br>Manfaat Luar Biasa</h2>
-                <p class="section-subtitle">Mulai gratis dan upgrade kapan saja. Tanpa kontrak tahunan, tanpa biaya tersembunyi.</p>
+                <p class="section-subtitle">Mulai gratis dan upgrade kapan saja. Tanpa kontrak tahunan, tanpa biaya
+                    tersembunyi.</p>
             </div>
 
             <div class="pricing-grid">
-                <!-- Starter -->
-                <div class="pricing-card animate-on-scroll">
-                    <div class="pricing-plan-name">Starter</div>
-                    <div class="pricing-plan-desc">Cocok untuk sekolah kecil yang baru memulai digitalisasi.</div>
-                    <div class="pricing-price">
-                        <span class="pricing-currency">Rp </span>
-                        <span class="pricing-amount">0</span>
-                        <span class="pricing-period">/ bulan</span>
-                    </div>
-                    <ul class="pricing-features">
-                        <li><i class="bi bi-check-circle-fill"></i> 1 Sekolah / Lembaga</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Max 50 Siswa</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Presensi Digital</li>
-                        <li><i class="bi bi-check-circle-fill"></i> E-Rapor PDF</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Catatan Anekdot</li>
-                    </ul>
-                    <a href="{{ url('/login') }}" class="btn btn-outline">Mulai Gratis</a>
-                </div>
+                @forelse($plans as $plan)
+                    @php
+                        $isPopular = in_array(strtolower($plan->code), ['pro', 'professional']) || ($loop->count > 1 && $loop->iteration == 2);
+                    @endphp
+                    <div class="pricing-card {{ $isPopular ? 'popular' : '' }} animate-on-scroll">
+                        @if($isPopular)
+                            <div class="pricing-popular-badge">Paling Populer</div>
+                        @endif
+                        <div class="pricing-plan-name">{{ $plan->name }}</div>
+                        <div class="pricing-plan-desc">{{ $plan->description ?? 'Paket layanan manajemen sekolah modern.' }}
+                        </div>
+                        <div class="pricing-price">
+                            @if($plan->price == 0)
+                                <span class="pricing-currency">Rp </span>
+                                <span class="pricing-amount">0</span>
+                                <span class="pricing-period">/ bulan</span>
+                            @else
+                                <span class="pricing-currency">Rp </span>
+                                <span class="pricing-amount">{{ number_format($plan->price, 0, ',', '.') }}</span>
+                                <span class="pricing-period">/ bulan</span>
+                            @endif
+                        </div>
+                        <ul class="pricing-features">
+                            <li>
+                                <i class="bi bi-check-circle-fill"></i>
+                                {{ $plan->max_schools > 1 ? 'Multi-Sekolah (' . $plan->max_schools . ' Unit)' : '1 Sekolah / Lembaga' }}
+                            </li>
+                            <li>
+                                <i class="bi bi-check-circle-fill"></i>
+                                {{ $plan->max_siswas == 0 ? 'Unlimited Siswa' : 'Max ' . number_format($plan->max_siswas) . ' Siswa' }}
+                            </li>
+                            @foreach($availableFeatures as $fKey => $fLabel)
+                                @if($plan->hasFeature($fKey))
+                                    <li><i class="bi bi-check-circle-fill"></i> {{ $fLabel }}</li>
+                                @endif
+                            @endforeach
+                        </ul>
 
-                <!-- Professional -->
-                <div class="pricing-card popular animate-on-scroll">
-                    <div class="pricing-popular-badge">Paling Populer</div>
-                    <div class="pricing-plan-name">Professional</div>
-                    <div class="pricing-plan-desc">Fitur lengkap untuk sekolah menengah dengan operasional aktif.</div>
-                    <div class="pricing-price">
-                        <span class="pricing-currency">Rp </span>
-                        <span class="pricing-amount">199K</span>
-                        <span class="pricing-period">/ bulan</span>
+                        @if($plan->price == 0)
+                            <a href="{{ url('/login') }}" class="btn btn-outline">Mulai Gratis</a>
+                        @else
+                            <a href="https://wa.me/6289669651907?text={{ rawurlencode('Halo Admin DnD Tech Solutions, saya ingin mendaftar paket ' . $plan->name) }}"
+                                target="_blank" class="btn {{ $isPopular ? 'btn-primary' : 'btn-outline' }}">
+                                Pilih {{ $plan->name }}
+                            </a>
+                        @endif
                     </div>
-                    <ul class="pricing-features">
-                        <li><i class="bi bi-check-circle-fill"></i> 1 Sekolah / Lembaga</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Unlimited Siswa</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Semua Fitur Starter</li>
-                        <li><i class="bi bi-check-circle-fill"></i> SPP & QRIS Payment</li>
-                        <li><i class="bi bi-check-circle-fill"></i> BendaharaKu & LPJ BOSP</li>
-                        <li><i class="bi bi-check-circle-fill"></i> WhatsApp Otomatis (Fonnte)</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Prioritas Support</li>
-                    </ul>
-                    <a href="#" class="btn btn-primary">Pilih Professional</a>
-                </div>
-
-                <!-- Enterprise -->
-                <div class="pricing-card animate-on-scroll">
-                    <div class="pricing-plan-name">Enterprise</div>
-                    <div class="pricing-plan-desc">Solusi untuk yayasan dengan banyak unit sekolah.</div>
-                    <div class="pricing-price">
-                        <span class="pricing-currency">Rp </span>
-                        <span class="pricing-amount">499K</span>
-                        <span class="pricing-period">/ bulan</span>
+                @empty
+                    <div class="col-12 text-center text-muted py-4">Belum ada paket langganan yang diatur oleh Superadmin.
                     </div>
-                    <ul class="pricing-features">
-                        <li><i class="bi bi-check-circle-fill"></i> Multi-Sekolah (5 Unit)</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Unlimited Siswa</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Semua Fitur Professional</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Dashboard Yayasan</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Custom Branding</li>
-                        <li><i class="bi bi-check-circle-fill"></i> Dedicated Account Manager</li>
-                        <li><i class="bi bi-check-circle-fill"></i> SLA 99.9% Uptime</li>
-                    </ul>
-                    <a href="#" class="btn btn-outline">Hubungi Sales</a>
-                </div>
+                @endforelse
             </div>
         </div>
     </section>
+
 
     <!-- ====== CTA ====== -->
     <section class="cta">
@@ -1793,12 +1893,13 @@
             <div class="cta-card">
                 <div class="cta-content animate-on-scroll">
                     <h2>Siap Digitalisasi Sekolah Anda?<br>Mulai Sekarang — Gratis!</h2>
-                    <p>Bergabung bersama 500+ sekolah yang sudah mempercayakan manajemen operasional mereka pada SekolahKu-Apps.</p>
+                    <p>Bergabung bersama 500+ sekolah yang sudah mempercayakan manajemen operasional mereka pada
+                        SekolahKu-Apps.</p>
                     <div class="cta-actions">
                         <a href="{{ url('/login') }}" class="btn btn-white">
                             <i class="bi bi-rocket-takeoff"></i> Coba Gratis 30 Hari
                         </a>
-                        <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-outline" style="border-color: rgba(255,255,255,0.3); color: var(--white);">
+                        <a href="https://wa.me/6289669651907" target="_blank" class="btn btn-white">
                             <i class="bi bi-whatsapp"></i> Konsultasi via WhatsApp
                         </a>
                     </div>
@@ -1816,7 +1917,9 @@
                         <div class="footer-logo"><i class="bi bi-mortarboard-fill"></i></div>
                         <div class="footer-brand-name">SekolahKu-Apps</div>
                     </div>
-                    <p>Platform SaaS manajemen sekolah all-in-one yang dikembangkan oleh <strong>DnD Tech Solutions</strong>. Misi kami: digitalisasi pendidikan Indonesia, satu sekolah pada satu waktu.</p>
+                    <p>Platform SaaS manajemen sekolah all-in-one yang dikembangkan oleh <strong>DnD Tech
+                            Solutions</strong>. Misi kami: digitalisasi pendidikan Indonesia, satu sekolah pada satu
+                        waktu.</p>
                     <div class="footer-socials">
                         <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
                         <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
@@ -1838,10 +1941,8 @@
                 <div>
                     <h4 class="footer-heading">Perusahaan</h4>
                     <ul class="footer-links">
-                        <li><a href="#">Tentang Kami</a></li>
-                        <li><a href="#">Blog & Edukasi</a></li>
-                        <li><a href="#">Karir</a></li>
-                        <li><a href="#">Hubungi Kami</a></li>
+                        <li><a href="{{ route('pages.about') }}">Tentang Kami</a></li>
+                        <li><a href="{{ route('pages.contact') }}">Hubungi Kami</a></li>
                     </ul>
                 </div>
 
@@ -1857,7 +1958,8 @@
             </div>
 
             <div class="footer-bottom">
-                <span>&copy; {{ date('Y') }} SekolahKu-Apps — Produk <a href="#">DnD Tech Solutions</a>. Hak Cipta Dilindungi.</span>
+                <span>&copy; {{ date('Y') }} SekolahKu-Apps — Produk <a href="#">DnD Tech Solutions</a>. Hak Cipta
+                    Dilindungi.</span>
                 <span>Dibuat dengan <i class="bi bi-heart-fill" style="color: #ef4444;"></i> di Indonesia</span>
             </div>
         </div>
@@ -1894,7 +1996,7 @@
 
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', function (e) {
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     e.preventDefault();
@@ -1904,4 +2006,5 @@
         });
     </script>
 </body>
+
 </html>

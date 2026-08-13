@@ -12,8 +12,10 @@ use App\Http\Controllers\TagihanSppController;
 use App\Http\Controllers\PembayaranSppController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ERaporController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\Superadmin\SubscriptionPlanController;
 use App\Http\Controllers\Superadmin\TenantSubscriptionController;
+use App\Http\Controllers\Superadmin\PageManagementController;
 use Illuminate\Support\Facades\Route;
 
 // Public Landing Page
@@ -21,8 +23,13 @@ Route::get('/', function () {
     if (auth()->check()) {
         return redirect()->route('dashboard');
     }
-    return view('landing');
+    $plans = \App\Models\SubscriptionPlan::where('is_active', true)->get();
+    return view('landing', compact('plans'));
 })->name('landing');
+
+// Public Informational Pages
+Route::get('/tentang-kami', [PageController::class, 'about'])->name('pages.about');
+Route::get('/hubungi-kami', [PageController::class, 'contact'])->name('pages.contact');
 
 // Auth Routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -45,6 +52,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/subscriptions', [TenantSubscriptionController::class, 'index'])->name('subscriptions.index');
         Route::put('/subscriptions/{tenant}', [TenantSubscriptionController::class, 'update'])->name('subscriptions.update');
         Route::post('/subscriptions/{tenant}/toggle', [TenantSubscriptionController::class, 'toggleStatus'])->name('subscriptions.toggle');
+
+        Route::get('/pages', [PageManagementController::class, 'index'])->name('pages.index');
+        Route::get('/pages/{page}/edit', [PageManagementController::class, 'edit'])->name('pages.edit');
+        Route::put('/pages/{page}', [PageManagementController::class, 'update'])->name('pages.update');
+
 
         // Role & Permission Management (Role Has Permission RBAC)
         Route::get('/roles', [\App\Http\Controllers\Superadmin\RolePermissionController::class, 'index'])->name('roles.index');

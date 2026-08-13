@@ -14,10 +14,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         :root {
-            --sk-primary: #16a34a;
-            --sk-primary-hover: #15803d;
-            --sk-primary-light: #dcfce7;
-            --sk-secondary: #0d9488;
+            --sk-primary: #0f766e;
+            --sk-primary-hover: #115e59;
+            --sk-primary-light: #f0fdfa;
+            --sk-secondary: #0369a1;
             --sk-dark: #0f172a;
             --sk-card-bg: #ffffff;
             --sk-bg: #f8fafc;
@@ -36,24 +36,25 @@
         }
 
         .btn-primary {
-            background-color: var(--sk-primary);
-            border-color: var(--sk-primary);
+            background-color: var(--sk-primary) !important;
+            border-color: var(--sk-primary) !important;
+            color: #ffffff !important;
         }
 
         .btn-primary:hover, .btn-primary:focus {
-            background-color: var(--sk-primary-hover);
-            border-color: var(--sk-primary-hover);
+            background-color: var(--sk-primary-hover) !important;
+            border-color: var(--sk-primary-hover) !important;
         }
 
         .btn-outline-primary {
-            color: var(--sk-primary);
-            border-color: var(--sk-primary);
+            color: var(--sk-primary) !important;
+            border-color: var(--sk-primary) !important;
         }
 
         .btn-outline-primary:hover {
-            background-color: var(--sk-primary);
-            border-color: var(--sk-primary);
-            color: #ffffff;
+            background-color: var(--sk-primary) !important;
+            border-color: var(--sk-primary) !important;
+            color: #ffffff !important;
         }
 
         .bg-primary {
@@ -64,33 +65,49 @@
             color: var(--sk-primary) !important;
         }
 
-        /* Sidebar Styling with Scrollable Overflow */
+        .bg-primary-subtle {
+            background-color: #ccfbf1 !important;
+            color: #0f766e !important;
+        }
+
+        .bg-success-subtle {
+            background-color: #d1fae5 !important;
+            color: #047857 !important;
+        }
+
+        .bg-info-subtle {
+            background-color: #e0f2fe !important;
+            color: #0369a1 !important;
+        }
+
+        /* Sidebar Styling - Light & Clean (siakad-ridho) */
         .sidebar {
             width: 260px;
-            background: #0b2518;
-            color: #f8fafc;
+            background: #ffffff;
+            color: #334155;
             position: fixed;
             top: 0;
             bottom: 0;
             left: 0;
             z-index: 100;
-            box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+            border-right: 1px solid #e2e8f0;
+            box-shadow: 2px 0 12px rgba(0,0,0,0.03);
             transition: all 0.3s ease;
             overflow-y: auto;
             scrollbar-width: thin;
-            scrollbar-color: #16a34a #0b2518;
+            scrollbar-color: #cbd5e1 #ffffff;
         }
 
         .sidebar::-webkit-scrollbar {
-            width: 6px;
+            width: 5px;
         }
 
         .sidebar::-webkit-scrollbar-track {
-            background: #0b2518;
+            background: #ffffff;
         }
 
         .sidebar::-webkit-scrollbar-thumb {
-            background-color: #16a34a;
+            background-color: #cbd5e1;
             border-radius: 3px;
         }
 
@@ -98,48 +115,90 @@
             display: flex;
             flex-direction: column;
             min-height: 100%;
-            padding-bottom: 2rem;
+            padding-bottom: 1.5rem;
         }
 
         .sidebar .nav-link {
-            color: #a7f3d0;
-            padding: 0.7rem 1.1rem;
-            font-weight: 500;
-            border-radius: 0.6rem;
-            margin: 0.2rem 0.75rem;
+            color: #475569;
+            padding: 0.65rem 1rem;
+            font-weight: 600;
+            font-size: 0.825rem;
+            border-radius: 0.75rem;
+            margin: 0.15rem 0.75rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
             transition: all 0.2s ease;
+            border: 1px solid transparent;
         }
 
         .sidebar .nav-link:hover {
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.1);
+            color: #0f172a;
+            background: #f8fafc;
         }
 
         .sidebar .nav-link.active {
-            color: #ffffff;
-            background: #16a34a;
-            box-shadow: 0 4px 14px rgba(22, 163, 74, 0.35);
+            color: #115e59;
+            background: #f0fdfa;
+            border-color: #ccfbf1;
+            box-shadow: 0 2px 8px rgba(15, 118, 110, 0.08);
             font-weight: 700;
+        }
+
+        .sidebar-brand-mark {
+            width: 38px;
+            height: 38px;
+            border-radius: 0.75rem;
+            background: linear-gradient(135deg, #0f766e 0%, #0369a1 100%);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            box-shadow: 0 4px 10px rgba(15, 118, 110, 0.25);
+        }
+
+        .sidebar-section-title {
+            padding: 0.75rem 1rem 0.35rem 1.1rem;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: #0f766e;
         }
 
         .main-content {
             margin-left: 260px;
-            padding: 1.5rem 2rem;
+            padding: 1.75rem 2.25rem;
         }
 
         .card-custom {
             background: #ffffff;
-            border: 1px solid var(--sk-border);
+            border: 1px solid #e2e8f0;
             border-radius: 1rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .card-custom:hover {
-            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+        }
+
+        .kpi-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
+            border: 1px solid #ccfbf1;
+            border-radius: 1.25rem;
+            padding: 1.75rem 2rem;
         }
 
         @media (max-width: 991.98px) {
@@ -161,17 +220,17 @@
     <aside class="sidebar">
         <div class="sidebar-wrapper">
             <!-- Brand Header -->
-            <div class="p-3 d-flex align-items-center gap-2 border-bottom border-success border-opacity-25 mb-2">
-                <div class="bg-success text-white rounded-3 p-2 d-flex align-items-center justify-content-center shadow-sm" style="width:40px; height:40px;">
-                    <i class="bi bi-mortarboard-fill fs-4"></i>
+            <div class="p-3 d-flex align-items-center gap-3 border-bottom border-slate-100 mb-2">
+                <div class="sidebar-brand-mark">
+                    <i class="bi bi-mortarboard-fill fs-5"></i>
                 </div>
                 <div>
-                    <h5 class="m-0 fw-bold text-white">SekolahKu</h5>
-                    <small class="text-xs text-success-subtle" style="font-size:0.75rem;">SaaS SIM & Finance</small>
+                    <h5 class="m-0 fw-bold" style="font-size:1.05rem; color:#0f172a;">SekolahKu</h5>
+                    <small class="text-xs" style="font-size:0.72rem; color:#64748b;">SaaS SIM & Finance</small>
                 </div>
             </div>
 
-            <div class="px-3 py-2 text-uppercase text-xs fw-bold text-success opacity-75 mt-1" style="font-size:0.7rem; letter-spacing:1px; color:#86efac !important;">
+            <div class="sidebar-section-title">
                 NAVIGASI UTAMA
             </div>
 
@@ -224,7 +283,7 @@
                 @endif
 
                 @if(Auth::user()->hasRole('Superadmin') || Auth::user()->can('manage-master-data') || Auth::user()->can('manage-school'))
-                    <div class="px-3 py-2 text-uppercase text-xs fw-bold opacity-75 mt-3" style="font-size:0.7rem; letter-spacing:1px; color:#86efac !important;">
+                    <div class="sidebar-section-title mt-2">
                         MASTER & PROFIL
                     </div>
 
@@ -243,7 +302,7 @@
                 @endif
 
                 @role('Superadmin')
-                    <div class="px-3 py-2 text-uppercase text-xs fw-bold opacity-75 mt-3" style="font-size:0.7rem; letter-spacing:1px; color:#fbbf24 !important;">
+                    <div class="sidebar-section-title mt-2" style="color:#b45309;">
                         SUPERADMIN SAAS
                     </div>
                     <a class="nav-link {{ request()->is('admin/plans*') ? 'active' : '' }}" href="{{ route('admin.plans.index') }}">
@@ -252,6 +311,9 @@
                     <a class="nav-link {{ request()->is('admin/subscriptions*') ? 'active' : '' }}" href="{{ route('admin.subscriptions.index') }}">
                         <i class="bi bi-patch-check-fill"></i> Langganan Sekolah
                     </a>
+                    <a class="nav-link {{ request()->is('admin/pages*') ? 'active' : '' }}" href="{{ route('admin.pages.index') }}">
+                        <i class="bi bi-file-earmark-richtext-fill"></i> Halaman CMS Publik
+                    </a>
                     <a class="nav-link {{ request()->is('admin/roles*') ? 'active' : '' }}" href="{{ route('admin.roles.index') }}">
                         <i class="bi bi-shield-lock-fill"></i> Role & Hak Akses (RBAC)
                     </a>
@@ -259,15 +321,15 @@
             </nav>
 
             <!-- User Footer Box -->
-            <div class="p-3 border-top border-success border-opacity-25 bg-black bg-opacity-30 rounded-3 mx-2 mt-3">
+            <div class="p-3 border-top border-slate-100 bg-slate-50 rounded-3 mx-2 mt-auto">
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center gap-2">
-                        <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center fw-bold shadow-sm" style="width:36px; height:36px;">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold shadow-sm" style="width:36px; height:36px; background-color:#0f766e; color:#ffffff;">
                             {{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}
                         </div>
                         <div class="overflow-hidden" style="max-width:120px;">
-                            <div class="fw-semibold text-white text-truncate small">{{ Auth::user()->name }}</div>
-                            <div class="text-xs text-success-subtle text-truncate" style="font-size:0.72rem;">{{ Auth::user()->roles->first()?->name ?? 'User' }}</div>
+                            <div class="fw-semibold text-truncate small" style="color:#0f172a;">{{ Auth::user()->name }}</div>
+                            <div class="text-xs text-truncate" style="font-size:0.72rem; color:#64748b;">{{ Auth::user()->roles->first()?->name ?? 'User' }}</div>
                         </div>
                     </div>
                     <form action="{{ route('logout') }}" method="POST">
@@ -284,13 +346,13 @@
     <!-- Main Body Content -->
     <main class="main-content">
         <!-- Top Navbar Header -->
-        <header class="d-flex align-items-center justify-content-between pb-3 mb-4 border-bottom">
+        <header class="d-flex align-items-center justify-content-between pb-3 mb-4 border-bottom border-slate-200">
             <div class="d-flex align-items-center gap-3">
                 <button class="btn btn-outline-secondary d-lg-none" type="button" onclick="document.querySelector('.sidebar').classList.toggle('show')">
                     <i class="bi bi-list"></i>
                 </button>
                 <div>
-                    <h4 class="fw-bold m-0 text-dark">@yield('page_title', 'Dashboard')</h4>
+                    <h4 class="fw-bold m-0" style="color:#0f172a;">@yield('page_title', 'Dashboard')</h4>
                     <p class="text-muted small m-0">{{ Auth::user()->school->name ?? 'SekolahKu Platform' }}</p>
                 </div>
             </div>
@@ -300,15 +362,15 @@
                     $planName = $tenant?->subscriptionPlan?->name ?? 'Free Plan';
                     $planCode = $tenant?->subscriptionPlan?->code ?? 'free';
                     $badgeBg = match($planCode) {
-                        'pro' => 'bg-success text-white',
-                        'enterprise' => 'bg-primary text-white',
+                        'pro' => 'bg-teal-700 text-white',
+                        'enterprise' => 'bg-sky-700 text-white',
                         default => 'bg-secondary text-white'
                     };
                 @endphp
-                <span class="badge {{ $badgeBg }} px-3 py-2 rounded-pill font-monospace" style="font-size:0.8rem;">
+                <span class="badge {{ $badgeBg }} px-3 py-2 rounded-pill font-monospace shadow-sm" style="font-size:0.8rem; background-color:#0f766e; color:#ffffff;">
                     <i class="bi bi-star-fill me-1"></i> {{ strtoupper($planName) }}
                 </span>
-                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-2">
+                <span class="badge rounded-pill px-3 py-2" style="background-color:#f0fdfa; color:#115e59; border:1px solid #ccfbf1;">
                     <i class="bi bi-buildings me-1"></i> {{ Auth::user()->school->jenjang ?? 'TK/PAUD' }}
                 </span>
             </div>
@@ -316,7 +378,7 @@
 
         <!-- Flash Messages -->
         @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show rounded-3 shadow-sm border-0 mb-4" role="alert">
+            <div class="alert alert-success alert-dismissible fade show rounded-3 shadow-sm border-0 mb-4" role="alert" style="background-color:#ecfdf5; color:#065f46; border:1px solid #a7f3d0;">
                 <i class="bi bi-check-circle-fill me-2 fs-5"></i> {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
@@ -344,3 +406,4 @@
     @stack('scripts')
 </body>
 </html>
+
