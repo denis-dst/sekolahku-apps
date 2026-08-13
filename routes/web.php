@@ -16,6 +16,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\Superadmin\SubscriptionPlanController;
 use App\Http\Controllers\Superadmin\TenantSubscriptionController;
 use App\Http\Controllers\Superadmin\PageManagementController;
+use App\Http\Controllers\Superadmin\WahaSettingController;
 use Illuminate\Support\Facades\Route;
 
 // Public Landing Page
@@ -56,6 +57,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/pages', [PageManagementController::class, 'index'])->name('pages.index');
         Route::get('/pages/{page}/edit', [PageManagementController::class, 'edit'])->name('pages.edit');
         Route::put('/pages/{page}', [PageManagementController::class, 'update'])->name('pages.update');
+
+        Route::get('/waha-settings', [WahaSettingController::class, 'index'])->name('waha.index');
+        Route::put('/waha-settings', [WahaSettingController::class, 'update'])->name('waha.update');
+        Route::post('/waha-settings/test', [WahaSettingController::class, 'testConnection'])->name('waha.test');
 
 
         // Role & Permission Management (Role Has Permission RBAC)

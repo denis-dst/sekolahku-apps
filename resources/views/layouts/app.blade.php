@@ -314,6 +314,9 @@
                     <a class="nav-link {{ request()->is('admin/pages*') ? 'active' : '' }}" href="{{ route('admin.pages.index') }}">
                         <i class="bi bi-file-earmark-richtext-fill"></i> Halaman CMS Publik
                     </a>
+                    <a class="nav-link {{ request()->is('admin/waha-settings*') ? 'active' : '' }}" href="{{ route('admin.waha.index') }}">
+                        <i class="bi bi-whatsapp"></i> Server WAHA (WhatsApp)
+                    </a>
                     <a class="nav-link {{ request()->is('admin/roles*') ? 'active' : '' }}" href="{{ route('admin.roles.index') }}">
                         <i class="bi bi-shield-lock-fill"></i> Role & Hak Akses (RBAC)
                     </a>

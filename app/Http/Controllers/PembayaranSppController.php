@@ -26,11 +26,23 @@ class PembayaranSppController extends Controller
         $request->validate([
             'metode_pembayaran' => 'required|in:Manual QRIS,Transfer Bank,Cash',
             'nominal_bayar' => 'required|numeric|min:1',
-            'bukti_pembayaran' => 'required|image|mimes:jpeg,png,jpg,heic|max:3072',
+            'bukti_pembayaran' => 'required|image|mimes:jpeg,png,jpg,heic|max:5120',
         ]);
 
+        $file = $request->file('bukti_pembayaran');
+
+        if (!$file || !$file->isValid() || empty($file->getRealPath())) {
+            return redirect()->back()->with('error', 'File bukti pembayaran gagal diunggah. Pastikan file berupa gambar valid dan tidak rusak.');
+        }
+
+        try {
+            $filePath = $file->store('bukti_spp', 'public');
+        } catch (\Throwable $e) {
+            Storage::disk('public')->makeDirectory('bukti_spp');
+            $filePath = $file->store('bukti_spp', 'public');
+        }
+
         $user = Auth::user();
-        $filePath = $request->file('bukti_pembayaran')->store('bukti_spp', 'public');
 
         $pembayaran = PembayaranSpp::create([
             'tagihan_spp_id' => $tagihan->id,

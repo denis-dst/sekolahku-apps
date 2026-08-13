@@ -14,7 +14,7 @@ class WahaService
 
     public function __construct(?string $url = null, ?string $apiKey = null, ?string $session = null)
     {
-        $baseUrl = $url ?: config('services.waha.url', env('WAHA_BASE_URL', 'http://localhost:3000'));
+        $baseUrl = $url ?: config('services.waha.url', env('WAHA_BASE_URL', 'http://127.0.0.1:3000'));
         // Ensure base URL doesn't end with slash
         $baseUrl = rtrim($baseUrl, '/');
         
