@@ -46,7 +46,7 @@
                 </div>
                 <div class="col-12 col-md-6">
                     <label class="form-label fw-semibold">Nomor WhatsApp Support (Format: 628xxx)</label>
-                    <input type="text" name="contact_phone" class="form-control" value="{{ old('contact_phone', $page->contact_phone) }}" placeholder="6289669651907">
+                    <input type="text" name="contact_phone" class="form-control" value="{{ old('contact_phone', $page->contact_phone) }}" placeholder="6283878537818">
                 </div>
                 <div class="col-12">
                     <label class="form-label fw-semibold">Alamat Kantor Lengkap</label>

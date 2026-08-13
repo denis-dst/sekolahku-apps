@@ -139,8 +139,8 @@
                     <div class="icon-box mx-auto"><i class="bi bi-whatsapp"></i></div>
                     <h5 class="fw-bold text-dark">WhatsApp Support</h5>
                     <p class="small text-muted mb-3">Konsultasi cepat & tanya jawab seputar produk via WhatsApp</p>
-                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $page->contact_phone ?? '6289669651907') }}" target="_blank" class="btn btn-outline-success rounded-pill px-4 fw-bold w-100">
-                        <i class="bi bi-whatsapp me-1"></i> +{{ $page->contact_phone ?? '6289669651907' }}
+                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $page->contact_phone ?? '6283878537818') }}" target="_blank" class="btn btn-outline-success rounded-pill px-4 fw-bold w-100">
+                        <i class="bi bi-whatsapp me-1"></i> +{{ $page->contact_phone ?? '6283878537818' }}
                     </a>
                 </div>
             </div>

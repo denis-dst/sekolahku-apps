@@ -1872,7 +1872,7 @@
                         @if($plan->price == 0)
                             <a href="{{ url('/login') }}" class="btn btn-outline">Mulai Gratis</a>
                         @else
-                            <a href="https://wa.me/6289669651907?text={{ rawurlencode('Halo Admin DnD Tech Solutions, saya ingin mendaftar paket ' . $plan->name) }}"
+                            <a href="https://wa.me/6283878537818?text={{ rawurlencode('Halo Admin DnD Tech Solutions, saya ingin mendaftar paket ' . $plan->name) }}"
                                 target="_blank" class="btn {{ $isPopular ? 'btn-primary' : 'btn-outline' }}">
                                 Pilih {{ $plan->name }}
                             </a>
@@ -1899,7 +1899,7 @@
                         <a href="{{ url('/login') }}" class="btn btn-white">
                             <i class="bi bi-rocket-takeoff"></i> Coba Gratis 30 Hari
                         </a>
-                        <a href="https://wa.me/6289669651907" target="_blank" class="btn btn-white">
+                        <a href="https://wa.me/6283878537818" target="_blank" class="btn btn-white">
                             <i class="bi bi-whatsapp"></i> Konsultasi via WhatsApp
                         </a>
                     </div>

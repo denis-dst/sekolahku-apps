@@ -40,4 +40,12 @@ return [
         'url' => env('FONNTE_URL', 'https://api.fonnte.com/send'),
     ],
 
+    'waha' => [
+        'url' => env('WAHA_BASE_URL', 'http://localhost:3000'),
+        'api_key' => env('WAHA_API_KEY'),
+        'session' => env('WAHA_SESSION', 'default'),
+        'sender_phone' => env('WAHA_SENDER_PHONE', '6283878537818'),
+    ],
+
 ];
+

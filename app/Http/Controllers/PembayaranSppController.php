@@ -4,18 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\TagihanSpp;
 use App\Models\PembayaranSpp;
-use App\Services\FonnteService;
+use App\Services\WahaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class PembayaranSppController extends Controller
 {
-    protected FonnteService $fonnte;
+    protected WahaService $waha;
 
-    public function __construct(FonnteService $fonnte)
+    public function __construct(WahaService $waha)
     {
-        $this->fonnte = $fonnte;
+        $this->waha = $waha;
     }
 
     /**
@@ -88,10 +88,10 @@ class PembayaranSppController extends Controller
         if ($request->status_verifikasi === 'Approved') {
             $tagihan->update(['status' => 'Lunas']);
 
-            // Send Fonnte WhatsApp Digital Receipt to Parent
+            // Send WAHA WhatsApp Digital Receipt to Parent
             $siswa = $pembayaran->siswa;
             if ($siswa && $siswa->no_hp_ortu) {
-                $this->fonnte->sendPaymentReceipt(
+                $this->waha->sendPaymentReceipt(
                     $siswa->no_hp_ortu,
                     $siswa->nama_lengkap,
                     $tagihan->bulan . ' ' . $tagihan->tahun,
@@ -101,7 +101,7 @@ class PembayaranSppController extends Controller
                 );
             }
 
-            $msg = 'Pembayaran SPP berhasil disetujui & ditandai Lunas! Bukti via Fonnte WA telah dikirimkan.';
+            $msg = 'Pembayaran SPP berhasil disetujui & ditandai Lunas! Bukti via WhatsApp (WAHA) telah dikirimkan.';
         } else {
             $tagihan->update(['status' => 'Belum Lunas']);
             $msg = 'Pembayaran SPP ditolak dengan alasan: ' . $request->catatan_verifikasi;

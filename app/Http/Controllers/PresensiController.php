@@ -6,17 +6,17 @@ use App\Models\Presensi;
 use App\Models\PresensiLog;
 use App\Models\Rombel;
 use App\Models\Siswa;
-use App\Services\FonnteService;
+use App\Services\WahaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PresensiController extends Controller
 {
-    protected FonnteService $fonnte;
+    protected WahaService $waha;
 
-    public function __construct(FonnteService $fonnte)
+    public function __construct(WahaService $waha)
     {
-        $this->fonnte = $fonnte;
+        $this->waha = $waha;
     }
 
     /**
@@ -93,11 +93,11 @@ class PresensiController extends Controller
                 'ip_address' => $request->ip(),
             ]);
 
-            // Dispatch Fonnte WhatsApp alert to parent if student is Sakit, Izin, Alpa, or Terlambat
+            // Dispatch WAHA WhatsApp alert to parent if student is Sakit, Izin, Alpa, or Terlambat
             if (in_array($status, ['Sakit', 'Izin', 'Alpa', 'Terlambat'])) {
                 $siswa = Siswa::find($siswaId);
                 if ($siswa && $siswa->no_hp_ortu) {
-                    $this->fonnte->sendAbsenceAlert(
+                    $this->waha->sendAbsenceAlert(
                         $siswa->no_hp_ortu,
                         $siswa->nama_lengkap,
                         $tanggal,
@@ -108,7 +108,7 @@ class PresensiController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Presensi kelas berhasil disimpan & pemberitahuan WhatsApp Fonnte telah dikirimkan!');
+        return redirect()->back()->with('success', 'Presensi kelas berhasil disimpan & pemberitahuan WhatsApp WAHA telah dikirimkan!');
     }
 
     /**

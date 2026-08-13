@@ -74,9 +74,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label fw-semibold">Fonnte WhatsApp Token API</label>
-                            <input type="text" name="fonnte_token" class="form-control" placeholder="Masukkan Token Fonnte..." value="{{ old('fonnte_token', $school->fonnte_token) }}">
-                            <small class="text-muted">Token Fonnte digunakan untuk mengirim pesan otomatis presensi & bukti SPP ke WhatsApp orang tua.</small>
+                            <label class="form-label fw-semibold"><i class="bi bi-whatsapp me-1 text-success"></i> WhatsApp WAHA API Token / Key</label>
+                            <input type="text" name="fonnte_token" class="form-control" placeholder="Masukkan API Key WAHA (Opsional)..." value="{{ old('fonnte_token', $school->fonnte_token) }}">
+                            <small class="text-muted">Digunakan untuk otorisasi pengiriman notifikasi presensi & SPP via WAHA HTTP API.</small>
                         </div>
                     </div>
                 </div>
