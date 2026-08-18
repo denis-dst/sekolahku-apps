@@ -10,7 +10,7 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: #0b2518;
+            background: linear-gradient(135deg, #115e59 0%, #0f766e 50%, #0369a1 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -19,24 +19,42 @@
         }
 
         .btn-primary {
-            background-color: #16a34a !important;
-            border-color: #16a34a !important;
+            background-color: #0f766e !important;
+            border-color: #0f766e !important;
+            color: #ffffff !important;
         }
 
         .btn-primary:hover {
-            background-color: #15803d !important;
-            border-color: #15803d !important;
+            background-color: #115e59 !important;
+            border-color: #115e59 !important;
         }
 
         .login-card {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 1.5rem;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 25px 60px rgba(15, 23, 42, 0.35);
             width: 100%;
-            max-width: 440px;
+            max-width: 450px;
             overflow: hidden;
+        }
+
+        .brand-badge {
+            width: 56px;
+            height: 56px;
+            border-radius: 1.25rem;
+            background: linear-gradient(135deg, #0f766e 0%, #0369a1 100%);
+            color: #ffffff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+        }
+
+        .form-control:focus {
+            border-color: #0f766e;
+            box-shadow: 0 0 0 0.25rem rgba(15, 118, 110, 0.15);
         }
 
         .demo-pill {
@@ -47,6 +65,7 @@
 
         .demo-pill:hover {
             transform: translateY(-2px);
+            opacity: 0.9;
         }
     </style>
 </head>
@@ -54,10 +73,10 @@
 
     <div class="login-card p-4 p-sm-5">
         <div class="text-center mb-4">
-            <div class="bg-primary text-white rounded-4 d-inline-flex align-items-center justify-content-center p-3 mb-3 shadow">
+            <div class="brand-badge mb-3">
                 <i class="bi bi-mortarboard-fill fs-2"></i>
             </div>
-            <h3 class="fw-bold text-dark mb-1" style="font-family: 'Outfit';">SekolahKu SaaS</h3>
+            <h3 class="fw-bold mb-1" style="font-family: 'Outfit'; color:#0f172a;">SekolahKu SaaS</h3>
             <p class="text-muted small">SIM Akademik & Digital Finance Sekolah</p>
         </div>
 
@@ -102,12 +121,12 @@
         <div class="border-top pt-3">
             <p class="text-xs text-muted fw-semibold mb-2 text-center" style="font-size:0.75rem;">AKUN DEMO CEPAT (KLIK UNTUK ISI):</p>
             <div class="d-flex flex-wrap gap-1 justify-content-center">
-                <span class="badge bg-dark-subtle text-dark border demo-pill p-2" onclick="setDemo('admin@sekolahku.id')">Superadmin</span>
-                <span class="badge bg-primary-subtle text-primary border demo-pill p-2" onclick="setDemo('headmaster@tknpembina.sch.id')">Kepala Sekolah</span>
-                <span class="badge bg-success-subtle text-success border demo-pill p-2" onclick="setDemo('bendahara@tknpembina.sch.id')">Bendahara</span>
-                <span class="badge bg-info-subtle text-info border demo-pill p-2" onclick="setDemo('guru@tknpembina.sch.id')">Guru Kelas</span>
-                <span class="badge bg-warning-subtle text-warning border demo-pill p-2" onclick="setDemo('ortu@tknpembina.sch.id')">Orang Tua</span>
-                <span class="badge bg-secondary-subtle text-secondary border demo-pill p-2" onclick="setDemo('siswa@tknpembina.sch.id')">Siswa</span>
+                <span class="badge text-white border demo-pill p-2" style="background-color:#0f172a;" onclick="setDemo('admin@sekolahku.id')">Superadmin</span>
+                <span class="badge border demo-pill p-2" style="background-color:#f0fdfa; color:#0f766e; border-color:#ccfbf1!important;" onclick="setDemo('headmaster@tknpembina.sch.id')">Kepala Sekolah</span>
+                <span class="badge border demo-pill p-2" style="background-color:#ecfdf5; color:#047857; border-color:#a7f3d0!important;" onclick="setDemo('bendahara@tknpembina.sch.id')">Bendahara</span>
+                <span class="badge border demo-pill p-2" style="background-color:#f0f9ff; color:#0369a1; border-color:#bae6fd!important;" onclick="setDemo('guru@tknpembina.sch.id')">Guru Kelas</span>
+                <span class="badge border demo-pill p-2" style="background-color:#fffbeb; color:#b45309; border-color:#fde68a!important;" onclick="setDemo('ortu@tknpembina.sch.id')">Orang Tua</span>
+                <span class="badge border demo-pill p-2" style="background-color:#f8fafc; color:#475569; border-color:#e2e8f0!important;" onclick="setDemo('siswa@tknpembina.sch.id')">Siswa</span>
             </div>
         </div>
     </div>
@@ -120,3 +139,4 @@
     </script>
 </body>
 </html>
+
