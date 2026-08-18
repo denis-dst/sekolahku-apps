@@ -11,6 +11,7 @@ use App\Http\Controllers\AnekdotController;
 use App\Http\Controllers\TagihanSppController;
 use App\Http\Controllers\PembayaranSppController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\ExpenseCategoryController;
 use App\Http\Controllers\ERaporController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\Superadmin\SubscriptionPlanController;
@@ -104,6 +105,10 @@ Route::middleware(['auth'])->group(function () {
     // Financial Assistant (BendaharaKu / Talangan & LPJ BOSP)
     Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
     Route::get('/expenses/report', [ExpenseController::class, 'report'])->name('expenses.report');
+    Route::get('/expenses/categories', [ExpenseCategoryController::class, 'index'])->name('expenses.categories.index');
+    Route::post('/expenses/categories', [ExpenseCategoryController::class, 'store'])->name('expenses.categories.store');
+    Route::put('/expenses/categories/{category}', [ExpenseCategoryController::class, 'update'])->name('expenses.categories.update');
+    Route::delete('/expenses/categories/{category}', [ExpenseCategoryController::class, 'destroy'])->name('expenses.categories.destroy');
     Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
     Route::get('/expenses/export-pdf', [ExpenseController::class, 'exportPdf'])->name('expenses.export-pdf');
     Route::get('/expenses/{expense}', [ExpenseController::class, 'show'])->name('expenses.show');

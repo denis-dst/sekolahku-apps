@@ -75,7 +75,10 @@
             <h5 class="fw-bold m-0 text-dark"><i class="bi bi-cash-stack me-2 text-primary"></i>Pencatatan Talangan Pribadi BOSP</h5>
             <small class="text-muted">Kelola pengeluaran operasional talangan pribadi yang akan direimburse melalui dana BOSP</small>
         </div>
-        <div class="d-flex gap-2">
+        <div class="d-flex flex-wrap gap-2">
+            <a href="{{ route('expenses.categories.index') }}" class="btn btn-outline-secondary btn-sm rounded-3 px-3 fw-semibold d-flex align-items-center gap-1">
+                <i class="bi bi-tags"></i> Kategori BOSP
+            </a>
             <a href="{{ route('expenses.report') }}" class="btn btn-outline-danger btn-sm rounded-3 px-3 fw-semibold d-flex align-items-center gap-1">
                 <i class="bi bi-file-earmark-pdf"></i> Rekap Periode & Cetak LPJ
             </a>
