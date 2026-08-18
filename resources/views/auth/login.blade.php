@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Masuk - SekolahKu SaaS Platform</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
@@ -69,6 +72,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="login-card p-4 p-sm-5">
@@ -91,8 +95,10 @@
             <div class="mb-3">
                 <label class="form-label small fw-semibold text-dark">Alamat Email</label>
                 <div class="input-group">
-                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-envelope text-muted"></i></span>
-                    <input type="email" name="email" id="email" class="form-control bg-light border-start-0" placeholder="nama@sekolah.sch.id" required value="{{ old('email', 'admin@sekolahku.id') }}">
+                    <span class="input-group-text bg-light border-end-0"><i
+                            class="bi bi-envelope text-muted"></i></span>
+                    <input type="email" name="email" id="email" class="form-control bg-light border-start-0"
+                        placeholder="nama@sekolah.sch.id" required value="{{ old('email', 'admin@sekolahku.id') }}">
                 </div>
             </div>
 
@@ -102,7 +108,8 @@
                 </div>
                 <div class="input-group">
                     <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock text-muted"></i></span>
-                    <input type="password" name="password" id="password" class="form-control bg-light border-start-0" placeholder="••••••••" required value="password">
+                    <input type="password" name="password" id="password" class="form-control bg-light border-start-0"
+                        placeholder="••••••••" required value="password">
                 </div>
             </div>
 
@@ -119,14 +126,26 @@
         </form>
 
         <div class="border-top pt-3">
-            <p class="text-xs text-muted fw-semibold mb-2 text-center" style="font-size:0.75rem;">AKUN DEMO CEPAT (KLIK UNTUK ISI):</p>
+            <p class="text-xs text-muted fw-semibold mb-2 text-center" style="font-size:0.75rem;">AKUN DEMO CEPAT (KLIK
+                UNTUK ISI):</p>
             <div class="d-flex flex-wrap gap-1 justify-content-center">
-                <span class="badge text-white border demo-pill p-2" style="background-color:#0f172a;" onclick="setDemo('admin@sekolahku.id')">Superadmin</span>
-                <span class="badge border demo-pill p-2" style="background-color:#f0fdfa; color:#0f766e; border-color:#ccfbf1!important;" onclick="setDemo('headmaster@tknpembina.sch.id')">Kepala Sekolah</span>
-                <span class="badge border demo-pill p-2" style="background-color:#ecfdf5; color:#047857; border-color:#a7f3d0!important;" onclick="setDemo('bendahara@tknpembina.sch.id')">Bendahara</span>
-                <span class="badge border demo-pill p-2" style="background-color:#f0f9ff; color:#0369a1; border-color:#bae6fd!important;" onclick="setDemo('guru@tknpembina.sch.id')">Guru Kelas</span>
-                <span class="badge border demo-pill p-2" style="background-color:#fffbeb; color:#b45309; border-color:#fde68a!important;" onclick="setDemo('ortu@tknpembina.sch.id')">Orang Tua</span>
-                <span class="badge border demo-pill p-2" style="background-color:#f8fafc; color:#475569; border-color:#e2e8f0!important;" onclick="setDemo('siswa@tknpembina.sch.id')">Siswa</span>
+                <span class="badge text-white border demo-pill p-2" style="background-color:#0f172a;"
+                    onclick="setDemo('admin@sekolahku.id')">Superadmin</span>
+                <span class="badge border demo-pill p-2"
+                    style="background-color:#f0fdfa; color:#0f766e; border-color:#ccfbf1!important;"
+                    onclick="setDemo('headmaster@tkarridhomandah.sch.id')">Kepala Sekolah</span>
+                <span class="badge border demo-pill p-2"
+                    style="background-color:#ecfdf5; color:#047857; border-color:#a7f3d0!important;"
+                    onclick="setDemo('bendahara@tkarridhomandah.sch.id')">Bendahara</span>
+                <span class="badge border demo-pill p-2"
+                    style="background-color:#f0f9ff; color:#0369a1; border-color:#bae6fd!important;"
+                    onclick="setDemo('guru@tkarridhomandah.sch.id')">Guru Kelas</span>
+                <span class="badge border demo-pill p-2"
+                    style="background-color:#fffbeb; color:#b45309; border-color:#fde68a!important;"
+                    onclick="setDemo('ortu@tkarridhomandah.sch.id')">Orang Tua</span>
+                <span class="badge border demo-pill p-2"
+                    style="background-color:#f8fafc; color:#475569; border-color:#e2e8f0!important;"
+                    onclick="setDemo('siswa@tkarridhomandah.sch.id')">Siswa</span>
             </div>
         </div>
     </div>
@@ -138,5 +157,5 @@
         }
     </script>
 </body>
-</html>
 
+</html>
