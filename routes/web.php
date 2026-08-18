@@ -86,9 +86,14 @@ Route::middleware(['auth'])->group(function () {
 
     // Financial Assistant (BendaharaKu / Talangan & LPJ BOSP)
     Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
+    Route::get('/expenses/report', [ExpenseController::class, 'report'])->name('expenses.report');
     Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
-    Route::post('/expenses/{expense}/status', [ExpenseController::class, 'updateStatus'])->name('expenses.update-status');
     Route::get('/expenses/export-pdf', [ExpenseController::class, 'exportPdf'])->name('expenses.export-pdf');
+    Route::get('/expenses/{expense}', [ExpenseController::class, 'show'])->name('expenses.show');
+    Route::get('/expenses/{expense}/edit', [ExpenseController::class, 'edit'])->name('expenses.edit');
+    Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
+    Route::post('/expenses/{expense}/status', [ExpenseController::class, 'updateStatus'])->name('expenses.update-status');
+    Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
 
     // E-Rapor Engine & PDF Download
     Route::get('/erapor', [ERaporController::class, 'index'])->name('erapor.index');

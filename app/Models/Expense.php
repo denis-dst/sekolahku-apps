@@ -54,4 +54,40 @@ class Expense extends Model
     {
         return $this->hasOne(Reimbursement::class);
     }
+
+    public function getFormattedNominalAttribute(): string
+    {
+        return 'Rp ' . number_format($this->nominal, 0, ',', '.');
+    }
+
+    public function getStatusBadgeAttribute(): array
+    {
+        return match($this->status) {
+            'Dibayar' => [
+                'class' => 'bg-success text-white',
+                'icon' => 'bi-check-circle-fill',
+                'label' => 'Dibayar (Reimburse Selesai)',
+            ],
+            'Disetujui' => [
+                'class' => 'bg-info text-dark',
+                'icon' => 'bi-hand-thumbs-up-fill',
+                'label' => 'Disetujui Kepala Sekolah',
+            ],
+            'Diajukan' => [
+                'class' => 'bg-warning text-dark',
+                'icon' => 'bi-hourglass-split',
+                'label' => 'Diajukan',
+            ],
+            'Ditolak' => [
+                'class' => 'bg-danger text-white',
+                'icon' => 'bi-x-circle-fill',
+                'label' => 'Ditolak',
+            ],
+            default => [
+                'class' => 'bg-secondary text-white',
+                'icon' => 'bi-clock-history',
+                'label' => 'Belum Diajukan',
+            ],
+        };
+    }
 }
