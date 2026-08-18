@@ -78,6 +78,8 @@ Route::middleware(['auth'])->group(function () {
     // Master Data
     Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
     Route::post('/siswa', [SiswaController::class, 'store'])->name('siswa.store');
+    Route::get('/siswa/template-excel', [SiswaController::class, 'downloadTemplate'])->name('siswa.template-excel');
+    Route::post('/siswa/import-excel', [SiswaController::class, 'importExcel'])->name('siswa.import-excel');
 
     Route::get('/guru', [GuruController::class, 'index'])->name('guru.index');
     Route::post('/guru', [GuruController::class, 'store'])->name('guru.store');
