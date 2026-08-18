@@ -88,6 +88,9 @@ Route::middleware(['auth'])->group(function () {
     // Presensi Module (Dual Mode: Guru Morning Entry & Siswa Self-Attendance)
     Route::get('/presensi', [PresensiController::class, 'index'])->name('presensi.index');
     Route::post('/presensi/guru', [PresensiController::class, 'storeGuru'])->name('presensi.guru.store');
+    Route::get('/presensi/rekap', [PresensiController::class, 'rekap'])->name('presensi.rekap');
+    Route::get('/presensi/rekap/pdf', [PresensiController::class, 'exportPdf'])->name('presensi.rekap.pdf');
+    Route::get('/presensi/rekap/csv', [PresensiController::class, 'exportCsv'])->name('presensi.rekap.csv');
     Route::get('/presensi/mandiri', [PresensiController::class, 'showMandiri'])->name('presensi.mandiri');
     Route::post('/presensi/mandiri', [PresensiController::class, 'storeMandiri'])->name('presensi.mandiri.store');
 
