@@ -73,6 +73,11 @@ class School extends Model
         return $this->hasMany(Expense::class);
     }
 
+    public function danaBosps()
+    {
+        return $this->hasMany(DanaBosp::class);
+    }
+
     public function subscriptionPlan()
     {
         return $this->tenant ? $this->tenant->subscriptionPlan() : null;

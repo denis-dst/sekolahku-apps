@@ -4,7 +4,137 @@
 @section('page_title', 'BendaharaKu - Asisten Digital Finance & LPJ BOSP')
 
 @section('content')
-    <!-- KPI Summary Cards -->
+    <!-- Card Informasi Dana BOSP Awal Sesuai Periode -->
+    <div class="card-custom p-4 mb-4 border-top border-4 border-primary shadow-sm" style="background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);">
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-3 pb-3 border-bottom">
+            <div>
+                <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+                    <span class="badge bg-primary px-3 py-1 rounded-pill fw-bold" style="font-size: 0.8rem;">
+                        <i class="bi bi-wallet-fill me-1"></i> {{ $danaBosp->sumber_dana ?? 'BOSP Reguler' }}
+                    </span>
+                    <span class="badge bg-light text-dark border px-3 py-1 rounded-pill fw-semibold" style="font-size: 0.8rem;">
+                        <i class="bi bi-calendar3 me-1 text-primary"></i> Periode: {{ $currentPeriode }} {{ $currentYear }}
+                    </span>
+                    @if($danaBosp && $danaBosp->tanggal_cair)
+                        <span class="badge bg-success-subtle text-success border border-success-subtle px-2.5 py-1 rounded-pill" style="font-size: 0.75rem;">
+                            <i class="bi bi-check-circle me-1"></i> Cair: {{ $danaBosp->tanggal_cair->format('d/m/Y') }}
+                        </span>
+                    @endif
+                </div>
+                <h5 class="fw-bold text-dark m-0">Anggaran & Realisasi Dana BOSP</h5>
+                <small class="text-muted">Pantau dana pencairan awal BOSP, serapan operasional, dan sisa saldo kas sekolah.</small>
+            </div>
+
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+                <!-- Dropdown Pilih Periode BOSP -->
+                <form action="{{ route('expenses.index') }}" method="GET" class="d-flex align-items-center gap-1.5" id="bospPeriodForm">
+                    @if(request('search')) <input type="hidden" name="search" value="{{ request('search') }}"> @endif
+                    @if(request('category_id')) <input type="hidden" name="category_id" value="{{ request('category_id') }}"> @endif
+                    @if(request('status')) <input type="hidden" name="status" value="{{ request('status') }}"> @endif
+
+                    <select name="bosp_year" class="form-select form-select-sm bg-white border fw-semibold" onchange="this.form.submit()" style="width: 95px;">
+                        @for($y = date('Y') + 1; $y >= 2024; $y--)
+                            <option value="{{ $y }}" {{ $currentYear == $y ? 'selected' : '' }}>{{ $y }}</option>
+                        @endfor
+                    </select>
+
+                    <select name="bosp_periode" class="form-select form-select-sm bg-white border fw-semibold" onchange="this.form.submit()" style="min-width: 190px;">
+                        <option value="Tahap 1 (Semester I)" {{ $currentPeriode == 'Tahap 1 (Semester I)' ? 'selected' : '' }}>Tahap 1 (Semester I)</option>
+                        <option value="Tahap 2 (Semester II)" {{ $currentPeriode == 'Tahap 2 (Semester II)' ? 'selected' : '' }}>Tahap 2 (Semester II)</option>
+                        <option value="Triwulan 1" {{ $currentPeriode == 'Triwulan 1' ? 'selected' : '' }}>Triwulan 1 (Jan - Mar)</option>
+                        <option value="Triwulan 2" {{ $currentPeriode == 'Triwulan 2' ? 'selected' : '' }}>Triwulan 2 (Apr - Jun)</option>
+                        <option value="Triwulan 3" {{ $currentPeriode == 'Triwulan 3' ? 'selected' : '' }}>Triwulan 3 (Jul - Sep)</option>
+                        <option value="Triwulan 4" {{ $currentPeriode == 'Triwulan 4' ? 'selected' : '' }}>Triwulan 4 (Okt - Des)</option>
+                        <option value="Tahunan" {{ $currentPeriode == 'Tahunan' ? 'selected' : '' }}>Tahunan (Jan - Des)</option>
+                    </select>
+                </form>
+
+                <button class="btn btn-primary btn-sm rounded-3 fw-bold shadow-sm d-flex align-items-center gap-1" data-bs-toggle="modal" data-bs-target="#bospModal">
+                    <i class="bi bi-pencil-square"></i> {{ $danaBosp ? 'Edit Dana BOSP' : 'Input Dana BOSP Cair' }}
+                </button>
+            </div>
+        </div>
+
+        <!-- 3 Metric Boxes -->
+        <div class="row g-3">
+            <div class="col-12 col-md-4">
+                <div class="p-3 bg-white border rounded-4 shadow-2xs h-100">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <span class="text-muted small fw-semibold text-uppercase" style="font-size: 0.75rem;">Dana BOSP Cair (Awal)</span>
+                        <div class="p-1.5 bg-primary-subtle text-primary rounded-3">
+                            <i class="bi bi-box-arrow-in-down fs-6"></i>
+                        </div>
+                    </div>
+                    <h3 class="fw-bold text-primary m-0">Rp {{ number_format($nominalDanaBosp, 0, ',', '.') }}</h3>
+                    <div class="small text-muted mt-1" style="font-size: 0.78rem;">
+                        @if($danaBosp)
+                            <i class="bi bi-info-circle me-1"></i>{{ $danaBosp->catatan ?: 'Telah dialokasikan untuk operasional sekolah' }}
+                        @else
+                            <span class="text-danger"><i class="bi bi-exclamation-circle me-1"></i>Belum diatur untuk periode ini</span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="p-3 bg-white border rounded-4 shadow-2xs h-100">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <span class="text-muted small fw-semibold text-uppercase" style="font-size: 0.75rem;">Realisasi Belanja Periode Ini</span>
+                        <div class="p-1.5 bg-danger-subtle text-danger rounded-3">
+                            <i class="bi bi-cart-check fs-6"></i>
+                        </div>
+                    </div>
+                    <h3 class="fw-bold text-danger m-0">Rp {{ number_format($realisasiPeriode, 0, ',', '.') }}</h3>
+                    <div class="small text-muted mt-1 d-flex justify-content-between align-items-center" style="font-size: 0.78rem;">
+                        <span>Serapan Anggaran:</span>
+                        <strong class="text-dark">{{ $persentaseSerapan }}%</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="p-3 bg-white border rounded-4 shadow-2xs h-100">
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <span class="text-muted small fw-semibold text-uppercase" style="font-size: 0.75rem;">Sisa Saldo Kas BOSP</span>
+                        <div class="p-1.5 {{ $sisaSaldoBosp >= 0 ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger' }} rounded-3">
+                            <i class="bi bi-safe fs-6"></i>
+                        </div>
+                    </div>
+                    <h3 class="fw-bold {{ $sisaSaldoBosp >= 0 ? 'text-success' : 'text-danger' }} m-0">
+                        Rp {{ number_format($sisaSaldoBosp, 0, ',', '.') }}
+                    </h3>
+                    <div class="small text-muted mt-1" style="font-size: 0.78rem;">
+                        @if($sisaSaldoBosp >= 0)
+                            <span class="text-success"><i class="bi bi-shield-check me-1"></i>Kondisi Kas Aman / Tersedia</span>
+                        @else
+                            <span class="text-danger"><i class="bi bi-shield-exclamation me-1"></i>Defisit (Belanja melebihi dana awal)</span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bar Serapan BOSP -->
+        @if($nominalDanaBosp > 0)
+            <div class="mt-3 pt-2">
+                <div class="d-flex justify-content-between align-items-center small mb-1">
+                    <span class="text-muted" style="font-size: 0.78rem;">Progress Serapan Dana BOSP ({{ $currentPeriode }} {{ $currentYear }}):</span>
+                    <span class="fw-bold text-dark" style="font-size: 0.78rem;">{{ $persentaseSerapan }}% Terpakai</span>
+                </div>
+                <div class="progress" style="height: 9px; border-radius: 10px; background-color: #e2e8f0;">
+                    <div class="progress-bar {{ $persentaseSerapan > 90 ? 'bg-danger' : ($persentaseSerapan > 70 ? 'bg-warning' : 'bg-primary') }}" 
+                         role="progressbar" 
+                         style="width: {{ $persentaseSerapan }}%; border-radius: 10px;" 
+                         aria-valuenow="{{ $persentaseSerapan }}" 
+                         aria-valuemin="0" 
+                         aria-valuemax="100">
+                    </div>
+                </div>
+            </div>
+        @endif
+    </div>
+
+    <!-- KPI Summary Cards (Talangan Status) -->
     <div class="row g-3 mb-4">
         <div class="col-12 col-md-4">
             <div class="card-custom p-3 border-start border-primary border-4">
@@ -316,6 +446,81 @@
                         <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold">
                             <i class="bi bi-check-lg me-1"></i> Simpan Catatan Talangan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Input/Edit Dana BOSP Awal Cair -->
+    <div class="modal fade" id="bospModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content rounded-4 border-0 shadow-lg">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold text-dark">
+                        <i class="bi bi-cash-coin text-primary me-2"></i>{{ $danaBosp ? 'Perbarui Dana BOSP Awal Cair' : 'Input Dana BOSP Awal Cair' }}
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ route('expenses.dana-bosp.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-body p-4">
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <label class="form-label fw-semibold">Tahun Anggaran <span class="text-danger">*</span></label>
+                                <select name="tahun" class="form-select bg-light" required>
+                                    @for($y = date('Y') + 1; $y >= 2024; $y--)
+                                        <option value="{{ $y }}" {{ $currentYear == $y ? 'selected' : '' }}>{{ $y }}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label fw-semibold">Tahap / Periode <span class="text-danger">*</span></label>
+                                <select name="periode" class="form-select bg-light" required>
+                                    <option value="Tahap 1 (Semester I)" {{ $currentPeriode == 'Tahap 1 (Semester I)' ? 'selected' : '' }}>Tahap 1 (Semester I)</option>
+                                    <option value="Tahap 2 (Semester II)" {{ $currentPeriode == 'Tahap 2 (Semester II)' ? 'selected' : '' }}>Tahap 2 (Semester II)</option>
+                                    <option value="Triwulan 1" {{ $currentPeriode == 'Triwulan 1' ? 'selected' : '' }}>Triwulan 1</option>
+                                    <option value="Triwulan 2" {{ $currentPeriode == 'Triwulan 2' ? 'selected' : '' }}>Triwulan 2</option>
+                                    <option value="Triwulan 3" {{ $currentPeriode == 'Triwulan 3' ? 'selected' : '' }}>Triwulan 3</option>
+                                    <option value="Triwulan 4" {{ $currentPeriode == 'Triwulan 4' ? 'selected' : '' }}>Triwulan 4</option>
+                                    <option value="Tahunan" {{ $currentPeriode == 'Tahunan' ? 'selected' : '' }}>Tahunan</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Sumber Dana BOSP <span class="text-danger">*</span></label>
+                                <select name="sumber_dana" class="form-select bg-light" required>
+                                    <option value="BOSP Reguler" {{ ($danaBosp?->sumber_dana == 'BOSP Reguler') ? 'selected' : '' }}>BOSP Reguler (Kemendikbud)</option>
+                                    <option value="BOSP Kinerja" {{ ($danaBosp?->sumber_dana == 'BOSP Kinerja') ? 'selected' : '' }}>BOSP Kinerja</option>
+                                    <option value="BOSP Daerah / BOSDA" {{ ($danaBosp?->sumber_dana == 'BOSP Daerah / BOSDA') ? 'selected' : '' }}>BOSP Daerah / BOSDA</option>
+                                    <option value="BOS Afirmasi" {{ ($danaBosp?->sumber_dana == 'BOS Afirmasi') ? 'selected' : '' }}>BOS Afirmasi</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Nominal Dana Cair Awal (Rp) <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light fw-bold text-muted">Rp</span>
+                                    <input type="text" inputmode="numeric" name="nominal_cair" class="form-control bg-light fw-bold rupiah-input"
+                                        placeholder="50.000.000" value="{{ $danaBosp ? number_format($danaBosp->nominal_cair, 0, ',', '.') : '' }}" required autocomplete="off">
+                                </div>
+                                <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">
+                                    <i class="bi bi-info-circle me-1"></i>Hanya angka tanpa simbol dan huruf (otomatis terformat)
+                                </small>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Tanggal Pencairan / Masuk Rekening</label>
+                                <input type="date" name="tanggal_cair" class="form-control bg-light" value="{{ $danaBosp && $danaBosp->tanggal_cair ? $danaBosp->tanggal_cair->format('Y-m-d') : date('Y-m-d') }}">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Catatan / Keterangan Pencairan</label>
+                                <textarea name="catatan" rows="2" class="form-control bg-light" placeholder="Contoh: Pencairan BOSP Reguler Tahap 1 via Bank Jabar/BJB">{{ $danaBosp?->catatan }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold">
+                            <i class="bi bi-check-lg me-1"></i> Simpan Dana BOSP Cair
                         </button>
                     </div>
                 </form>

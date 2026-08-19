@@ -99,16 +99,27 @@
 <div class="card-custom p-4 mb-4 border-top border-4 border-primary">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
         <div>
-            <span class="badge bg-success-subtle text-success border border-success-subtle fw-bold px-3 py-1.5 mb-2 rounded-pill">
-                PERIODE: {{ strtoupper($periodLabel) }}
-            </span>
+            <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
+                <span class="badge bg-success-subtle text-success border border-success-subtle fw-bold px-3 py-1.5 rounded-pill">
+                    PERIODE: {{ strtoupper($periodLabel) }}
+                </span>
+                @if(isset($danaBosp) && $danaBosp)
+                    <span class="badge bg-primary px-3 py-1.5 rounded-pill">
+                        <i class="bi bi-wallet-fill me-1"></i> Dana Cair: Rp {{ number_format($danaBosp->nominal_cair, 0, ',', '.') }}
+                    </span>
+                    @php $sisa = $danaBosp->nominal_cair - $totalAmount; @endphp
+                    <span class="badge {{ $sisa >= 0 ? 'bg-success' : 'bg-danger' }} px-3 py-1.5 rounded-pill">
+                        Sisa Kas: Rp {{ number_format($sisa, 0, ',', '.') }}
+                    </span>
+                @endif
+            </div>
             <h4 class="fw-bold mb-1 text-dark">Rekapitulasi Talangan Pribadi Dana BOSP</h4>
             <span class="text-muted"><i class="bi bi-building me-1"></i> {{ auth()->user()->school->name }} (NPSN: {{ auth()->user()->school->npsn ?? '-' }})</span>
         </div>
 
         <div class="d-flex align-items-center gap-3">
             <div class="text-md-end">
-                <span class="text-muted small d-block">Total Nominal Periode Ini</span>
+                <span class="text-muted small d-block">Total Realisasi Belanja</span>
                 <h3 class="fw-bold text-success mb-0">Rp {{ number_format($totalAmount, 0, ',', '.') }}</h3>
                 <small class="text-muted">{{ $expenses->count() }} Transaksi Tercatat</small>
             </div>

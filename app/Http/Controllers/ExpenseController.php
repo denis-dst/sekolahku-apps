@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DanaBosp;
 use App\Models\Expense;
 use App\Models\ExpenseCategory;
 use App\Models\ExpenseReceipt;
@@ -17,7 +18,7 @@ use Illuminate\Support\Str;
 class ExpenseController extends Controller
 {
     /**
-     * Display list of expenses with filters and KPI metrics
+     * Display list of expenses with filters, KPI metrics, and Dana BOSP Awal Cair per Period
      */
     public function index(Request $request)
     {
@@ -25,7 +26,7 @@ class ExpenseController extends Controller
         $categories = ExpenseCategory::where('school_id', $schoolId)->get();
 
         $query = Expense::where('school_id', $schoolId)
-            ->with(['user', 'category', 'receipts', 'statusHistories']);
+            ->with(['user:id,name', 'category:id,nama_kategori,kode_bosp', 'receipts', 'statusHistories']);
 
         // Search filter
         if ($request->filled('search')) {
@@ -64,7 +65,130 @@ class ExpenseController extends Controller
         $totalPending = Expense::where('school_id', $schoolId)->whereIn('status', ['Belum Diajukan', 'Diajukan'])->sum('nominal');
         $totalDibayar = Expense::where('school_id', $schoolId)->where('status', 'Dibayar')->sum('nominal');
 
-        return view('expenses.index', compact('categories', 'expenses', 'totalTalangan', 'totalPending', 'totalDibayar'));
+        // BOSP Dana Awal Cair per Periode
+        $currentYear = (int) $request->get('bosp_year', now()->year);
+        $defaultPeriode = (now()->month <= 6) ? 'Tahap 1 (Semester I)' : 'Tahap 2 (Semester II)';
+        $currentPeriode = $request->get('bosp_periode', $defaultPeriode);
+
+        $danaBosp = DanaBosp::where('school_id', $schoolId)
+            ->where('tahun', $currentYear)
+            ->where('periode', $currentPeriode)
+            ->first();
+
+        $allDanaBosps = DanaBosp::where('school_id', $schoolId)
+            ->orderBy('tahun', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        [$startDate, $endDate] = $this->calculatePeriodDates($currentYear, $currentPeriode);
+        $realisasiPeriode = Expense::where('school_id', $schoolId)
+            ->whereBetween('tanggal', [$startDate->toDateString(), $endDate->toDateString()])
+            ->sum('nominal');
+
+        $nominalDanaBosp = $danaBosp ? (float) $danaBosp->nominal_cair : 0;
+        $sisaSaldoBosp = $nominalDanaBosp - $realisasiPeriode;
+        $persentaseSerapan = $nominalDanaBosp > 0 ? min(100, round(($realisasiPeriode / $nominalDanaBosp) * 100, 1)) : 0;
+
+        return view('expenses.index', compact(
+            'categories',
+            'expenses',
+            'totalTalangan',
+            'totalPending',
+            'totalDibayar',
+            'danaBosp',
+            'allDanaBosps',
+            'currentYear',
+            'currentPeriode',
+            'nominalDanaBosp',
+            'realisasiPeriode',
+            'sisaSaldoBosp',
+            'persentaseSerapan',
+            'startDate',
+            'endDate'
+        ));
+    }
+
+    /**
+     * Store / Update Dana BOSP Awal Cair per Periode
+     */
+    public function storeDanaBosp(Request $request)
+    {
+        $schoolId = Auth::user()->school_id;
+
+        if ($request->has('nominal_cair')) {
+            $request->merge(['nominal_cair' => preg_replace('/[^0-9]/', '', (string)$request->nominal_cair)]);
+        }
+
+        $request->validate([
+            'tahun' => 'required|integer|min:2020|max:2099',
+            'periode' => 'required|string',
+            'nominal_cair' => 'required|numeric|min:0',
+            'tanggal_cair' => 'nullable|date',
+            'sumber_dana' => 'required|string|max:100',
+            'catatan' => 'nullable|string|max:500',
+        ]);
+
+        DanaBosp::updateOrCreate(
+            [
+                'school_id' => $schoolId,
+                'tahun' => $request->tahun,
+                'periode' => $request->periode,
+            ],
+            [
+                'nominal_cair' => $request->nominal_cair,
+                'tanggal_cair' => $request->tanggal_cair ?: now(),
+                'sumber_dana' => $request->sumber_dana,
+                'catatan' => $request->catatan,
+            ]
+        );
+
+        return redirect()->route('expenses.index', [
+            'bosp_year' => $request->tahun,
+            'bosp_periode' => $request->periode,
+        ])->with('success', "Informasi Dana BOSP Awal Cair ({$request->periode} {$request->tahun}) sebesar Rp " . number_format($request->nominal_cair, 0, ',', '.') . " berhasil disimpan!");
+    }
+
+    /**
+     * Helper to compute date range from period
+     */
+    protected function calculatePeriodDates(int $year, string $periode): array
+    {
+        if (str_contains($periode, 'Tahap 1') || str_contains($periode, 'Semester I')) {
+            return [
+                Carbon::createFromDate($year, 1, 1)->startOfDay(),
+                Carbon::createFromDate($year, 6, 30)->endOfDay()
+            ];
+        } elseif (str_contains($periode, 'Tahap 2') || str_contains($periode, 'Semester II')) {
+            return [
+                Carbon::createFromDate($year, 7, 1)->startOfDay(),
+                Carbon::createFromDate($year, 12, 31)->endOfDay()
+            ];
+        } elseif (str_contains($periode, 'Triwulan 1')) {
+            return [
+                Carbon::createFromDate($year, 1, 1)->startOfDay(),
+                Carbon::createFromDate($year, 3, 31)->endOfDay()
+            ];
+        } elseif (str_contains($periode, 'Triwulan 2')) {
+            return [
+                Carbon::createFromDate($year, 4, 1)->startOfDay(),
+                Carbon::createFromDate($year, 6, 30)->endOfDay()
+            ];
+        } elseif (str_contains($periode, 'Triwulan 3')) {
+            return [
+                Carbon::createFromDate($year, 7, 1)->startOfDay(),
+                Carbon::createFromDate($year, 9, 30)->endOfDay()
+            ];
+        } elseif (str_contains($periode, 'Triwulan 4')) {
+            return [
+                Carbon::createFromDate($year, 10, 1)->startOfDay(),
+                Carbon::createFromDate($year, 12, 31)->endOfDay()
+            ];
+        } else {
+            return [
+                Carbon::createFromDate($year, 1, 1)->startOfDay(),
+                Carbon::createFromDate($year, 12, 31)->endOfDay()
+            ];
+        }
     }
 
     /**
@@ -361,6 +485,18 @@ class ExpenseController extends Controller
 
         $totalAmount = $expenses->sum('nominal');
 
+        $bospPeriodeName = match($filterType) {
+            'semester' => ($semester == 1 ? 'Tahap 1 (Semester I)' : 'Tahap 2 (Semester II)'),
+            'quarter' => "Triwulan $quarter",
+            'year' => 'Tahunan',
+            default => ($month <= 6 ? 'Tahap 1 (Semester I)' : 'Tahap 2 (Semester II)'),
+        };
+
+        $danaBosp = DanaBosp::where('school_id', $schoolId)
+            ->where('tahun', $year)
+            ->where('periode', $bospPeriodeName)
+            ->first();
+
         return view('expenses.report', compact(
             'expenses',
             'categoryTotals',
@@ -371,7 +507,8 @@ class ExpenseController extends Controller
             'month',
             'quarter',
             'semester',
-            'statusFilter'
+            'statusFilter',
+            'danaBosp'
         ));
     }
 

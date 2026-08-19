@@ -117,6 +117,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Financial Assistant (BendaharaKu / Talangan & LPJ BOSP)
     Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
+    Route::post('/expenses/dana-bosp', [ExpenseController::class, 'storeDanaBosp'])->name('expenses.dana-bosp.store');
     Route::get('/expenses/report', [ExpenseController::class, 'report'])->name('expenses.report');
     Route::get('/expenses/categories', [ExpenseCategoryController::class, 'index'])->name('expenses.categories.index');
     Route::post('/expenses/categories', [ExpenseCategoryController::class, 'store'])->name('expenses.categories.store');
