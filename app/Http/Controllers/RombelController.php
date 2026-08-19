@@ -13,9 +13,9 @@ class RombelController extends Controller
     public function index()
     {
         $schoolId = Auth::user()->school_id;
-        $rombels = Rombel::where('school_id', $schoolId)->with(['waliKelas', 'tahunAjaran', 'siswas'])->get();
-        $gurus = Guru::where('school_id', $schoolId)->get();
-        $tahunAjarans = TahunAjaran::where('school_id', $schoolId)->get();
+        $rombels = Rombel::where('school_id', $schoolId)->with(['waliKelas:id,nama_lengkap', 'tahunAjaran:id,name'])->withCount('siswas')->get();
+        $gurus = Guru::where('school_id', $schoolId)->select('id', 'nama_lengkap')->get();
+        $tahunAjarans = TahunAjaran::where('school_id', $schoolId)->select('id', 'name')->get();
 
         return view('rombel.index', compact('rombels', 'gurus', 'tahunAjarans'));
     }

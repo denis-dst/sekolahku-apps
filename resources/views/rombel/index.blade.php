@@ -32,7 +32,7 @@
                         <td><span class="badge bg-primary">{{ $r->tingkat }}</span></td>
                         <td>{{ $r->tahunAjaran->name ?? '-' }}</td>
                         <td>{{ $r->waliKelas->nama_lengkap ?? 'Belum Ditentukan' }}</td>
-                        <td><span class="badge bg-secondary">{{ $r->siswas->count() }} Siswa</span></td>
+                        <td><span class="badge bg-secondary">{{ $r->siswas_count ?? $r->siswas->count() }} Siswa</span></td>
                     </tr>
                 @empty
                     <tr>

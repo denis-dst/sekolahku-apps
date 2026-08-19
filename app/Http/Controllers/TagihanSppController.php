@@ -55,18 +55,23 @@ class TagihanSppController extends Controller
             return redirect()->back()->with('error', 'Tahun ajaran aktif belum dikonfigurasi.');
         }
 
-        $siswas = Siswa::where('school_id', $schoolId)->where('status', 'Aktif')->get();
+        $siswas = Siswa::where('school_id', $schoolId)->where('status', 'Aktif')->get(['id']);
+        
+        $existingSiswaIds = TagihanSpp::where('school_id', $schoolId)
+            ->where('bulan', $request->bulan)
+            ->where('tahun', $request->tahun)
+            ->pluck('siswa_id')
+            ->flip()
+            ->all();
+
         $count = 0;
+        $now = now();
+        $jatuhTempo = $now->copy()->addDays(10);
+        $newRecords = [];
 
         foreach ($siswas as $siswa) {
-            $existing = TagihanSpp::where('school_id', $schoolId)
-                ->where('siswa_id', $siswa->id)
-                ->where('bulan', $request->bulan)
-                ->where('tahun', $request->tahun)
-                ->exists();
-
-            if (!$existing) {
-                TagihanSpp::create([
+            if (!isset($existingSiswaIds[$siswa->id])) {
+                $newRecords[] = [
                     'school_id' => $schoolId,
                     'siswa_id' => $siswa->id,
                     'tahun_ajaran_id' => $activeTa->id,
@@ -76,9 +81,18 @@ class TagihanSppController extends Controller
                     'potongan' => 0,
                     'total_tagihan' => $request->nominal,
                     'status' => 'Belum Lunas',
-                    'jatuh_tempo' => now()->addDays(10),
-                ]);
+                    'jatuh_tempo' => $jatuhTempo,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ];
                 $count++;
+            }
+        }
+
+        if (!empty($newRecords)) {
+            // Bulk insert in chunks of 200 for optimal performance
+            foreach (array_chunk($newRecords, 200) as $chunk) {
+                TagihanSpp::insert($chunk);
             }
         }
 

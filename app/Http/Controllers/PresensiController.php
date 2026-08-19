@@ -75,13 +75,18 @@ class PresensiController extends Controller
         $rombelId = $request->rombel_id;
         $tanggal = $request->tanggal;
 
-        DB::transaction(function () use ($request, $school, $user, $rombelId, $tanggal) {
-            foreach ($request->presensi as $siswaId => $status) {
-                $existing = Presensi::where('school_id', $school->id)
-                    ->where('siswa_id', $siswaId)
-                    ->where('tanggal', $tanggal)
-                    ->first();
+        $siswaIds = array_keys($request->presensi);
+        $existingPresensis = Presensi::where('school_id', $school->id)
+            ->whereIn('siswa_id', $siswaIds)
+            ->where('tanggal', $tanggal)
+            ->get()
+            ->keyBy('siswa_id');
 
+        $siswas = Siswa::whereIn('id', $siswaIds)->get()->keyBy('id');
+
+        DB::transaction(function () use ($request, $school, $user, $rombelId, $tanggal, $existingPresensis, $siswas) {
+            foreach ($request->presensi as $siswaId => $status) {
+                $existing = $existingPresensis->get($siswaId);
                 $statusLama = $existing ? $existing->status : null;
                 $catatan = $request->catatan[$siswaId] ?? null;
 
@@ -113,7 +118,7 @@ class PresensiController extends Controller
 
                 // Dispatch WhatsApp alert to parent if student is Sakit, Izin, Alpa, or Terlambat
                 if (in_array($status, ['Sakit', 'Izin', 'Alpa', 'Terlambat']) && $statusLama !== $status) {
-                    $siswa = Siswa::find($siswaId);
+                    $siswa = $siswas->get($siswaId);
                     if ($siswa && $siswa->no_hp_ortu) {
                         $this->waha->sendAbsenceAlert(
                             $siswa->no_hp_ortu,
@@ -361,30 +366,25 @@ class PresensiController extends Controller
             ->where('rombel_id', $rombelId)
             ->where('status', 'Aktif')
             ->orderBy('nama_lengkap', 'asc')
-            ->get();
+            ->get(['id', 'nisn', 'nama_lengkap', 'jenis_kelamin']);
 
-        $stats = Presensi::select('siswa_id', 'status', DB::raw('count(*) as count'))
-            ->where('school_id', $schoolId)
+        $presensisBySiswa = Presensi::where('school_id', $schoolId)
             ->where('rombel_id', $rombelId)
             ->whereYear('tanggal', $year)
             ->whereMonth('tanggal', $month)
-            ->groupBy('siswa_id', 'status')
-            ->get();
+            ->get(['siswa_id', 'tanggal', 'status'])
+            ->groupBy('siswa_id');
 
-        $details = Presensi::where('school_id', $schoolId)
-            ->where('rombel_id', $rombelId)
-            ->whereYear('tanggal', $year)
-            ->whereMonth('tanggal', $month)
-            ->get(['siswa_id', 'tanggal', 'status']);
+        return $siswas->map(function ($s) use ($presensisBySiswa) {
+            $studentPresensis = $presensisBySiswa->get($s->id, collect());
 
-        return $siswas->map(function ($s) use ($stats, $details) {
-            $sHadir = $stats->where('siswa_id', $s->id)->where('status', 'Hadir')->first()?->count ?? 0;
-            $sSakit = $stats->where('siswa_id', $s->id)->where('status', 'Sakit')->first()?->count ?? 0;
-            $sIzin = $stats->where('siswa_id', $s->id)->where('status', 'Izin')->first()?->count ?? 0;
-            $sAlpa = $stats->where('siswa_id', $s->id)->where('status', 'Alpa')->first()?->count ?? 0;
-            $sTerlambat = $stats->where('siswa_id', $s->id)->where('status', 'Terlambat')->first()?->count ?? 0;
+            $sHadir = $studentPresensis->where('status', 'Hadir')->count();
+            $sSakit = $studentPresensis->where('status', 'Sakit')->count();
+            $sIzin = $studentPresensis->where('status', 'Izin')->count();
+            $sAlpa = $studentPresensis->where('status', 'Alpa')->count();
+            $sTerlambat = $studentPresensis->where('status', 'Terlambat')->count();
 
-            $sDetails = $details->where('siswa_id', $s->id)->mapWithKeys(function ($item) {
+            $sDetails = $studentPresensis->mapWithKeys(function ($item) {
                 return [$item->tanggal->format('Y-m-d') => $item->status];
             })->all();
 

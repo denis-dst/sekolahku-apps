@@ -30,7 +30,7 @@ class AnekdotController extends Controller
         }
 
         $anekdots = $query->latest()->paginate(10);
-        $siswas = Siswa::where('school_id', $schoolId)->where('status', 'Aktif')->get();
+        $siswas = Siswa::where('school_id', $schoolId)->where('status', 'Aktif')->select('id', 'nama_lengkap', 'rombel_id')->with('rombel:id,nama_rombel')->orderBy('nama_lengkap')->get();
 
         return view('anekdot.index', compact('anekdots', 'siswas'));
     }
