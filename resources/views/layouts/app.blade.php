@@ -262,6 +262,8 @@
             background-color: #f8fafc;
             border-color: var(--sk-border);
             opacity: 0.7;
+        }
+
         .top-navbar-header {
             padding-bottom: 0.85rem;
             margin-bottom: 1.5rem;
@@ -321,16 +323,17 @@
 
         @media (max-width: 991.98px) {
             .sidebar {
-                margin-left: -260px;
-                z-index: 1050;
+                margin-left: -260px !important;
+                z-index: 1050 !important;
+                box-shadow: none;
             }
             .main-content {
-                margin-left: 0;
-                padding: 1rem 0.85rem;
+                margin-left: 0 !important;
+                padding: 1rem 0.85rem !important;
             }
             .sidebar.show {
-                margin-left: 0;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+                margin-left: 0 !important;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.25) !important;
             }
             .sidebar-backdrop.show {
                 display: block;
@@ -344,14 +347,23 @@
     <aside class="sidebar">
         <div class="sidebar-wrapper">
             <!-- Brand Header -->
-            <div class="p-3 d-flex align-items-center gap-3 border-bottom border-slate-100 mb-2">
-                <div class="sidebar-brand-mark">
-                    <i class="bi bi-mortarboard-fill fs-5"></i>
+            <div class="p-3 d-flex align-items-center justify-content-between border-bottom border-slate-100 mb-2">
+                <div class="d-flex align-items-center gap-2.5">
+                    <div class="sidebar-brand-mark">
+                        <i class="bi bi-mortarboard-fill fs-5"></i>
+                    </div>
+                    <div>
+                        <h5 class="m-0 fw-bold" style="font-size:1.05rem; color:#0f172a;">SekolahKu</h5>
+                        <small class="text-xs" style="font-size:0.72rem; color:#64748b;">SaaS SIM & Finance</small>
+                    </div>
                 </div>
-                <div>
-                    <h5 class="m-0 fw-bold" style="font-size:1.05rem; color:#0f172a;">SekolahKu</h5>
-                    <small class="text-xs" style="font-size:0.72rem; color:#64748b;">SaaS SIM & Finance</small>
-                </div>
+                <button class="btn btn-sm btn-light border d-lg-none rounded-circle d-flex align-items-center justify-content-center" 
+                        type="button" 
+                        onclick="toggleSidebar()" 
+                        aria-label="Tutup Menu"
+                        style="width: 32px; height: 32px;">
+                    <i class="bi bi-x-lg text-secondary" style="font-size: 0.8rem;"></i>
+                </button>
             </div>
 
             <div class="sidebar-section-title">
