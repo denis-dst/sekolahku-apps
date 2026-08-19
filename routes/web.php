@@ -36,6 +36,8 @@ Route::get('/hubungi-kami', [PageController::class, 'contact'])->name('pages.con
 // Auth Routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Protected Routes
@@ -53,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/subscriptions', [TenantSubscriptionController::class, 'index'])->name('subscriptions.index');
         Route::put('/subscriptions/{tenant}', [TenantSubscriptionController::class, 'update'])->name('subscriptions.update');
+        Route::post('/subscriptions/{tenant}/approve', [TenantSubscriptionController::class, 'approve'])->name('subscriptions.approve');
         Route::post('/subscriptions/{tenant}/toggle', [TenantSubscriptionController::class, 'toggleStatus'])->name('subscriptions.toggle');
 
         Route::get('/pages', [PageManagementController::class, 'index'])->name('pages.index');
@@ -70,6 +73,11 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/roles', [\App\Http\Controllers\Superadmin\RolePermissionController::class, 'storeRole'])->name('roles.store');
         Route::post('/permissions', [\App\Http\Controllers\Superadmin\RolePermissionController::class, 'storePermission'])->name('permissions.store');
     });
+
+    // Multi-School Management for Foundation / Yayasan Admin
+    Route::get('/schools', [\App\Http\Controllers\TenantSchoolController::class, 'index'])->name('schools.index');
+    Route::post('/schools', [\App\Http\Controllers\TenantSchoolController::class, 'store'])->name('schools.store');
+    Route::post('/schools/{school}/switch', [\App\Http\Controllers\TenantSchoolController::class, 'switchSchool'])->name('schools.switch');
 
     // School Profile & QRIS Settings
     Route::get('/settings/school', [SchoolSettingsController::class, 'edit'])->name('settings.school.edit');

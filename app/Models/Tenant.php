@@ -43,7 +43,7 @@ class Tenant extends Model
 
     public function isSubscriptionActive(): bool
     {
-        if ($this->subscription_status === 'suspended') {
+        if (in_array($this->subscription_status, ['suspended', 'pending'])) {
             return false;
         }
 
@@ -52,6 +52,20 @@ class Tenant extends Model
         }
 
         return true;
+    }
+
+    public function canAddSchool(): bool
+    {
+        if (!$this->isSubscriptionActive()) {
+            return false;
+        }
+
+        $plan = $this->subscriptionPlan;
+        if (!$plan || $plan->max_schools == 0) {
+            return true; // Unlimited
+        }
+
+        return $this->schools()->count() < $plan->max_schools;
     }
 
     public function hasFeature(string $featureKey): bool

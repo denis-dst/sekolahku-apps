@@ -77,12 +77,33 @@
 
     <div class="login-card p-4 p-sm-5">
         <div class="text-center mb-4">
-            <div class="brand-badge mb-3">
-                <i class="bi bi-mortarboard-fill fs-2"></i>
-            </div>
-            <h3 class="fw-bold mb-1" style="font-family: 'Outfit'; color:#0f172a;">SekolahKu SaaS</h3>
+            <a href="{{ url('/') }}" class="text-decoration-none">
+                <div class="brand-badge mb-3">
+                    <i class="bi bi-mortarboard-fill fs-2"></i>
+                </div>
+                <h3 class="fw-bold mb-1" style="font-family: 'Outfit'; color:#0f172a;">SekolahKu SaaS</h3>
+            </a>
             <p class="text-muted small">SIM Akademik & Digital Finance Sekolah</p>
         </div>
+
+        @if(session('success'))
+            <div class="alert alert-success rounded-3 small py-2.5 mb-3 d-flex align-items-center gap-2">
+                <i class="bi bi-check-circle-fill fs-5"></i>
+                <div>{{ session('success') }}</div>
+            </div>
+        @endif
+
+        @if(session('success_pending'))
+            <div class="alert alert-warning rounded-3 small py-3 mb-3 border-warning">
+                <div class="d-flex align-items-start gap-2">
+                    <i class="bi bi-hourglass-split fs-5 text-warning"></i>
+                    <div>
+                        <strong class="d-block mb-1 text-dark">Pendaftaran Berhasil!</strong>
+                        <span class="text-muted">{{ session('success_pending') }}</span>
+                    </div>
+                </div>
+            </div>
+        @endif
 
         @if($errors->any())
             <div class="alert alert-danger rounded-3 small py-2 mb-3">
@@ -98,7 +119,7 @@
                     <span class="input-group-text bg-light border-end-0"><i
                             class="bi bi-envelope text-muted"></i></span>
                     <input type="email" name="email" id="email" class="form-control bg-light border-start-0"
-                        placeholder="nama@sekolah.sch.id" required value="{{ old('email', 'admin@sekolahku.id') }}">
+                        placeholder="nama@sekolah.sch.id" required value="{{ old('email') }}">
                 </div>
             </div>
 
@@ -109,7 +130,7 @@
                 <div class="input-group">
                     <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock text-muted"></i></span>
                     <input type="password" name="password" id="password" class="form-control bg-light border-start-0"
-                        placeholder="••••••••" required value="password">
+                        placeholder="••••••••" required>
                 </div>
             </div>
 
@@ -120,42 +141,18 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary w-100 py-2.5 rounded-3 fw-semibold shadow-sm mb-4">
+            <button type="submit" class="btn btn-primary w-100 py-2.5 rounded-3 fw-semibold shadow-sm mb-3">
                 Masuk ke Sistem <i class="bi bi-arrow-right ms-1"></i>
             </button>
         </form>
 
-        <div class="border-top pt-3">
-            <p class="text-xs text-muted fw-semibold mb-2 text-center" style="font-size:0.75rem;">AKUN DEMO CEPAT (KLIK
-                UNTUK ISI):</p>
-            <div class="d-flex flex-wrap gap-1 justify-content-center">
-                <span class="badge text-white border demo-pill p-2" style="background-color:#0f172a;"
-                    onclick="setDemo('admin@sekolahku.id')">Superadmin</span>
-                <span class="badge border demo-pill p-2"
-                    style="background-color:#f0fdfa; color:#0f766e; border-color:#ccfbf1!important;"
-                    onclick="setDemo('headmaster@tkarridhomandah.sch.id')">Kepala Sekolah</span>
-                <span class="badge border demo-pill p-2"
-                    style="background-color:#ecfdf5; color:#047857; border-color:#a7f3d0!important;"
-                    onclick="setDemo('bendahara@tkarridhomandah.sch.id')">Bendahara</span>
-                <span class="badge border demo-pill p-2"
-                    style="background-color:#f0f9ff; color:#0369a1; border-color:#bae6fd!important;"
-                    onclick="setDemo('guru@tkarridhomandah.sch.id')">Guru Kelas</span>
-                <span class="badge border demo-pill p-2"
-                    style="background-color:#fffbeb; color:#b45309; border-color:#fde68a!important;"
-                    onclick="setDemo('ortu@tkarridhomandah.sch.id')">Orang Tua</span>
-                <span class="badge border demo-pill p-2"
-                    style="background-color:#f8fafc; color:#475569; border-color:#e2e8f0!important;"
-                    onclick="setDemo('siswa@tkarridhomandah.sch.id')">Siswa</span>
-            </div>
+        <div class="border-top pt-3 text-center">
+            <span class="text-muted small">Belum mendaftarkan Yayasan / Sekolah Anda?</span>
+            <a href="{{ route('register') }}" class="d-block fw-bold text-decoration-none mt-1" style="color: #0f766e;">
+                <i class="bi bi-building-add me-1"></i> Daftar Sekolah / Yayasan Baru
+            </a>
         </div>
     </div>
-
-    <script>
-        function setDemo(email) {
-            document.getElementById('email').value = email;
-            document.getElementById('password').value = 'password';
-        }
-    </script>
 </body>
 
 </html>

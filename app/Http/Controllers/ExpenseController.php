@@ -72,6 +72,10 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->has('nominal')) {
+            $request->merge(['nominal' => preg_replace('/[^0-9]/', '', (string)$request->nominal)]);
+        }
+
         $request->validate([
             'expense_category_id' => 'required|exists:expense_categories,id',
             'tanggal' => 'required|date',
@@ -156,6 +160,10 @@ class ExpenseController extends Controller
     {
         $schoolId = Auth::user()->school_id;
         $expense = Expense::where('school_id', $schoolId)->findOrFail($id);
+
+        if ($request->has('nominal')) {
+            $request->merge(['nominal' => preg_replace('/[^0-9]/', '', (string)$request->nominal)]);
+        }
 
         $request->validate([
             'expense_category_id' => 'required|exists:expense_categories,id',

@@ -342,6 +342,15 @@
                     </a>
                 @endif
 
+                @if(Auth::user()->hasRole('Superadmin') || Auth::user()->hasRole('Yayasan Admin') || Auth::user()->can('manage-yayasan'))
+                    <div class="sidebar-section-title mt-2" style="color:#6d28d9;">
+                        YAYASAN & MULTI-UNIT
+                    </div>
+                    <a class="nav-link {{ request()->is('schools*') ? 'active' : '' }}" href="{{ route('schools.index') }}">
+                        <i class="bi bi-diagram-3-fill"></i> Unit Sekolah Yayasan
+                    </a>
+                @endif
+
                 @role('Superadmin')
                     <div class="sidebar-section-title mt-2" style="color:#b45309;">
                         SUPERADMIN SAAS

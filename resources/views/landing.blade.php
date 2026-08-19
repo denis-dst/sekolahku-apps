@@ -1484,8 +1484,8 @@
             </ul>
 
             <div class="navbar-cta">
-                <a href="{{ url('/login') }}" class="btn btn-outline btn-sm">Masuk</a>
-                <a href="#harga" class="btn btn-primary btn-sm">Coba Gratis</a>
+                <a href="{{ route('login') }}" class="btn btn-outline btn-sm">Masuk</a>
+                <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Daftar Sekolah</a>
                 <button class="hamburger" onclick="document.querySelector('.navbar-links').classList.toggle('show')"
                     aria-label="Menu">
                     <span></span><span></span><span></span>
@@ -1512,11 +1512,11 @@
                     platform terpadu — mudah, cepat, dan terkoneksi WhatsApp.</p>
 
                 <div class="hero-actions">
-                    <a href="#harga" class="btn btn-primary">
-                        <i class="bi bi-rocket-takeoff"></i> Mulai Gratis 30 Hari
+                    <a href="{{ route('register') }}" class="btn btn-primary">
+                        <i class="bi bi-building-add"></i> Daftar Sekolah / Yayasan
                     </a>
                     <a href="#fitur" class="btn btn-outline">
-                        <i class="bi bi-play-circle"></i> Lihat Demo
+                        <i class="bi bi-grid-fill"></i> Jelajahi Fitur
                     </a>
                 </div>
 
@@ -1869,14 +1869,10 @@
                             @endforeach
                         </ul>
 
-                        @if($plan->price == 0)
-                            <a href="{{ url('/login') }}" class="btn btn-outline">Mulai Gratis</a>
-                        @else
-                            <a href="https://wa.me/6283878537818?text={{ rawurlencode('Halo Admin DnD Tech Solutions, saya ingin mendaftar paket ' . $plan->name) }}"
-                                target="_blank" class="btn {{ $isPopular ? 'btn-primary' : 'btn-outline' }}">
-                                Pilih {{ $plan->name }}
-                            </a>
-                        @endif
+                        <a href="{{ route('register', ['plan' => $plan->code]) }}"
+                            class="btn {{ $isPopular ? 'btn-primary' : 'btn-outline' }}">
+                            <i class="bi bi-check2-circle me-1"></i> Pilih {{ $plan->name }}
+                        </a>
                     </div>
                 @empty
                     <div class="col-12 text-center text-muted py-4">Belum ada paket langganan yang diatur oleh Superadmin.
@@ -1896,8 +1892,8 @@
                     <p>Bergabung bersama 500+ sekolah yang sudah mempercayakan manajemen operasional mereka pada
                         SekolahKu-Apps.</p>
                     <div class="cta-actions">
-                        <a href="{{ url('/login') }}" class="btn btn-white">
-                            <i class="bi bi-rocket-takeoff"></i> Coba Gratis 30 Hari
+                        <a href="{{ route('register') }}" class="btn btn-white">
+                            <i class="bi bi-building-add"></i> Daftar Sekolah Sekarang
                         </a>
                         <a href="https://wa.me/6283878537818" target="_blank" class="btn btn-white">
                             <i class="bi bi-whatsapp"></i> Konsultasi via WhatsApp

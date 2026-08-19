@@ -50,7 +50,13 @@
 
                     <div class="col-12 col-sm-6">
                         <label for="nominal" class="form-label fw-semibold text-secondary">Nominal Talangan (Rp) <span class="text-danger">*</span></label>
-                        <input type="number" name="nominal" id="nominal" class="form-control bg-light fw-bold" value="{{ old('nominal', $expense->nominal) }}" required min="1" step="100">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light fw-bold text-muted">Rp</span>
+                            <input type="text" inputmode="numeric" name="nominal" id="nominal" class="form-control bg-light fw-bold rupiah-input" value="{{ old('nominal', number_format($expense->nominal, 0, ',', '.')) }}" required autocomplete="off">
+                        </div>
+                        <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">
+                            <i class="bi bi-info-circle me-1"></i>Hanya angka tanpa simbol dan huruf
+                        </small>
                     </div>
                 </div>
 
@@ -86,4 +92,30 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function formatRupiah(value) {
+            let numberString = value.replace(/[^,\d]/g, '').toString();
+            let split = numberString.split(',');
+            let sisa = split[0].length % 3;
+            let rupiah = split[0].substr(0, sisa);
+            let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                let separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return rupiah;
+        }
+
+        document.querySelectorAll('.rupiah-input').forEach(function(input) {
+            input.addEventListener('input', function() {
+                this.value = formatRupiah(this.value);
+            });
+        });
+    });
+</script>
 @endsection

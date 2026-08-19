@@ -30,17 +30,18 @@ class TenantSubscriptionController extends Controller
             });
         }
 
-        $tenants = $query->paginate(15);
+        $tenants = $query->latest()->paginate(15);
         $plans = SubscriptionPlan::where('is_active', true)->get();
+        $pendingCount = Tenant::where('subscription_status', 'pending')->count();
 
-        return view('superadmin.subscriptions.index', compact('tenants', 'plans'));
+        return view('superadmin.subscriptions.index', compact('tenants', 'plans', 'pendingCount'));
     }
 
     public function update(Request $request, Tenant $tenant)
     {
         $request->validate([
             'subscription_plan_id' => 'required|exists:subscription_plans,id',
-            'subscription_status' => 'required|in:active,expired,suspended',
+            'subscription_status' => 'required|in:active,expired,suspended,pending',
             'duration_months' => 'nullable|integer|min:0',
             'custom_expires_at' => 'nullable|date',
             'notes' => 'nullable|string',
@@ -68,6 +69,27 @@ class TenantSubscriptionController extends Controller
         ]);
 
         return redirect()->route('admin.subscriptions.index')->with('success', 'Langganan untuk sekolah/tenant ' . $tenant->name . ' berhasil diperbarui ke paket ' . $plan->name . '!');
+    }
+
+    public function approve(Request $request, Tenant $tenant)
+    {
+        $request->validate([
+            'duration_months' => 'nullable|integer|min:1',
+            'notes' => 'nullable|string',
+        ]);
+
+        $durationMonths = (int) ($request->duration_months ?: 1);
+        $expiresAt = now()->addMonths($durationMonths);
+        $plan = $tenant->subscriptionPlan ?: SubscriptionPlan::where('code', 'pro')->first();
+
+        $tenant->update([
+            'subscription_status' => 'active',
+            'subscribed_at' => now(),
+            'subscription_expires_at' => $expiresAt,
+            'notes' => $request->notes ?: ('Disetujui (ACC) oleh Superadmin pada ' . now()->format('d/m/Y H:i') . ' (Durasi: ' . $durationMonths . ' Bulan)'),
+        ]);
+
+        return redirect()->route('admin.subscriptions.index')->with('success', 'Pendaftaran & Lisensi ' . ($plan?->name ?? 'Pro') . ' untuk Yayasan/Sekolah ' . $tenant->name . ' berhasil di-ACC dan diaktifkan selama ' . $durationMonths . ' bulan!');
     }
 
     public function toggleStatus(Tenant $tenant)
