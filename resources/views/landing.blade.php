@@ -153,15 +153,15 @@
         }
 
         .btn-primary {
-            background: var(--green-600);
+            background: var(--green-700);
             color: var(--white);
-            box-shadow: var(--shadow-green);
+            box-shadow: 0 4px 12px rgba(21, 128, 61, 0.25);
         }
 
         .btn-primary:hover {
-            background: var(--green-700);
+            background: var(--green-800);
             transform: translateY(-2px);
-            box-shadow: 0 14px 35px -5px rgba(22, 163, 74, 0.35);
+            box-shadow: 0 14px 35px -5px rgba(21, 128, 61, 0.35);
         }
 
         .btn-outline {
@@ -248,7 +248,7 @@
         }
 
         .navbar-brand-text span {
-            color: var(--green-600);
+            color: var(--green-700);
         }
 
         .navbar-links {
@@ -378,14 +378,14 @@
         }
 
         .hero h1 .highlight {
-            color: var(--green-600);
+            color: var(--green-700);
             background: none;
-            -webkit-text-fill-color: var(--green-600);
+            -webkit-text-fill-color: var(--green-700);
         }
 
         .hero p {
             font-size: 1.1rem;
-            color: var(--gray-500);
+            color: var(--gray-600);
             line-height: 1.7;
             margin-bottom: 36px;
             max-width: 500px;
@@ -632,8 +632,8 @@
         .trusted-label {
             text-align: center;
             font-size: 0.82rem;
-            font-weight: 600;
-            color: var(--gray-400);
+            font-weight: 700;
+            color: var(--gray-600);
             text-transform: uppercase;
             letter-spacing: 0.1em;
             margin-bottom: 28px;
@@ -651,18 +651,19 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            color: var(--gray-300);
+            color: var(--gray-600);
             font-weight: 700;
             font-size: 1rem;
             transition: color 0.3s;
         }
 
-        .trusted-item:hover {
-            color: var(--green-600);
+        .trusted-item i {
+            color: var(--green-700);
+            font-size: 1.6rem;
         }
 
-        .trusted-item i {
-            font-size: 1.6rem;
+        .trusted-item:hover {
+            color: var(--green-800);
         }
 
         /* ========== FEATURES SECTION ========== */
@@ -1511,6 +1512,9 @@
         </div>
     </nav>
 
+    <!-- ====== MAIN CONTENT ====== -->
+    <main id="main-content">
+
     <!-- ====== HERO ====== -->
     <section class="hero" id="hero">
         <div class="container">
@@ -1721,25 +1725,25 @@
             <div class="how-steps">
                 <div class="how-step animate-on-scroll">
                     <div class="how-step-number">1</div>
-                    <h4>Daftar & Buat Profil</h4>
+                    <h3 class="how-step-title">Daftar & Buat Profil</h3>
                     <p>Daftarkan sekolah Anda, isi profil, upload QRIS, dan atur tahun ajaran aktif.</p>
                 </div>
 
                 <div class="how-step animate-on-scroll">
                     <div class="how-step-number">2</div>
-                    <h4>Input Data Master</h4>
+                    <h3 class="how-step-title">Input Data Master</h3>
                     <p>Tambahkan data siswa, guru, dan buat rombongan belajar — bisa import dari Excel.</p>
                 </div>
 
                 <div class="how-step animate-on-scroll">
                     <div class="how-step-number">3</div>
-                    <h4>Operasional Harian</h4>
+                    <h3 class="how-step-title">Operasional Harian</h3>
                     <p>Presensi digital setiap pagi, catat talangan, dan kelola tagihan SPP bulanan.</p>
                 </div>
 
                 <div class="how-step animate-on-scroll">
                     <div class="how-step-number">4</div>
-                    <h4>Unduh Laporan</h4>
+                    <h3 class="how-step-title">Unduh Laporan</h3>
                     <p>Cetak E-Rapor, Rekap LPJ BOSP, dan laporan kehadiran dalam satu klik.</p>
                 </div>
             </div>
@@ -1920,6 +1924,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <!-- ====== FOOTER ====== -->
     <footer class="footer">
@@ -1942,7 +1947,7 @@
                 </div>
 
                 <div>
-                    <h4 class="footer-heading">Produk</h4>
+                    <h3 class="footer-heading">Produk</h3>
                     <ul class="footer-links">
                         <li><a href="#fitur">Fitur Lengkap</a></li>
                         <li><a href="#harga">Harga & Paket</a></li>
@@ -1952,7 +1957,7 @@
                 </div>
 
                 <div>
-                    <h4 class="footer-heading">Perusahaan</h4>
+                    <h3 class="footer-heading">Perusahaan</h3>
                     <ul class="footer-links">
                         <li><a href="{{ route('pages.about') }}">Tentang Kami</a></li>
                         <li><a href="{{ route('pages.contact') }}">Hubungi Kami</a></li>
@@ -1960,7 +1965,7 @@
                 </div>
 
                 <div>
-                    <h4 class="footer-heading">Dukungan</h4>
+                    <h3 class="footer-heading">Dukungan</h3>
                     <ul class="footer-links">
                         <li><a href="#">Pusat Bantuan</a></li>
                         <li><a href="#">Dokumentasi API</a></li>

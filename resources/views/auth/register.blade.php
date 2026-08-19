@@ -147,13 +147,13 @@
 </head>
 
 <body>
-    <div class="container" style="max-width: 960px;">
+    <main id="main-content" class="container" style="max-width: 960px;">
         <div class="text-center mb-4">
             <a href="{{ url('/') }}" class="brand-logo mb-2">
                 <div class="brand-icon"><i class="bi bi-mortarboard-fill"></i></div>
                 <span>Sekolah<span style="color: var(--primary);">Ku</span>-Apps</span>
             </a>
-            <h3 class="fw-bold text-dark mt-2 mb-1" style="font-family: 'Outfit';">Daftar Sekolah & Yayasan Baru</h3>
+            <h1 class="fw-bold fs-3 text-dark mt-2 mb-1" style="font-family: 'Outfit';">Daftar Sekolah & Yayasan Baru</h1>
             <p class="text-muted small">Mulai digitalisasi sistem sekolah, presensi, e-rapor, dan keuangan BOSP Anda.</p>
         </div>
 
@@ -296,7 +296,7 @@
                 </div>
             </form>
         </div>
-    </div>
+    </main>
 
     <script>
         function selectPlan(planId, cardElement) {
