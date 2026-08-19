@@ -1667,7 +1667,7 @@
                 <div class="feature-card animate-on-scroll">
                     <div class="feature-icon"><i class="bi bi-cash-stack"></i></div>
                     <h3>BendaharaKu & LPJ BOSP</h3>
-                    <p>Catat pengeluaran talangan pribadi dalam &lt;30 detik, lampirkan foto nota, ajukan reimburse, dan
+                    <p>Catat pengeluaran talangan pribadi, lampirkan foto nota, ajukan reimburse, dan
                         cetak rekap LPJ BOSP resmi.</p>
                     <span class="feature-tag">Laporan Dinas-Ready</span>
                 </div>
