@@ -10,17 +10,34 @@
         content="sekolahku, aplikasi sekolah, e-rapor, presensi digital, spp online, bendaharaku, lpj bosp, saas sekolah, dnd tech solutions">
     <meta name="author" content="DnD Tech Solutions">
     <title>SekolahKu-Apps — Platform Cerdas Manajemen Sekolah | DnD Tech Solutions</title>
+    
+    <!-- Preconnect & DNS-Prefetch for External CDNs -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+    <!-- Non-blocking Google Fonts with display=swap -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+    </noscript>
+
+    <!-- Non-blocking Bootstrap Icons with Preload -->
+    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    </noscript>
+
     <style>
-        /* ========================================================
-           SekolahKu-Apps Landing Page — by DnD Tech Solutions
-           Premium Green & White Palette
-           ======================================================== */
+        @font-face {
+            font-family: 'bootstrap-icons';
+            font-display: swap;
+        }
 
         :root {
             /* Primary green palette */
@@ -325,7 +342,7 @@
         }
 
         .hero-content {
-            animation: fadeInUp 0.8s ease-out;
+            opacity: 1;
         }
 
         .hero-badge {
@@ -406,7 +423,7 @@
         /* Hero Visual */
         .hero-visual {
             position: relative;
-            animation: fadeInRight 1s ease-out 0.2s both;
+            opacity: 1;
         }
 
         .hero-mockup {
