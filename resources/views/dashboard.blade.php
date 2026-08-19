@@ -85,54 +85,65 @@
                         class="bi bi-lightning-charge-fill text-warning me-2"></i>Aksi Cepat Fitur</h5>
                 <div class="row g-3">
                     @role('Siswa')
-                    <div class="col-6 col-md-4">
+                    <div class="col-6">
                         <a href="{{ route('presensi.mandiri') }}"
-                            class="btn btn-outline-primary w-100 p-3 text-start rounded-3">
-                            <i class="bi bi-qr-code-scan fs-3 d-block mb-1"></i>
-                            <span class="fw-bold d-block">Absen Mandiri</span>
-                            <small class="text-muted">Absen pagi siswa</small>
+                            class="btn btn-outline-primary w-100 h-100 p-3 text-start rounded-3 d-flex flex-column justify-content-between">
+                            <div>
+                                <i class="bi bi-qr-code-scan fs-3 d-block mb-1"></i>
+                                <span class="fw-bold d-block">Absen Mandiri</span>
+                            </div>
+                            <span class="small text-muted mt-1">Absen pagi siswa</span>
                         </a>
                     </div>
                     @endrole
 
                     @hasanyrole('Superadmin|School Admin|Guru')
-                    <div class="col-6 col-md-4">
+                    <div class="col-6">
                         <a href="{{ route('presensi.index') }}"
-                            class="btn btn-outline-primary w-100 p-3 text-start rounded-3">
-                            <i class="bi bi-calendar2-check fs-3 d-block mb-1"></i>
-                            <span class="fw-bold d-block">Presensi Kelas</span>
-                            <span class="small text-muted">Input presensi pagi</span>
+                            class="btn btn-outline-primary w-100 h-100 p-3 text-start rounded-3 d-flex flex-column justify-content-between">
+                            <div>
+                                <i class="bi bi-calendar2-check fs-3 d-block mb-1"></i>
+                                <span class="fw-bold d-block">Presensi Kelas</span>
+                            </div>
+                            <span class="small text-muted mt-1">Input presensi pagi</span>
                         </a>
                     </div>
                     @endhasanyrole
 
                     @hasanyrole('Superadmin|School Admin|Bendahara')
-                    <div class="col-6 col-md-4">
+                    <div class="col-6">
                         <a href="{{ route('spp.verifikasi.queue') }}"
-                            class="btn btn-outline-warning w-100 p-3 text-start rounded-3">
-                            <i class="bi bi-check2-circle fs-3 d-block mb-1"></i>
-                            <span class="fw-bold d-block">Verifikasi QRIS</span>
-                            <span class="small text-muted">Cek bukti bayar SPP</span>
+                            class="btn btn-outline-warning w-100 h-100 p-3 text-start rounded-3 d-flex flex-column justify-content-between">
+                            <div>
+                                <i class="bi bi-check2-circle fs-3 d-block mb-1"></i>
+                                <span class="fw-bold d-block">Verifikasi QRIS</span>
+                            </div>
+                            <span class="small text-muted mt-1">Cek bukti bayar SPP</span>
                         </a>
                     </div>
                     @endhasanyrole
 
                     @hasanyrole('Superadmin|School Admin|Bendahara|Guru')
-                    <div class="col-6 col-md-4">
+                    <div class="col-6">
                         <a href="{{ route('expenses.index') }}"
-                            class="btn btn-outline-success w-100 p-3 text-start rounded-3">
-                            <i class="bi bi-plus-circle-fill fs-3 d-block mb-1"></i>
-                            <span class="fw-bold d-block">Input Talangan</span>
+                            class="btn btn-outline-success w-100 h-100 p-3 text-start rounded-3 d-flex flex-column justify-content-between">
+                            <div>
+                                <i class="bi bi-plus-circle-fill fs-3 d-block mb-1"></i>
+                                <span class="fw-bold d-block">Input Talangan</span>
+                            </div>
+                            <span class="small text-muted mt-1">Catat nota & reimburse</span>
                         </a>
                     </div>
                     @endhasanyrole
 
                     @hasanyrole('Superadmin|School Admin|Guru|Orang Tua|Siswa')
-                    <div class="col-6 col-md-4">
-                        <a href="{{ route('erapor.index') }}" class="btn btn-outline-danger w-100 p-3 text-start rounded-3">
-                            <i class="bi bi-file-earmark-pdf fs-3 d-block mb-1"></i>
-                            <span class="fw-bold d-block">E-Rapor Digital</span>
-                            <span class="small text-muted">Cetak rapor & narasi</span>
+                    <div class="col-6">
+                        <a href="{{ route('erapor.index') }}" class="btn btn-outline-danger w-100 h-100 p-3 text-start rounded-3 d-flex flex-column justify-content-between">
+                            <div>
+                                <i class="bi bi-file-earmark-pdf fs-3 d-block mb-1"></i>
+                                <span class="fw-bold d-block">E-Rapor Digital</span>
+                            </div>
+                            <span class="small text-muted mt-1">Cetak rapor & narasi</span>
                         </a>
                     </div>
                     @endhasanyrole
