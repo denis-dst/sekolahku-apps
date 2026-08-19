@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Profil Sekolah & QRIS - SekolahKu')
-@section('page_title', 'Pengaturan Profil Sekolah & Payment QRIS')
+@section('page_title', 'Profil Sekolah & QRIS')
 
 @section('content')
 <div class="row justify-content-center">

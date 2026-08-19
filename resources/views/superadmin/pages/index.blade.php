@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Manajemen Halaman Informatif CMS - SekolahKu')
-@section('page_title', 'Manajemen Halaman Publik (Tentang Kami & Hubungi Kami)')
+@section('title', 'Manajemen Halaman Publik - SekolahKu')
+@section('page_title', 'Halaman Publik CMS')
 
 @section('content')
 <div class="card-custom p-4 mb-4">

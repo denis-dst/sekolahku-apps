@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'E-Rapor Digital - SekolahKu')
-@section('page_title', 'E-Rapor Digital & Penilaian Capaian')
+@section('page_title', 'E-Rapor & Penilaian')
 
 @section('content')
 <div class="card-custom p-4 mb-4">

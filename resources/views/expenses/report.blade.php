@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Rekap Periode & LPJ BOSP - SekolahKu')
-@section('page_title', 'Rekapitulasi Periode & Laporan LPJ BOSP')
+@section('page_title', 'Laporan LPJ BOSP')
 
 @section('content')
 <!-- Filter Card -->

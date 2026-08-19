@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Verifikasi Pembayaran SPP - SekolahKu')
-@section('page_title', 'Verifikasi Bukti Pembayaran SPP (Bendahara)')
+@section('page_title', 'Verifikasi Pembayaran SPP')
 
 @section('content')
 <div class="card-custom p-4 mb-4">

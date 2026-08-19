@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Manajemen Kategori BOSP - SekolahKu')
-@section('page_title', 'Kelola Kategori Pengeluaran BOSP')
+@section('title', 'Kategori Belanja BOSP - SekolahKu')
+@section('page_title', 'Kategori Belanja BOSP')
 
 @section('content')
 <div class="d-flex align-items-center justify-content-between mb-4">

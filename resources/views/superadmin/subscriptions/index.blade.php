@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Manajemen Langganan Sekolah (Subscriptions) - SekolahKu')
-@section('page_title', 'Penetapan & Manajemen Langganan Sekolah')
+@section('title', 'Manajemen Langganan Sekolah - SekolahKu')
+@section('page_title', 'Langganan Sekolah')
 
 @section('content')
 @if(isset($pendingCount) && $pendingCount > 0)

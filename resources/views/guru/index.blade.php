@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Data Guru - SekolahKu')
-@section('page_title', 'Manajemen Data Guru & Pendidik')
+@section('page_title', 'Data Guru & Pendidik')
 
 @section('content')
 <div class="card-custom p-4 mb-4">

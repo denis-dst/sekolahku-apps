@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Pengaturan Server WAHA (WhatsApp HTTP API) - SekolahKu')
-@section('page_title', 'Pengaturan Server WAHA & WhatsApp Gateway')
+@section('title', 'Pengaturan Server WAHA - SekolahKu')
+@section('page_title', 'Server WAHA & WhatsApp')
 
 @section('content')
 <div class="row justify-content-center">

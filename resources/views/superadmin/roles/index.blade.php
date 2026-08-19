@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Manajemen Peran & Hak Akses (Role Has Permission) - SekolahKu')
-@section('page_title', 'Manajemen Hak Akses & Peran Pengguna (RBAC)')
+@section('title', 'Manajemen Role & Hak Akses - SekolahKu')
+@section('page_title', 'Hak Akses & Role (RBAC)')
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">

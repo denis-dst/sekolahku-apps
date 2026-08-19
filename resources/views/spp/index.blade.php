@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Tagihan & Pembayaran SPP - SekolahKu')
-@section('page_title', 'Manajemen Tagihan & Pembayaran SPP')
+@section('page_title', 'Tagihan & SPP Siswa')
 
 @section('content')
 <div class="card-custom p-4 mb-4">

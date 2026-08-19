@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Presensi Harian Siswa - SekolahKu')
-@section('page_title', 'Presensi Harian Rombel (Mode Guru Kelas)')
+@section('page_title', 'Presensi Harian Kelas')
 
 @section('content')
 <!-- Header Action Bar -->

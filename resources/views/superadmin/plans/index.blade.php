@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Manajemen Paket Langganan SaaS - SekolahKu')
-@section('page_title', 'Manajemen Paket & Fitur (Free, Pro, Enterprise)')
+@section('title', 'Paket & Fitur Layanan - SekolahKu')
+@section('page_title', 'Paket & Fitur Layanan')
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">

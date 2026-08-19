@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Rombel & Kelas - SekolahKu')
-@section('page_title', 'Manajemen Rombel (Rombongan Belajar)')
+@section('page_title', 'Rombongan Belajar (Rombel)')
 
 @section('content')
 <div class="card-custom p-4 mb-4">

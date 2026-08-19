@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Rekapitulasi Presensi Bulanan - SekolahKu')
-@section('page_title', 'Laporan Rekapitulasi Presensi Bulanan')
+@section('page_title', 'Rekap Presensi Bulanan')
 
 @section('content')
 <!-- Header Action Bar -->
