@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'BendaharaKu & LPJ BOSP - SekolahKu')
-@section('page_title', 'BendaharaKu - Asisten Digital Finance & LPJ BOSP')
+@section('page_title', 'BendaharaKu & LPJ BOSP')
 
 @section('content')
     <!-- Card Informasi Dana BOSP Awal Sesuai Periode -->

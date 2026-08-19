@@ -262,18 +262,79 @@
             background-color: #f8fafc;
             border-color: var(--sk-border);
             opacity: 0.7;
+        .top-navbar-header {
+            padding-bottom: 0.85rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .header-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1.25;
+            margin: 0;
+        }
+
+        @media (min-width: 768px) {
+            .header-title {
+                font-size: 1.45rem;
+            }
+        }
+
+        .hamburger-btn {
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            border-radius: 0.75rem;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            color: #1e293b;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+
+        .hamburger-btn:hover, .hamburger-btn:active {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+            color: #0f766e;
+        }
+
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            z-index: 1040;
+            opacity: 0;
+            transition: opacity 0.25s ease;
         }
 
         @media (max-width: 991.98px) {
             .sidebar {
                 margin-left: -260px;
+                z-index: 1050;
             }
             .main-content {
                 margin-left: 0;
-                padding: 1rem;
+                padding: 1rem 0.85rem;
             }
             .sidebar.show {
                 margin-left: 0;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            }
+            .sidebar-backdrop.show {
+                display: block;
+                opacity: 1;
             }
         }
     </style>
@@ -418,36 +479,57 @@
         </div>
     </aside>
 
+    <!-- Sidebar Backdrop for Mobile -->
+    <div class="sidebar-backdrop" onclick="toggleSidebar()"></div>
+
     <!-- Main Body Content -->
     <main class="main-content">
         <!-- Top Navbar Header -->
-        <header class="d-flex align-items-center justify-content-between pb-3 mb-4 border-bottom border-slate-200">
-            <div class="d-flex align-items-center gap-3">
-                <button class="btn btn-outline-secondary d-lg-none" type="button" onclick="document.querySelector('.sidebar').classList.toggle('show')">
-                    <i class="bi bi-list"></i>
-                </button>
-                <div>
-                    <h4 class="fw-bold m-0" style="color:#0f172a;">@yield('page_title', 'Dashboard')</h4>
-                    <p class="text-muted small m-0">{{ Auth::user()->school->name ?? 'SekolahKu Platform' }}</p>
+        <header class="top-navbar-header">
+            <div class="d-flex align-items-center justify-content-between gap-2 gap-sm-3">
+                <!-- Left: Hamburger Button & Page Title -->
+                <div class="d-flex align-items-center gap-2 gap-sm-3 flex-grow-1 min-w-0">
+                    <button class="hamburger-btn d-lg-none flex-shrink-0" type="button" onclick="toggleSidebar()" aria-label="Buka Menu Navigasi">
+                        <i class="bi bi-list fs-4"></i>
+                    </button>
+                    <div class="min-w-0 flex-grow-1">
+                        <h1 class="header-title text-truncate" title="@yield('page_title', 'Dashboard')">
+                            @yield('page_title', 'Dashboard')
+                        </h1>
+                        <div class="d-flex align-items-center gap-2 flex-wrap mt-0.5">
+                            <span class="text-muted small text-truncate" style="font-size: 0.8rem;">
+                                <i class="bi bi-building me-1 opacity-75 text-secondary"></i>{{ Auth::user()->school->name ?? 'SekolahKu Platform' }}
+                            </span>
+                            <span class="d-inline-flex d-md-none badge bg-light text-dark border px-2 py-0.5 rounded-pill font-monospace" style="font-size: 0.68rem;">
+                                {{ Auth::user()->school->jenjang ?? 'TK/PAUD' }}
+                            </span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="d-flex align-items-center gap-2">
-                @php
-                    $tenant = Auth::user()->tenant ?? Auth::user()->school?->tenant;
-                    $planName = $tenant?->subscriptionPlan?->name ?? 'Free Plan';
-                    $planCode = $tenant?->subscriptionPlan?->code ?? 'free';
-                    $badgeBg = match($planCode) {
-                        'pro' => 'bg-teal-700 text-white',
-                        'enterprise' => 'bg-sky-700 text-white',
-                        default => 'bg-secondary text-white'
-                    };
-                @endphp
-                <span class="badge {{ $badgeBg }} px-3 py-2 rounded-pill font-monospace shadow-sm" style="font-size:0.8rem; background-color:#0f766e; color:#ffffff;">
-                    <i class="bi bi-star-fill me-1"></i> {{ strtoupper($planName) }}
-                </span>
-                <span class="badge rounded-pill px-3 py-2" style="background-color:#f0fdfa; color:#115e59; border:1px solid #ccfbf1;">
-                    <i class="bi bi-buildings me-1"></i> {{ Auth::user()->school->jenjang ?? 'TK/PAUD' }}
-                </span>
+
+                <!-- Right: License & School Badges -->
+                <div class="d-flex align-items-center gap-1.5 gap-sm-2 flex-shrink-0">
+                    @php
+                        $tenant = Auth::user()->tenant ?? Auth::user()->school?->tenant;
+                        $planName = $tenant?->subscriptionPlan?->name ?? 'Free Plan';
+                        $planCode = $tenant?->subscriptionPlan?->code ?? 'free';
+                        $badgeBg = match($planCode) {
+                            'pro' => 'bg-teal-700 text-white',
+                            'enterprise' => 'bg-sky-700 text-white',
+                            default => 'bg-secondary text-white'
+                        };
+                    @endphp
+                    <span class="badge {{ $badgeBg }} px-2.5 px-sm-3 py-1.5 py-sm-2 rounded-pill font-monospace shadow-xs d-flex align-items-center gap-1" 
+                          style="font-size:0.75rem; background-color:#0f766e; color:#ffffff;">
+                        <i class="bi bi-star-fill text-warning" style="font-size: 0.7rem;"></i> 
+                        <span class="d-none d-sm-inline">{{ strtoupper($planName) }}</span>
+                        <span class="d-inline d-sm-none">{{ strtoupper(explode(' ', $planName)[0]) }}</span>
+                    </span>
+                    <span class="badge rounded-pill px-2.5 px-sm-3 py-1.5 py-sm-2 d-none d-md-inline-flex align-items-center" 
+                          style="background-color:#f0fdfa; color:#115e59; border:1px solid #ccfbf1; font-size:0.75rem;">
+                        <i class="bi bi-buildings me-1"></i> {{ Auth::user()->school->jenjang ?? 'TK/PAUD' }}
+                    </span>
+                </div>
             </div>
         </header>
 
@@ -478,6 +560,14 @@
 
     <!-- Bootstrap 5 Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const backdrop = document.querySelector('.sidebar-backdrop');
+            if (sidebar) sidebar.classList.toggle('show');
+            if (backdrop) backdrop.classList.toggle('show');
+        }
+    </script>
     @stack('scripts')
 </body>
 </html>
