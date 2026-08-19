@@ -10,8 +10,24 @@ use Carbon\Carbon;
 
 class TenantSubscriptionController extends Controller
 {
+    private function ensureSubscriptionTablesExist(): void
+    {
+        try {
+            if (!\Illuminate\Support\Facades\Schema::hasTable('subscription_plans')) {
+                \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+                \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'SubscriptionPlanSeeder', '--force' => true]);
+            } elseif (SubscriptionPlan::count() === 0) {
+                \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'SubscriptionPlanSeeder', '--force' => true]);
+            }
+        } catch (\Throwable $e) {
+            // Ignore error or log if cannot run directly
+        }
+    }
+
     public function index(Request $request)
     {
+        $this->ensureSubscriptionTablesExist();
+
         $query = Tenant::with(['subscriptionPlan', 'schools.siswas']);
 
         if ($request->has('status') && $request->status != '') {
@@ -39,6 +55,8 @@ class TenantSubscriptionController extends Controller
 
     public function update(Request $request, Tenant $tenant)
     {
+        $this->ensureSubscriptionTablesExist();
+
         $request->validate([
             'subscription_plan_id' => 'required|exists:subscription_plans,id',
             'subscription_status' => 'required|in:active,expired,suspended,pending',
@@ -73,6 +91,8 @@ class TenantSubscriptionController extends Controller
 
     public function approve(Request $request, Tenant $tenant)
     {
+        $this->ensureSubscriptionTablesExist();
+
         $request->validate([
             'duration_months' => 'nullable|integer|min:1',
             'notes' => 'nullable|string',

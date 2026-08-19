@@ -72,6 +72,21 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/roles/{role}', [\App\Http\Controllers\Superadmin\RolePermissionController::class, 'updateRolePermissions'])->name('roles.update');
         Route::post('/roles', [\App\Http\Controllers\Superadmin\RolePermissionController::class, 'storeRole'])->name('roles.store');
         Route::post('/permissions', [\App\Http\Controllers\Superadmin\RolePermissionController::class, 'storePermission'])->name('permissions.store');
+
+        // Superadmin Maintenance & Migration Helper
+        Route::get('/system/migrate', function () {
+            try {
+                \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+                $migrateOutput = \Illuminate\Support\Facades\Artisan::output();
+                
+                \Illuminate\Support\Facades\Artisan::call('db:seed', ['--class' => 'SubscriptionPlanSeeder', '--force' => true]);
+                $seedOutput = \Illuminate\Support\Facades\Artisan::output();
+                
+                return redirect()->back()->with('success', 'Migrasi Database & Seeder Paket Berhasil Dijalankan! Output: ' . trim($migrateOutput . ' ' . $seedOutput));
+            } catch (\Throwable $e) {
+                return redirect()->back()->with('error', 'Gagal menjalankan migrasi: ' . $e->getMessage());
+            }
+        })->name('system.migrate');
     });
 
     // Multi-School Management for Foundation / Yayasan Admin

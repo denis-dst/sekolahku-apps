@@ -22,6 +22,16 @@
 @endif
 
 <div class="card-custom p-4 mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+            <h4 class="fw-bold m-0 text-dark">Langganan Sekolah & Yayasan</h4>
+            <p class="text-muted small m-0">Kelola penetapan paket, durasi aktif, dan persetujuan (ACC) pendaftaran baru.</p>
+        </div>
+        <a href="{{ route('admin.system.migrate') }}" class="btn btn-outline-secondary btn-sm rounded-3 fw-semibold d-flex align-items-center gap-1.5" onclick="return confirm('Jalankan migrasi dan seeder database sekarang?')" title="Jalankan migrasi database jika ada tabel/fitur baru">
+            <i class="bi bi-arrow-repeat"></i> Sinkron Database & Paket
+        </a>
+    </div>
+
     <!-- Filter Header -->
     <form action="{{ route('admin.subscriptions.index') }}" method="GET" class="row g-3 align-items-end mb-4">
         <div class="col-12 col-md-4">
