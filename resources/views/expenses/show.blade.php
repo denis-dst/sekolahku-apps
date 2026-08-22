@@ -4,18 +4,18 @@
 @section('page_title', 'Detail Transaksi Talangan & Reimbursement')
 
 @section('content')
-<div class="d-flex align-items-center justify-content-between mb-4">
-    <a href="{{ route('expenses.index') }}" class="btn btn-light border rounded-3 px-3 fw-semibold d-flex align-items-center gap-2">
+<div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-between gap-2 mb-4">
+    <a href="{{ route('expenses.index') }}" class="btn btn-light border rounded-3 px-3 fw-semibold d-flex align-items-center justify-content-center gap-2" style="min-height: 40px;">
         <i class="bi bi-arrow-left"></i> Kembali ke Daftar Talangan
     </a>
     <div class="d-flex gap-2">
-        <a href="{{ route('expenses.edit', $expense->id) }}" class="btn btn-outline-secondary rounded-3 px-3 fw-semibold">
-            <i class="bi bi-pencil me-1"></i> Edit Data
+        <a href="{{ route('expenses.edit', $expense->id) }}" class="btn btn-outline-secondary rounded-3 px-3 fw-semibold flex-fill d-flex align-items-center justify-content-center gap-1" style="min-height: 40px;">
+            <i class="bi bi-pencil me-1"></i> Edit
         </a>
-        <form action="{{ route('expenses.destroy', $expense->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus catatan talangan ini?')">
+        <form action="{{ route('expenses.destroy', $expense->id) }}" method="POST" class="flex-fill" onsubmit="return confirm('Apakah Anda yakin ingin menghapus catatan talangan ini?')">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn btn-outline-danger rounded-3 px-3 fw-semibold">
+            <button type="submit" class="btn btn-outline-danger rounded-3 px-3 fw-semibold w-100 d-flex align-items-center justify-content-center gap-1" style="min-height: 40px;">
                 <i class="bi bi-trash me-1"></i> Hapus
             </button>
         </form>
@@ -26,18 +26,18 @@
     <!-- Left Column: Details & Receipts -->
     <div class="col-12 col-lg-7">
         <!-- Main Transaction Detail Card -->
-        <div class="card-custom p-4 mb-4">
+        <div class="card-custom p-3 p-sm-4 mb-4 bg-white">
             <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start gap-3 mb-3">
                 <div>
-                    <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1.5 mb-2 fw-semibold">
+                    <span class="badge bg-success-subtle text-success border border-success-subtle rounded-2 px-2.5 py-1 mb-2 fw-semibold">
                         <i class="bi bi-tag-fill me-1"></i> {{ $expense->category->nama_kategori ?? 'Kategori BOSP' }} ({{ $expense->category->kode_bosp ?: 'BOSP' }})
                     </span>
                     <h4 class="fw-bold text-dark mb-1">{{ $expense->uraian }}</h4>
                     <span class="text-muted small"><i class="bi bi-calendar3 me-1"></i> Tanggal Transaksi: <strong>{{ $expense->tanggal->translatedFormat('d F Y') }}</strong></span>
                 </div>
-                <div class="text-sm-end">
+                <div class="text-start text-sm-end">
                     <span class="text-muted small d-block">Nominal Talangan</span>
-                    <h3 class="fw-bold text-success mb-0">Rp {{ number_format($expense->nominal, 0, ',', '.') }}</h3>
+                    <h3 class="fw-bold text-success mb-0" style="font-size: clamp(1.3rem, 2vw, 1.7rem);">Rp {{ number_format($expense->nominal, 0, ',', '.') }}</h3>
                 </div>
             </div>
 
@@ -54,7 +54,7 @@
                 </div>
                 <div class="col-6 col-sm-4">
                     <span class="text-muted small d-block">Sumber Dana</span>
-                    <span class="badge bg-secondary-subtle text-dark border">Talangan Pribadi</span>
+                    <span class="badge bg-secondary-subtle text-dark border rounded-2">Talangan Pribadi</span>
                 </div>
                 <div class="col-6 col-sm-4">
                     <span class="text-muted small d-block">Pencatat / Pengaju</span>
@@ -67,7 +67,7 @@
                 <div class="col-6 col-sm-4">
                     <span class="text-muted small d-block">Status Saat Ini</span>
                     @php $badge = $expense->status_badge; @endphp
-                    <span class="badge {{ $badge['class'] }} rounded-pill px-2.5 py-1">
+                    <span class="badge {{ $badge['class'] }} rounded-2 px-2.5 py-1">
                         <i class="bi {{ $badge['icon'] }} me-1"></i> {{ $expense->status }}
                     </span>
                 </div>

@@ -197,30 +197,54 @@
         .card-custom {
             background: #ffffff;
             border: 1px solid #e2e8f0;
-            border-radius: 1rem;
+            border-radius: 0.75rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: box-shadow 0.2s ease;
         }
 
-        .card-custom:hover {
-            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+        .shadow-xs {
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
+        }
+
+        .shadow-2xs {
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02) !important;
         }
 
         .kpi-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 0.75rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 0.65rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 1.35rem;
         }
 
         .hero-banner {
-            background: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
+            background: #ffffff;
             border: 1px solid #ccfbf1;
-            border-radius: 1.25rem;
-            padding: 1.75rem 2rem;
+            border-top: 4px solid var(--sk-primary);
+            border-radius: 0.85rem;
+            padding: 1.5rem 1.75rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+
+        /* Form input comfortable touch targets & prevent iOS auto-zoom */
+        .form-control, .form-select {
+            font-size: 0.9rem;
+            border-color: #cbd5e1;
+            border-radius: 0.5rem;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--sk-primary);
+            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+        }
+
+        @media (max-width: 576px) {
+            .form-control, .form-select {
+                font-size: 16px; /* Prevents auto-zoom in Safari iOS */
+            }
         }
 
         /* Custom Pagination Styling */

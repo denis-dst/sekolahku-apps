@@ -5,32 +5,32 @@
 
 @section('content')
 <!-- Header Action Bar -->
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2.5 mb-4">
     <div>
         <h5 class="fw-bold m-0 text-dark"><i class="bi bi-file-earmark-spreadsheet-fill me-2 text-primary"></i>Rekap Presensi Bulanan Siswa</h5>
         <small class="text-muted">Laporan matriks kehadiran harian siswa per tanggal dalam satu bulan penuh</small>
     </div>
-    <div class="d-flex flex-wrap gap-2">
+    <div class="d-flex flex-wrap gap-2 w-100 w-md-auto">
         @if($selectedRombelId && count($recap) > 0)
-            <a href="{{ route('presensi.rekap.csv', ['rombel_id' => $selectedRombelId, 'tahun' => $tahun, 'bulan' => $bulan]) }}" class="btn btn-outline-success btn-sm rounded-3 px-3 fw-semibold d-flex align-items-center gap-1">
+            <a href="{{ route('presensi.rekap.csv', ['rombel_id' => $selectedRombelId, 'tahun' => $tahun, 'bulan' => $bulan]) }}" class="btn btn-outline-success btn-sm rounded-3 px-3 fw-semibold d-flex align-items-center justify-content-center gap-1 flex-fill flex-md-grow-0" style="min-height: 38px;">
                 <i class="bi bi-file-earmark-excel"></i> Export CSV
             </a>
-            <a href="{{ route('presensi.rekap.pdf', ['rombel_id' => $selectedRombelId, 'tahun' => $tahun, 'bulan' => $bulan]) }}" target="_blank" class="btn btn-danger btn-sm rounded-3 px-3 fw-semibold d-flex align-items-center gap-1 shadow-sm">
+            <a href="{{ route('presensi.rekap.pdf', ['rombel_id' => $selectedRombelId, 'tahun' => $tahun, 'bulan' => $bulan]) }}" target="_blank" class="btn btn-danger btn-sm rounded-3 px-3 fw-semibold d-flex align-items-center justify-content-center gap-1 shadow-xs flex-fill flex-md-grow-0" style="min-height: 38px;">
                 <i class="bi bi-file-earmark-pdf-fill"></i> Export PDF Rekap
             </a>
         @endif
-        <a href="{{ route('presensi.index', ['rombel_id' => $selectedRombelId]) }}" class="btn btn-primary btn-sm rounded-3 px-3 fw-semibold d-flex align-items-center gap-1">
-            <i class="bi bi-pencil-square"></i> Input Presensi Harian
+        <a href="{{ route('presensi.index', ['rombel_id' => $selectedRombelId]) }}" class="btn btn-primary btn-sm rounded-3 px-3 fw-semibold d-flex align-items-center justify-content-center gap-1 flex-fill flex-md-grow-0" style="min-height: 38px;">
+            <i class="bi bi-pencil-square"></i> Input Presensi
         </a>
     </div>
 </div>
 
 <!-- Filter Selection Card -->
-<div class="card-custom p-4 mb-4">
-    <form action="{{ route('presensi.rekap') }}" method="GET" class="row g-3 align-items-end">
+<div class="card-custom p-3 p-sm-4 mb-4 bg-white">
+    <form action="{{ route('presensi.rekap') }}" method="GET" class="row g-2.5 align-items-end">
         <div class="col-12 col-md-5">
             <label class="form-label fw-semibold text-secondary small">Pilih Rombel / Kelas <span class="text-danger">*</span></label>
-            <select name="rombel_id" class="form-select bg-light" onchange="this.form.submit()">
+            <select name="rombel_id" class="form-select bg-light" onchange="this.form.submit()" style="min-height: 42px;">
                 <option value="">-- Pilih Rombel --</option>
                 @foreach($rombels as $r)
                     <option value="{{ $r->id }}" {{ $selectedRombelId == $r->id ? 'selected' : '' }}>
@@ -42,7 +42,7 @@
 
         <div class="col-6 col-md-3">
             <label class="form-label fw-semibold text-secondary small">Bulan</label>
-            <select name="bulan" class="form-select bg-light" onchange="this.form.submit()">
+            <select name="bulan" class="form-select bg-light" onchange="this.form.submit()" style="min-height: 42px;">
                 @foreach(range(1, 12) as $m)
                     <option value="{{ $m }}" {{ $bulan == $m ? 'selected' : '' }}>
                         {{ Carbon\Carbon::create()->month($m)->translatedFormat('F') }}
@@ -53,7 +53,7 @@
 
         <div class="col-6 col-md-2">
             <label class="form-label fw-semibold text-secondary small">Tahun</label>
-            <select name="tahun" class="form-select bg-light" onchange="this.form.submit()">
+            <select name="tahun" class="form-select bg-light" onchange="this.form.submit()" style="min-height: 42px;">
                 @for($y = date('Y') + 1; $y >= 2024; $y--)
                     <option value="{{ $y }}" {{ $tahun == $y ? 'selected' : '' }}>{{ $y }}</option>
                 @endfor
@@ -61,7 +61,7 @@
         </div>
 
         <div class="col-12 col-md-2">
-            <button type="submit" class="btn btn-primary w-100 fw-semibold">
+            <button type="submit" class="btn btn-primary w-100 fw-semibold" style="min-height: 42px;">
                 <i class="bi bi-filter me-1"></i> Tampilkan
             </button>
         </div>
@@ -70,18 +70,18 @@
 
 @if($selectedRombelId && count($recap) > 0)
     <!-- Header Summary Card -->
-    <div class="card-custom p-4 mb-4 border-top border-4 border-success">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+    <div class="card-custom p-3 p-sm-4 mb-4 border-top border-4 border-success bg-white">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
             <div>
-                <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-1.5 rounded-pill fw-bold mb-1">
+                <span class="badge bg-success-subtle text-success border border-success-subtle px-2.5 py-1 rounded-2 fw-bold mb-1">
                     PERIODE: {{ strtoupper(Carbon\Carbon::createFromDate($tahun, $bulan, 1)->translatedFormat('F Y')) }}
                 </span>
                 <h5 class="fw-bold text-dark mb-0">Rombel: {{ $selectedRombel->nama_rombel }} (Tingkat {{ $selectedRombel->tingkat }})</h5>
                 <small class="text-muted">Wali Kelas: <strong>{{ $selectedRombel->waliKelas?->nama ?? 'Belum Ditentukan' }}</strong> &bull; Total Siswa: {{ count($recap) }} Siswa</small>
             </div>
-            <div class="d-flex gap-2">
-                <a href="{{ route('presensi.rekap.pdf', ['rombel_id' => $selectedRombelId, 'tahun' => $tahun, 'bulan' => $bulan]) }}" target="_blank" class="btn btn-danger px-4 py-2 rounded-3 fw-bold shadow-sm d-flex align-items-center gap-2">
-                    <i class="bi bi-file-earmark-pdf-fill fs-5"></i> Download PDF Rekap
+            <div class="d-flex gap-2 w-100 w-md-auto">
+                <a href="{{ route('presensi.rekap.pdf', ['rombel_id' => $selectedRombelId, 'tahun' => $tahun, 'bulan' => $bulan]) }}" target="_blank" class="btn btn-danger px-3.5 py-2 rounded-3 fw-bold shadow-xs d-flex align-items-center justify-content-center gap-2 w-100 w-md-auto" style="min-height: 42px;">
+                    <i class="bi bi-file-earmark-pdf-fill fs-5"></i> Download PDF
                 </a>
             </div>
         </div>

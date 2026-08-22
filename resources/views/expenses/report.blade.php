@@ -5,12 +5,12 @@
 
 @section('content')
 <!-- Filter Card -->
-<div class="card-custom p-4 mb-4">
-    <form action="{{ route('expenses.report') }}" method="GET" class="row g-3 align-items-end" id="filterForm">
+<div class="card-custom p-3 p-sm-4 mb-4 bg-white">
+    <form action="{{ route('expenses.report') }}" method="GET" class="row g-2.5 align-items-end" id="filterForm">
         
         <div class="col-12 col-sm-6 col-md-3">
             <label class="form-label fw-semibold text-secondary small">Jenis Periode Rekap</label>
-            <select name="filter_type" id="filter_type" class="form-select bg-light" onchange="togglePeriodFields()">
+            <select name="filter_type" id="filter_type" class="form-select bg-light" onchange="togglePeriodFields()" style="min-height: 42px;">
                 <option value="month" {{ $filterType == 'month' ? 'selected' : '' }}>Bulanan</option>
                 <option value="quarter" {{ $filterType == 'quarter' ? 'selected' : '' }}>Triwulan (BOSP)</option>
                 <option value="semester" {{ $filterType == 'semester' ? 'selected' : '' }}>Semester</option>
@@ -22,7 +22,7 @@
         <!-- Filter: Year -->
         <div class="col-6 col-sm-3 col-md-2" id="field_year">
             <label class="form-label fw-semibold text-secondary small">Tahun</label>
-            <select name="year" class="form-select bg-light">
+            <select name="year" class="form-select bg-light" style="min-height: 42px;">
                 @for($y = date('Y') + 1; $y >= 2024; $y--)
                     <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>{{ $y }}</option>
                 @endfor
@@ -32,7 +32,7 @@
         <!-- Filter: Month -->
         <div class="col-6 col-sm-3 col-md-2" id="field_month">
             <label class="form-label fw-semibold text-secondary small">Bulan</label>
-            <select name="month" class="form-select bg-light">
+            <select name="month" class="form-select bg-light" style="min-height: 42px;">
                 @foreach(range(1, 12) as $m)
                     <option value="{{ $m }}" {{ $month == $m ? 'selected' : '' }}>
                         {{ Carbon\Carbon::create()->month($m)->translatedFormat('F') }}
@@ -44,7 +44,7 @@
         <!-- Filter: Quarter -->
         <div class="col-6 col-sm-3 col-md-2" id="field_quarter" style="display: none;">
             <label class="form-label fw-semibold text-secondary small">Triwulan BOSP</label>
-            <select name="quarter" class="form-select bg-light">
+            <select name="quarter" class="form-select bg-light" style="min-height: 42px;">
                 <option value="1" {{ $quarter == 1 ? 'selected' : '' }}>Triwulan I (Jan - Mar)</option>
                 <option value="2" {{ $quarter == 2 ? 'selected' : '' }}>Triwulan II (Apr - Jun)</option>
                 <option value="3" {{ $quarter == 3 ? 'selected' : '' }}>Triwulan III (Jul - Sep)</option>
@@ -55,7 +55,7 @@
         <!-- Filter: Semester -->
         <div class="col-6 col-sm-3 col-md-2" id="field_semester" style="display: none;">
             <label class="form-label fw-semibold text-secondary small">Semester</label>
-            <select name="semester" class="form-select bg-light">
+            <select name="semester" class="form-select bg-light" style="min-height: 42px;">
                 <option value="1" {{ $semester == 1 ? 'selected' : '' }}>Semester I (Jan - Jun)</option>
                 <option value="2" {{ $semester == 2 ? 'selected' : '' }}>Semester II (Jul - Des)</option>
             </select>
@@ -64,17 +64,17 @@
         <!-- Filter: Custom Dates -->
         <div class="col-6 col-sm-3 col-md-2" id="field_date_from" style="display: none;">
             <label class="form-label fw-semibold text-secondary small">Dari Tanggal</label>
-            <input type="date" name="date_from" class="form-control bg-light" value="{{ request('date_from', date('Y-m-01')) }}">
+            <input type="date" name="date_from" class="form-control bg-light" value="{{ request('date_from', date('Y-m-01')) }}" style="min-height: 42px;">
         </div>
         <div class="col-6 col-sm-3 col-md-2" id="field_date_to" style="display: none;">
             <label class="form-label fw-semibold text-secondary small">Sampai Tanggal</label>
-            <input type="date" name="date_to" class="form-control bg-light" value="{{ request('date_to', date('Y-m-t')) }}">
+            <input type="date" name="date_to" class="form-control bg-light" value="{{ request('date_to', date('Y-m-t')) }}" style="min-height: 42px;">
         </div>
 
         <!-- Filter: Status -->
         <div class="col-6 col-sm-3 col-md-2">
             <label class="form-label fw-semibold text-secondary small">Filter Status</label>
-            <select name="status" class="form-select bg-light">
+            <select name="status" class="form-select bg-light" style="min-height: 42px;">
                 <option value="all" {{ $statusFilter == 'all' ? 'selected' : '' }}>Semua Status</option>
                 <option value="Belum Diajukan" {{ $statusFilter == 'Belum Diajukan' ? 'selected' : '' }}>Belum Diajukan</option>
                 <option value="Diajukan" {{ $statusFilter == 'Diajukan' ? 'selected' : '' }}>Diajukan</option>
@@ -85,10 +85,10 @@
         </div>
 
         <div class="col-12 col-md-3 d-flex gap-2">
-            <button type="submit" class="btn btn-primary flex-fill fw-semibold py-2">
+            <button type="submit" class="btn btn-primary flex-fill fw-semibold py-2" style="min-height: 42px;">
                 <i class="bi bi-filter me-1"></i> Tampilkan
             </button>
-            <a href="{{ route('expenses.index') }}" class="btn btn-light border py-2 px-3" title="Kembali ke Daftar">
+            <a href="{{ route('expenses.index') }}" class="btn btn-light border d-flex align-items-center justify-content-center px-3" title="Kembali ke Daftar" style="min-height: 42px;">
                 <i class="bi bi-list-task"></i>
             </a>
         </div>
@@ -96,19 +96,19 @@
 </div>
 
 <!-- Header Summary Card -->
-<div class="card-custom p-4 mb-4 border-top border-4 border-primary">
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+<div class="card-custom p-3 p-sm-4 mb-4 border-top border-4 border-primary bg-white">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
         <div>
-            <div class="d-flex align-items-center gap-2 mb-1 flex-wrap">
-                <span class="badge bg-success-subtle text-success border border-success-subtle fw-bold px-3 py-1.5 rounded-pill">
+            <div class="d-flex align-items-center gap-2 mb-1.5 flex-wrap">
+                <span class="badge bg-success-subtle text-success border border-success-subtle fw-bold px-2.5 py-1 rounded-2">
                     PERIODE: {{ strtoupper($periodLabel) }}
                 </span>
                 @if(isset($danaBosp) && $danaBosp)
-                    <span class="badge bg-primary px-3 py-1.5 rounded-pill">
+                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2.5 py-1 rounded-2 fw-semibold">
                         <i class="bi bi-wallet-fill me-1"></i> Dana Cair: Rp {{ number_format($danaBosp->nominal_cair, 0, ',', '.') }}
                     </span>
                     @php $sisa = $danaBosp->nominal_cair - $totalAmount; @endphp
-                    <span class="badge {{ $sisa >= 0 ? 'bg-success' : 'bg-danger' }} px-3 py-1.5 rounded-pill">
+                    <span class="badge {{ $sisa >= 0 ? 'bg-success-subtle text-success border border-success-subtle' : 'bg-danger-subtle text-danger border border-danger-subtle' }} px-2.5 py-1 rounded-2 fw-semibold">
                         Sisa Kas: Rp {{ number_format($sisa, 0, ',', '.') }}
                     </span>
                 @endif
@@ -117,28 +117,30 @@
             <span class="text-muted"><i class="bi bi-building me-1"></i> {{ auth()->user()->school->name }} (NPSN: {{ auth()->user()->school->npsn ?? '-' }})</span>
         </div>
 
-        <div class="d-flex align-items-center gap-3">
-            <div class="text-md-end">
+        <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-3 w-100 w-md-auto">
+            <div class="text-start text-md-end">
                 <span class="text-muted small d-block">Total Realisasi Belanja</span>
-                <h3 class="fw-bold text-success mb-0">Rp {{ number_format($totalAmount, 0, ',', '.') }}</h3>
+                <h3 class="fw-bold text-success mb-0" style="font-size: clamp(1.3rem, 2vw, 1.7rem);">Rp {{ number_format($totalAmount, 0, ',', '.') }}</h3>
                 <small class="text-muted">{{ $expenses->count() }} Transaksi Tercatat</small>
             </div>
             
-            <a href="{{ route('expenses.export-pdf', request()->all()) }}" target="_blank" class="btn btn-danger btn-lg px-4 fw-bold shadow-sm rounded-3 d-flex align-items-center gap-2">
-                <i class="bi bi-file-earmark-pdf-fill fs-4"></i> Cetak PDF LPJ
+            <a href="{{ route('expenses.export-pdf', request()->all()) }}" target="_blank" class="btn btn-danger btn-md px-3.5 py-2.5 fw-bold shadow-xs rounded-3 d-flex align-items-center justify-content-center gap-2" style="min-height: 44px;">
+                <i class="bi bi-file-earmark-pdf-fill fs-5"></i> Cetak PDF LPJ
             </a>
         </div>
     </div>
 </div>
 
 <!-- Category Breakdown Grid -->
-<div class="row g-3 mb-4">
+<div class="row g-3 mb-4 align-items-stretch">
     @foreach($categoryTotals as $cat)
-        <div class="col-6 col-sm-4 col-md-3">
-            <div class="card-custom p-3 border-start border-4 border-success h-100">
-                <span class="text-muted small d-block text-truncate fw-semibold">{{ $cat['name'] }}</span>
-                <span class="fw-bold fs-6 text-dark d-block mt-1">Rp {{ number_format($cat['total'], 0, ',', '.') }}</span>
-                <small class="text-secondary" style="font-size: 0.75rem;">{{ $cat['count'] }} Transaksi</small>
+        <div class="col-12 col-sm-6 col-md-3 d-flex">
+            <div class="card-custom p-3 border-start border-4 border-success h-100 w-100 d-flex flex-column justify-content-between bg-white">
+                <div>
+                    <span class="text-muted small d-block text-truncate fw-semibold" title="{{ $cat['name'] }}">{{ $cat['name'] }}</span>
+                    <span class="fw-bold fs-6 text-dark d-block mt-1">Rp {{ number_format($cat['total'], 0, ',', '.') }}</span>
+                </div>
+                <small class="text-secondary mt-1.5" style="font-size: 0.75rem;">{{ $cat['count'] }} Transaksi</small>
             </div>
         </div>
     @endforeach

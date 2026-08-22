@@ -4,12 +4,12 @@
 @section('page_title', 'Kategori Belanja BOSP')
 
 @section('content')
-<div class="d-flex align-items-center justify-content-between mb-4">
-    <div class="d-flex align-items-center gap-2">
-        <a href="{{ route('expenses.index') }}" class="btn btn-light border rounded-3 px-3 fw-semibold d-flex align-items-center gap-2">
+<div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center justify-content-between gap-2 mb-4">
+    <div class="d-flex flex-wrap align-items-center gap-2">
+        <a href="{{ route('expenses.index') }}" class="btn btn-light border rounded-3 px-3 fw-semibold d-flex align-items-center justify-content-center gap-2 flex-fill flex-sm-grow-0" style="min-height: 40px;">
             <i class="bi bi-arrow-left"></i> Kembali ke Daftar Talangan
         </a>
-        <a href="{{ route('expenses.report') }}" class="btn btn-outline-danger rounded-3 px-3 fw-semibold d-flex align-items-center gap-2">
+        <a href="{{ route('expenses.report') }}" class="btn btn-outline-danger rounded-3 px-3 fw-semibold d-flex align-items-center justify-content-center gap-2 flex-fill flex-sm-grow-0" style="min-height: 40px;">
             <i class="bi bi-file-earmark-pdf"></i> Rekap Periode LPJ
         </a>
     </div>
@@ -18,7 +18,7 @@
 <div class="row g-4">
     <!-- Left Column: Add Category Form -->
     <div class="col-12 col-md-5">
-        <div class="card-custom p-4">
+        <div class="card-custom p-3 p-sm-4 bg-white">
             <h6 class="fw-bold mb-3 text-dark"><i class="bi bi-plus-circle-fill me-2 text-primary"></i> Tambah Kategori BOSP Baru</h6>
 
             @if ($errors->any())
