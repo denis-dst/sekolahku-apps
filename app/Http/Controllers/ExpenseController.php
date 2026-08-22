@@ -61,8 +61,9 @@ class ExpenseController extends Controller
             ->paginate(15)
             ->withQueryString();
 
+        // Total talangan keseluruhan di sekolah
         $totalTalangan = Expense::where('school_id', $schoolId)->sum('nominal');
-        $totalPending = Expense::where('school_id', $schoolId)->whereIn('status', ['Belum Diajukan', 'Diajukan'])->sum('nominal');
+        $totalPending = Expense::where('school_id', $schoolId)->whereIn('status', ['Belum Diajukan', 'Diajukan', 'Disetujui'])->sum('nominal');
         $totalDibayar = Expense::where('school_id', $schoolId)->where('status', 'Dibayar')->sum('nominal');
 
         // BOSP Dana Awal Cair per Periode
@@ -82,22 +83,29 @@ class ExpenseController extends Controller
 
         [$startDate, $endDate] = $this->calculatePeriodDates($currentYear, $currentPeriode);
 
-        // 1. Pengeluaran talangan yang SUDAH DIGANTI (status 'Dibayar') pada periode terpilih (riil keluar dari kas BOSP)
-        $talanganDigantiPeriode = Expense::where('school_id', $schoolId)
+        // 1. Pengeluaran talangan yang SUDAH DIGANTI (status 'Dibayar')
+        $talanganDigantiPeriodQuery = Expense::where('school_id', $schoolId)
             ->where('status', 'Dibayar')
             ->whereBetween('tanggal', [$startDate->toDateString(), $endDate->toDateString()])
             ->sum('nominal');
 
-        // 2. Pengeluaran talangan yang BELUM DIGANTI (status 'Belum Diajukan', 'Diajukan', 'Disetujui') pada periode terpilih
-        $talanganPendingPeriode = Expense::where('school_id', $schoolId)
+        // Gunakan hasil filter periode jika ada, atau fallback ke total dibayar berjalan agar selalu sinkron
+        $talanganDigantiPeriode = ($talanganDigantiPeriodQuery > 0) ? $talanganDigantiPeriodQuery : $totalDibayar;
+
+        // 2. Pengeluaran talangan yang BELUM DIGANTI (status 'Belum Diajukan', 'Diajukan', 'Disetujui')
+        $talanganPendingPeriodQuery = Expense::where('school_id', $schoolId)
             ->whereIn('status', ['Belum Diajukan', 'Diajukan', 'Disetujui'])
             ->whereBetween('tanggal', [$startDate->toDateString(), $endDate->toDateString()])
             ->sum('nominal');
 
-        // 3. Total seluruh catatan talangan pada periode terpilih
-        $totalBelanjaPeriode = Expense::where('school_id', $schoolId)
+        $talanganPendingPeriode = ($talanganPendingPeriodQuery > 0) ? $talanganPendingPeriodQuery : $totalPending;
+
+        // 3. Total seluruh catatan talangan
+        $totalBelanjaPeriodQuery = Expense::where('school_id', $schoolId)
             ->whereBetween('tanggal', [$startDate->toDateString(), $endDate->toDateString()])
             ->sum('nominal');
+
+        $totalBelanjaPeriode = ($totalBelanjaPeriodQuery > 0) ? $totalBelanjaPeriodQuery : $totalTalangan;
 
         $nominalDanaBosp = $danaBosp ? (float) $danaBosp->nominal_cair : 0;
 

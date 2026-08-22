@@ -59,19 +59,21 @@
         </div>
 
         <!-- 3 Metric Boxes -->
-        <div class="row g-3">
-            <div class="col-12 col-md-4">
-                <div class="p-3 bg-white border rounded-4 shadow-2xs h-100">
-                    <div class="d-flex justify-content-between align-items-start mb-1">
-                        <span class="text-muted small fw-semibold text-uppercase" style="font-size: 0.75rem;">Dana BOSP Cair (Awal Periode)</span>
-                        <div class="p-1.5 bg-primary-subtle text-primary rounded-3">
-                            <i class="bi bi-box-arrow-in-down fs-6"></i>
+        <div class="row g-3 align-items-stretch">
+            <div class="col-12 col-md-4 d-flex">
+                <div class="p-3.5 bg-white border rounded-4 shadow-2xs w-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-start gap-2 mb-2" style="min-height: 38px;">
+                            <span class="text-muted small fw-bold text-uppercase" style="font-size: 0.72rem; letter-spacing: 0.4px;">Dana BOSP Cair (Awal Periode)</span>
+                            <div class="p-1.5 bg-primary-subtle text-primary rounded-3 flex-shrink-0">
+                                <i class="bi bi-box-arrow-in-down fs-6"></i>
+                            </div>
                         </div>
+                        <h3 class="fw-bold text-primary m-0" style="font-size: 1.65rem;">Rp {{ number_format($nominalDanaBosp, 0, ',', '.') }}</h3>
                     </div>
-                    <h3 class="fw-bold text-primary m-0">Rp {{ number_format($nominalDanaBosp, 0, ',', '.') }}</h3>
-                    <div class="small text-muted mt-1" style="font-size: 0.78rem;">
+                    <div class="pt-2 mt-2 border-top border-light-subtle small text-muted d-flex align-items-center" style="min-height: 28px; font-size: 0.76rem;">
                         @if($danaBosp)
-                            <i class="bi bi-info-circle me-1"></i>{{ $danaBosp->catatan ?: 'Telah dialokasikan untuk operasional sekolah' }}
+                            <span class="text-truncate" title="{{ $danaBosp->catatan ?: $danaBosp->sumber_dana }}"><i class="bi bi-info-circle me-1"></i>{{ $danaBosp->catatan ?: ($danaBosp->sumber_dana . ' Cair') }}</span>
                         @else
                             <span class="text-danger"><i class="bi bi-exclamation-circle me-1"></i>Belum diatur untuk periode ini</span>
                         @endif
@@ -79,49 +81,49 @@
                 </div>
             </div>
 
-            <div class="col-12 col-md-4">
-                <div class="p-3 bg-white border rounded-4 shadow-2xs h-100">
-                    <div class="d-flex justify-content-between align-items-start mb-1">
-                        <span class="text-muted small fw-semibold text-uppercase" style="font-size: 0.75rem;">Talangan Sudah Diganti (Realisasi Kas)</span>
-                        <div class="p-1.5 bg-danger-subtle text-danger rounded-3">
-                            <i class="bi bi-cash-coin fs-6"></i>
+            <div class="col-12 col-md-4 d-flex">
+                <div class="p-3.5 bg-white border rounded-4 shadow-2xs w-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-start gap-2 mb-2" style="min-height: 38px;">
+                            <span class="text-muted small fw-bold text-uppercase" style="font-size: 0.72rem; letter-spacing: 0.4px;">Talangan Sudah Diganti (Realisasi Kas)</span>
+                            <div class="p-1.5 bg-danger-subtle text-danger rounded-3 flex-shrink-0">
+                                <i class="bi bi-cash-coin fs-6"></i>
+                            </div>
                         </div>
+                        <h3 class="fw-bold text-danger m-0" style="font-size: 1.65rem;">Rp {{ number_format($talanganDigantiPeriode, 0, ',', '.') }}</h3>
                     </div>
-                    <h3 class="fw-bold text-danger m-0">Rp {{ number_format($talanganDigantiPeriode, 0, ',', '.') }}</h3>
-                    <div class="small text-muted mt-1" style="font-size: 0.78rem;">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span>Serapan Kas Riil: <strong class="text-dark">{{ $persentaseSerapan }}%</strong></span>
-                            @if($talanganPendingPeriode > 0)
-                                <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle py-0.5 px-1.5" title="Talangan diajukan yang belum dibayarkan">
-                                    Pending: Rp {{ number_format($talanganPendingPeriode, 0, ',', '.') }}
-                                </span>
-                            @endif
-                        </div>
+                    <div class="pt-2 mt-2 border-top border-light-subtle small text-muted d-flex justify-content-between align-items-center flex-wrap gap-1" style="min-height: 28px; font-size: 0.76rem;">
+                        <span>Serapan Kas Riil: <strong class="text-dark">{{ $persentaseSerapan }}%</strong></span>
+                        @if($talanganPendingPeriode > 0)
+                            <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle py-0.5 px-1.5" title="Talangan diajukan yang belum dibayarkan">
+                                Pending: Rp {{ number_format($talanganPendingPeriode, 0, ',', '.') }}
+                            </span>
+                        @endif
                     </div>
                 </div>
             </div>
 
-            <div class="col-12 col-md-4">
-                <div class="p-3 bg-white border rounded-4 shadow-2xs h-100">
-                    <div class="d-flex justify-content-between align-items-start mb-1">
-                        <span class="text-muted small fw-semibold text-uppercase" style="font-size: 0.75rem;">Saldo Terkini Kas BOSP</span>
-                        <div class="p-1.5 {{ $saldoTerkiniBosp >= 0 ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger' }} rounded-3">
-                            <i class="bi bi-safe fs-6"></i>
-                        </div>
-                    </div>
-                    <h3 class="fw-bold {{ $saldoTerkiniBosp >= 0 ? 'text-success' : 'text-danger' }} m-0">
-                        Rp {{ number_format($saldoTerkiniBosp, 0, ',', '.') }}
-                    </h3>
-                    <div class="small text-muted mt-1" style="font-size: 0.78rem;">
-                        @if($saldoTerkiniBosp >= 0)
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="text-success"><i class="bi bi-shield-check me-1"></i>Kas Riil Tersedia</span>
-                                @if($talanganPendingPeriode > 0)
-                                    <span class="text-muted" title="Estimasi sisa saldo jika seluruh talangan pending diganti">(Est. Sisa: Rp {{ number_format($estimasiSisaSaldo, 0, ',', '.') }})</span>
-                                @endif
+            <div class="col-12 col-md-4 d-flex">
+                <div class="p-3.5 bg-white border rounded-4 shadow-2xs w-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-start gap-2 mb-2" style="min-height: 38px;">
+                            <span class="text-muted small fw-bold text-uppercase" style="font-size: 0.72rem; letter-spacing: 0.4px;">Saldo Terkini Kas BOSP</span>
+                            <div class="p-1.5 {{ $saldoTerkiniBosp >= 0 ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger' }} rounded-3 flex-shrink-0">
+                                <i class="bi bi-safe fs-6"></i>
                             </div>
+                        </div>
+                        <h3 class="fw-bold {{ $saldoTerkiniBosp >= 0 ? 'text-success' : 'text-danger' }} m-0" style="font-size: 1.65rem;">
+                            Rp {{ number_format($saldoTerkiniBosp, 0, ',', '.') }}
+                        </h3>
+                    </div>
+                    <div class="pt-2 mt-2 border-top border-light-subtle small text-muted d-flex justify-content-between align-items-center flex-wrap gap-1" style="min-height: 28px; font-size: 0.76rem;">
+                        @if($saldoTerkiniBosp >= 0)
+                            <span class="text-success"><i class="bi bi-shield-check me-1"></i>Kas Riil Tersedia</span>
+                            @if($talanganPendingPeriode > 0)
+                                <span class="text-muted" title="Estimasi sisa saldo jika seluruh talangan pending diganti">(Est. Sisa: Rp {{ number_format($estimasiSisaSaldo, 0, ',', '.') }})</span>
+                            @endif
                         @else
-                            <span class="text-danger"><i class="bi bi-shield-exclamation me-1"></i>Defisit (Pengeluaran melebihi dana awal cair)</span>
+                            <span class="text-danger"><i class="bi bi-shield-exclamation me-1"></i>Defisit Kas</span>
                         @endif
                     </div>
                 </div>
@@ -162,7 +164,7 @@
                         </div>
                     @endif
                 </div>
-                <div class="d-flex justify-content-between align-items-center mt-1 text-muted" style="font-size: 0.72rem;">
+                <div class="d-flex justify-content-between align-items-center mt-1 text-muted flex-wrap gap-2" style="font-size: 0.72rem;">
                     <span><i class="bi bi-dot text-primary fs-6"></i> Sudah Diganti: Rp {{ number_format($talanganDigantiPeriode, 0, ',', '.') }}</span>
                     @if($talanganPendingPeriode > 0)
                         <span><i class="bi bi-dot text-warning fs-6"></i> Belum Diganti: Rp {{ number_format($talanganPendingPeriode, 0, ',', '.') }}</span>
@@ -174,23 +176,47 @@
     </div>
 
     <!-- KPI Summary Cards (Talangan Status) -->
-    <div class="row g-3 mb-4">
-        <div class="col-12 col-md-4">
-            <div class="card-custom p-3 border-start border-primary border-4">
-                <span class="text-muted small fw-semibold text-uppercase">Total Seluruh Talangan Dicatat</span>
-                <h4 class="fw-bold m-0 text-dark">Rp {{ number_format($totalTalangan, 0, ',', '.') }}</h4>
+    <div class="row g-3 mb-4 align-items-stretch">
+        <div class="col-12 col-md-4 d-flex">
+            <div class="card-custom p-3.5 w-100 rounded-4 shadow-sm d-flex flex-column justify-content-between" style="border: 2.5px solid #0d6efd; background: #ffffff;">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2" style="min-height: 38px;">
+                    <span class="text-muted small fw-bold text-uppercase" style="font-size: 0.73rem; letter-spacing: 0.3px; line-height: 1.35;">Total Seluruh Talangan Dicatat</span>
+                    <div class="p-1.5 bg-primary-subtle text-primary rounded-3 flex-shrink-0">
+                        <i class="bi bi-receipt fs-6"></i>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="fw-bold m-0 text-dark" style="font-size: 1.55rem;">Rp {{ number_format($totalTalangan, 0, ',', '.') }}</h4>
+                    <small class="text-muted d-block mt-1" style="font-size: 0.75rem;">Semua catatan transaksi pengeluaran</small>
+                </div>
             </div>
         </div>
-        <div class="col-12 col-md-4">
-            <div class="card-custom p-3 border-start border-warning border-4">
-                <span class="text-muted small fw-semibold text-uppercase">Belum Diganti (Menunggu Reimburse)</span>
-                <h4 class="fw-bold m-0 text-warning">Rp {{ number_format($totalPending, 0, ',', '.') }}</h4>
+        <div class="col-12 col-md-4 d-flex">
+            <div class="card-custom p-3.5 w-100 rounded-4 shadow-sm d-flex flex-column justify-content-between" style="border: 2.5px solid #ffc107; background: #ffffff;">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2" style="min-height: 38px;">
+                    <span class="text-muted small fw-bold text-uppercase" style="font-size: 0.73rem; letter-spacing: 0.3px; line-height: 1.35;">Belum Diganti (Menunggu Reimburse)</span>
+                    <div class="p-1.5 bg-warning-subtle text-warning-emphasis rounded-3 flex-shrink-0">
+                        <i class="bi bi-hourglass-split fs-6"></i>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="fw-bold m-0 text-warning" style="font-size: 1.55rem;">Rp {{ number_format($totalPending, 0, ',', '.') }}</h4>
+                    <small class="text-muted d-block mt-1" style="font-size: 0.75rem;">Status Belum Diajukan / Diajukan / Disetujui</small>
+                </div>
             </div>
         </div>
-        <div class="col-12 col-md-4">
-            <div class="card-custom p-3 border-start border-success border-4">
-                <span class="text-muted small fw-semibold text-uppercase">Sudah Diganti (Telah Direimburse)</span>
-                <h4 class="fw-bold m-0 text-success">Rp {{ number_format($totalDibayar, 0, ',', '.') }}</h4>
+        <div class="col-12 col-md-4 d-flex">
+            <div class="card-custom p-3.5 w-100 rounded-4 shadow-sm d-flex flex-column justify-content-between" style="border: 2.5px solid #198754; background: #ffffff;">
+                <div class="d-flex justify-content-between align-items-start gap-2 mb-2" style="min-height: 38px;">
+                    <span class="text-muted small fw-bold text-uppercase" style="font-size: 0.73rem; letter-spacing: 0.3px; line-height: 1.35;">Sudah Diganti (Telah Direimburse)</span>
+                    <div class="p-1.5 bg-success-subtle text-success rounded-3 flex-shrink-0">
+                        <i class="bi bi-check-circle-fill fs-6"></i>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="fw-bold m-0 text-success" style="font-size: 1.55rem;">Rp {{ number_format($totalDibayar, 0, ',', '.') }}</h4>
+                    <small class="text-muted d-block mt-1" style="font-size: 0.75rem;">Dana talangan telah dicairkan ke pengaju</small>
+                </div>
             </div>
         </div>
     </div>
