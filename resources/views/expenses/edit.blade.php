@@ -6,9 +6,9 @@
 @section('content')
 <div class="row justify-content-center">
     <div class="col-12 col-md-8 col-lg-7">
-        <div class="card-custom p-4">
+        <div class="card-custom p-3 p-sm-4 bg-white">
             <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
-                <a href="{{ route('expenses.show', $expense->id) }}" class="btn btn-light rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                <a href="{{ route('expenses.show', $expense->id) }}" class="btn btn-light rounded-2 border d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;" title="Kembali">
                     <i class="bi bi-arrow-left fs-5"></i>
                 </a>
                 <div>
@@ -32,8 +32,8 @@
                 @method('PUT')
 
                 <div class="mb-3">
-                    <label for="expense_category_id" class="form-label fw-semibold text-secondary">Kategori BOSP <span class="text-danger">*</span></label>
-                    <select name="expense_category_id" id="expense_category_id" class="form-select bg-light" required>
+                    <label for="expense_category_id" class="form-label fw-semibold text-secondary small">Kategori BOSP <span class="text-danger">*</span></label>
+                    <select name="expense_category_id" id="expense_category_id" class="form-select bg-light" required style="min-height: 42px;">
                         @foreach($categories as $cat)
                             <option value="{{ $cat->id }}" {{ old('expense_category_id', $expense->expense_category_id) == $cat->id ? 'selected' : '' }}>
                                 {{ $cat->nama_kategori }} ({{ $cat->kode_bosp ?: 'BOSP' }})
@@ -44,15 +44,15 @@
 
                 <div class="row g-3 mb-3">
                     <div class="col-12 col-sm-6">
-                        <label for="tanggal" class="form-label fw-semibold text-secondary">Tanggal Pengeluaran <span class="text-danger">*</span></label>
-                        <input type="date" name="tanggal" id="tanggal" class="form-control bg-light" value="{{ old('tanggal', $expense->tanggal->format('Y-m-d')) }}" required>
+                        <label for="tanggal" class="form-label fw-semibold text-secondary small">Tanggal Pengeluaran <span class="text-danger">*</span></label>
+                        <input type="date" name="tanggal" id="tanggal" class="form-control bg-light" value="{{ old('tanggal', $expense->tanggal->format('Y-m-d')) }}" required style="min-height: 42px;">
                     </div>
 
                     <div class="col-12 col-sm-6">
-                        <label for="nominal" class="form-label fw-semibold text-secondary">Nominal Talangan (Rp) <span class="text-danger">*</span></label>
+                        <label for="nominal" class="form-label fw-semibold text-secondary small">Nominal Talangan (Rp) <span class="text-danger">*</span></label>
                         <div class="input-group">
                             <span class="input-group-text bg-light fw-bold text-muted">Rp</span>
-                            <input type="text" inputmode="numeric" name="nominal" id="nominal" class="form-control bg-light fw-bold rupiah-input" value="{{ old('nominal', number_format($expense->nominal, 0, ',', '.')) }}" required autocomplete="off">
+                            <input type="text" inputmode="numeric" name="nominal" id="nominal" class="form-control bg-light fw-bold rupiah-input" value="{{ old('nominal', number_format($expense->nominal, 0, ',', '.')) }}" required autocomplete="off" style="min-height: 42px;">
                         </div>
                         <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">
                             <i class="bi bi-info-circle me-1"></i>Hanya angka tanpa simbol dan huruf
@@ -61,30 +61,30 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="uraian" class="form-label fw-semibold text-secondary">Uraian / Keperluan <span class="text-danger">*</span></label>
+                    <label for="uraian" class="form-label fw-semibold text-secondary small">Uraian / Keperluan <span class="text-danger">*</span></label>
                     <textarea name="uraian" id="uraian" rows="2" class="form-control bg-light" placeholder="Contoh: Beli Kertas HVS & Tinta Printer" required>{{ old('uraian', $expense->uraian) }}</textarea>
                 </div>
 
                 <div class="row g-3 mb-3">
                     <div class="col-12 col-sm-6">
-                        <label for="toko_vendor" class="form-label fw-semibold text-secondary">Nama Toko / Vendor</label>
-                        <input type="text" name="toko_vendor" id="toko_vendor" class="form-control bg-light" placeholder="Contoh: Fotocopy Sejahtera" value="{{ old('toko_vendor', $expense->toko_vendor) }}">
+                        <label for="toko_vendor" class="form-label fw-semibold text-secondary small">Nama Toko / Vendor</label>
+                        <input type="text" name="toko_vendor" id="toko_vendor" class="form-control bg-light" placeholder="Contoh: Fotocopy Sejahtera" value="{{ old('toko_vendor', $expense->toko_vendor) }}" style="min-height: 42px;">
                     </div>
                     <div class="col-12 col-sm-6">
-                        <label for="lokasi" class="form-label fw-semibold text-secondary">Lokasi / Kota</label>
-                        <input type="text" name="lokasi" id="lokasi" class="form-control bg-light" placeholder="Contoh: Sukajadi" value="{{ old('lokasi', $expense->lokasi) }}">
+                        <label for="lokasi" class="form-label fw-semibold text-secondary small">Lokasi / Kota</label>
+                        <input type="text" name="lokasi" id="lokasi" class="form-control bg-light" placeholder="Contoh: Sukajadi" value="{{ old('lokasi', $expense->lokasi) }}" style="min-height: 42px;">
                     </div>
                 </div>
 
                 <div class="mb-4">
-                    <label class="form-label fw-semibold text-secondary">Tambah Foto Bukti Nota / Resi Tambahan</label>
-                    <input type="file" name="receipts[]" class="form-control bg-light" accept="image/*,application/pdf" multiple>
+                    <label class="form-label fw-semibold text-secondary small">Tambah Foto Bukti Nota / Resi Tambahan</label>
+                    <input type="file" name="receipts[]" class="form-control bg-light" accept="image/*,application/pdf" multiple style="min-height: 42px;">
                     <small class="text-muted">Format didukung: JPG, PNG, HEIC, PDF (Max 5MB)</small>
                 </div>
 
-                <div class="d-flex gap-2">
-                    <a href="{{ route('expenses.show', $expense->id) }}" class="btn btn-light border py-2 px-4 rounded-3 text-muted fw-semibold">Batal</a>
-                    <button type="submit" class="btn btn-primary flex-fill py-2 rounded-3 fw-bold">
+                <div class="d-flex flex-column flex-sm-row gap-2">
+                    <a href="{{ route('expenses.show', $expense->id) }}" class="btn btn-light border py-2 px-4 rounded-3 text-muted fw-semibold d-flex align-items-center justify-content-center" style="min-height: 44px;">Batal</a>
+                    <button type="submit" class="btn btn-primary flex-fill py-2 rounded-3 fw-bold shadow-xs d-flex align-items-center justify-content-center" style="min-height: 44px;">
                         <i class="bi bi-save me-1"></i> Simpan Perubahan
                     </button>
                 </div>

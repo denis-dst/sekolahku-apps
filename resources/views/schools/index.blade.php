@@ -19,7 +19,7 @@
                 $canAdd = $tenant->canAddSchool();
                 $count = $schools->count();
             @endphp
-            <div class="px-3 py-2 bg-light border rounded-3 text-start text-sm-end">
+            <div class="px-3 py-2 bg-light-subtle border rounded-3 text-start text-sm-end">
                 <span class="small text-muted d-block" style="font-size: 0.75rem;">Kuota Unit Lisensi:</span>
                 <span class="fw-bold text-dark">{{ $count }} / {{ $maxSchools == 0 ? 'Unlimited' : $maxSchools }} Unit</span>
             </div>
@@ -43,7 +43,7 @@
                 $isActiveContext = (Auth::user()->school_id == $s->id);
             @endphp
             <div class="col-12 col-md-6 col-xl-4 d-flex">
-                <div class="card h-100 w-100 rounded-3 border {{ $isActiveContext ? 'border-primary border-2 shadow-xs' : 'border-light-subtle' }} p-3.5 d-flex flex-column justify-content-between" style="background: #ffffff;">
+                <div class="card h-100 w-100 rounded-3 border {{ $isActiveContext ? 'border-primary border-2 shadow-xs' : 'border-light-subtle' }} p-3.5 d-flex flex-column justify-content-between bg-white">
                     <div>
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <span class="badge bg-light text-dark border rounded-2 px-2.5 py-1">
@@ -56,8 +56,8 @@
                             @else
                                 <form action="{{ route('schools.switch', $s->id) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="btn btn-outline-primary btn-sm rounded-2 px-2.5 py-1 fw-semibold" style="font-size: 0.78rem;">
-                                        Kelola Unit
+                                    <button type="submit" class="btn btn-outline-primary btn-sm rounded-2 px-2.5 py-1 fw-semibold d-flex align-items-center gap-1" style="min-height: 36px; font-size: 0.78rem;">
+                                        <i class="bi bi-box-arrow-in-right"></i> Kelola Unit
                                     </button>
                                 </form>
                             @endif
@@ -104,19 +104,19 @@
             </div>
             <form action="{{ route('schools.store') }}" method="POST">
                 @csrf
-                <div class="modal-body p-4">
+                <div class="modal-body p-3 p-sm-4">
                     <div class="row g-3">
                         <div class="col-12 col-md-8">
-                            <label class="form-label fw-semibold">Nama Unit Sekolah <span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control" placeholder="Contoh: SD Islam Al-Falah 02" required>
+                            <label class="form-label fw-semibold text-secondary small">Nama Unit Sekolah <span class="text-danger">*</span></label>
+                            <input type="text" name="name" class="form-control bg-light" placeholder="Contoh: SD Islam Al-Falah 02" required style="min-height: 42px;">
                         </div>
                         <div class="col-12 col-md-4">
-                            <label class="form-label fw-semibold">NPSN (Opsional)</label>
-                            <input type="text" name="npsn" class="form-control" placeholder="20109988">
+                            <label class="form-label fw-semibold text-secondary small">NPSN (Opsional)</label>
+                            <input type="text" name="npsn" class="form-control bg-light" placeholder="20109988" style="min-height: 42px;">
                         </div>
                         <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold">Jenjang Pendidikan <span class="text-danger">*</span></label>
-                            <select name="jenjang" class="form-select" required>
+                            <label class="form-label fw-semibold text-secondary small">Jenjang Pendidikan <span class="text-danger">*</span></label>
+                            <select name="jenjang" class="form-select bg-light" required style="min-height: 42px;">
                                 <option value="PAUD/TK/RA">PAUD / TK / RA</option>
                                 <option value="SD/MI">SD / MI</option>
                                 <option value="SMP/MTs">SMP / MTs</option>
@@ -125,26 +125,26 @@
                             </select>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold">No. HP / Telepon Unit</label>
-                            <input type="text" name="phone" class="form-control" placeholder="081234567890">
+                            <label class="form-label fw-semibold text-secondary small">No. HP / Telepon Unit</label>
+                            <input type="text" name="phone" class="form-control bg-light" placeholder="081234567890" style="min-height: 42px;">
                         </div>
                         <div class="col-12">
-                            <label class="form-label fw-semibold">Alamat Sekolah</label>
-                            <textarea name="address" rows="2" class="form-control" placeholder="Jl. Raya Pendidikan No..."></textarea>
+                            <label class="form-label fw-semibold text-secondary small">Alamat Sekolah</label>
+                            <textarea name="address" rows="2" class="form-control bg-light" placeholder="Jl. Raya Pendidikan No..."></textarea>
                         </div>
                         <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold">Nama Kepala Sekolah</label>
-                            <input type="text" name="kepala_sekolah_nama" class="form-control" placeholder="Dra. Hj. Siti...">
+                            <label class="form-label fw-semibold text-secondary small">Nama Kepala Sekolah</label>
+                            <input type="text" name="kepala_sekolah_nama" class="form-control bg-light" placeholder="Dra. Hj. Siti..." style="min-height: 42px;">
                         </div>
                         <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold">Nama Bendahara Sekolah</label>
-                            <input type="text" name="bendahara_nama" class="form-control" placeholder="Ahmadi, S.E.">
+                            <label class="form-label fw-semibold text-secondary small">Nama Bendahara Sekolah</label>
+                            <input type="text" name="bendahara_nama" class="form-control bg-light" placeholder="Ahmadi, S.E." style="min-height: 42px;">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-light rounded-3" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold">
+                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                    <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold shadow-xs" style="min-height: 40px;">
                         <i class="bi bi-check-lg me-1"></i> Simpan Unit Sekolah
                     </button>
                 </div>

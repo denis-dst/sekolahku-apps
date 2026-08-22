@@ -33,12 +33,13 @@
         }
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: linear-gradient(135deg, #115e59 0%, #0f766e 50%, #0369a1 100%);
+            background-color: #f8fafc;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 1.5rem;
+            color: #0f172a;
         }
 
         .btn-primary {
@@ -53,42 +54,45 @@
         }
 
         .login-card {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 1.5rem;
-            box-shadow: 0 25px 60px rgba(15, 23, 42, 0.35);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1.25rem;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
             width: 100%;
             max-width: 450px;
             overflow: hidden;
         }
 
         .brand-badge {
-            width: 56px;
-            height: 56px;
-            border-radius: 1.25rem;
-            background: linear-gradient(135deg, #0f766e 0%, #0369a1 100%);
+            width: 54px;
+            height: 54px;
+            border-radius: 1rem;
+            background: #0f766e;
             color: #ffffff;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 8px 20px rgba(15, 118, 110, 0.3);
+        }
+
+        .form-control {
+            min-height: 44px;
+            border-radius: 0.5rem;
         }
 
         .form-control:focus {
             border-color: #0f766e;
-            box-shadow: 0 0 0 0.25rem rgba(15, 118, 110, 0.15);
+            box-shadow: 0 0 0 0.2rem rgba(15, 118, 110, 0.15);
         }
 
-        .demo-pill {
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 0.8rem;
+        .input-group-text {
+            min-height: 44px;
+            border-radius: 0.5rem;
         }
 
-        .demo-pill:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
+        @media (max-width: 575.98px) {
+            .form-control, .form-select {
+                font-size: 16px !important;
+            }
         }
     </style>
 </head>
@@ -98,23 +102,23 @@
         <div class="login-card p-4 p-sm-5">
             <div class="text-center mb-4">
                 <a href="{{ url('/') }}" class="text-decoration-none">
-                    <div class="brand-badge mb-3">
+                    <div class="brand-badge mb-2.5">
                         <i class="bi bi-mortarboard-fill fs-2"></i>
                     </div>
                     <h1 class="fw-bold fs-3 mb-1" style="font-family: 'Outfit'; color:#0f172a;">SekolahKu SaaS</h1>
                 </a>
-                <p class="text-muted small">SIM Akademik & Digital Finance Sekolah</p>
+                <p class="text-muted small m-0">SIM Akademik & Digital Finance Sekolah</p>
             </div>
 
             @if(session('success'))
-                <div class="alert alert-success rounded-3 small py-2.5 mb-3 d-flex align-items-center gap-2">
+                <div class="alert alert-success rounded-3 small py-2.5 mb-3 d-flex align-items-center gap-2 border border-success-subtle bg-success-subtle text-success">
                     <i class="bi bi-check-circle-fill fs-5"></i>
                     <div>{{ session('success') }}</div>
                 </div>
             @endif
 
             @if(session('success_pending'))
-                <div class="alert alert-warning rounded-3 small py-3 mb-3 border-warning">
+                <div class="alert alert-warning rounded-3 small py-3 mb-3 border-warning-subtle bg-warning-subtle text-dark">
                     <div class="d-flex align-items-start gap-2">
                         <i class="bi bi-hourglass-split fs-5 text-warning"></i>
                         <div>
@@ -126,7 +130,7 @@
             @endif
 
             @if($errors->any())
-                <div class="alert alert-danger rounded-3 small py-2 mb-3">
+                <div class="alert alert-danger rounded-3 small py-2.5 mb-3 border border-danger-subtle bg-danger-subtle text-danger">
                     <i class="bi bi-exclamation-circle me-1"></i> {{ $errors->first() }}
                 </div>
             @endif
@@ -134,7 +138,7 @@
             <form action="{{ route('login') }}" method="POST">
                 @csrf
                 <div class="mb-3">
-                    <label class="form-label small fw-semibold text-dark" for="email">Alamat Email</label>
+                    <label class="form-label small fw-semibold text-secondary" for="email">Alamat Email</label>
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0"><i
                                 class="bi bi-envelope text-muted"></i></span>
@@ -143,10 +147,8 @@
                     </div>
                 </div>
 
-                <div class="mb-4">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <label class="form-label small fw-semibold text-dark" for="password">Kata Sandi</label>
-                    </div>
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold text-secondary" for="password">Kata Sandi</label>
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0"><i class="bi bi-lock text-muted"></i></span>
                         <input type="password" name="password" id="password" class="form-control bg-light border-start-0"
@@ -161,7 +163,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary w-100 py-2.5 rounded-3 fw-semibold shadow-sm mb-3">
+                <button type="submit" class="btn btn-primary w-100 py-2.5 rounded-3 fw-bold shadow-xs mb-3" style="min-height: 44px;">
                     Masuk ke Sistem <i class="bi bi-arrow-right ms-1"></i>
                 </button>
             </form>

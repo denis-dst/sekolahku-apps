@@ -4,7 +4,7 @@
 @section('page_title', 'Halaman Publik CMS')
 
 @section('content')
-<div class="card-custom p-4 mb-4">
+<div class="card-custom p-3 p-sm-4 mb-4 bg-white">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h5 class="fw-bold text-dark m-0">Daftar Halaman Publik Informatif</h5>
@@ -14,27 +14,27 @@
 
     <div class="table-responsive">
         <table class="table table-hover align-middle">
-            <thead class="table-dark">
+            <thead class="table-light text-uppercase" style="font-size: 0.8rem; letter-spacing: 0.5px;">
                 <tr>
-                    <th>No</th>
+                    <th style="width: 45px;">No</th>
                     <th>Judul Halaman</th>
                     <th>Slug URL</th>
                     <th>Detail Kontak Terkait</th>
                     <th>Status Halaman</th>
                     <th>Terakhir Diperbarui</th>
-                    <th class="text-center">Aksi Superadmin</th>
+                    <th class="text-center" style="width: 180px;">Aksi Superadmin</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($pages as $idx => $p)
                     <tr>
-                        <td>{{ $idx + 1 }}</td>
+                        <td class="text-muted fw-semibold">{{ $idx + 1 }}</td>
                         <td>
                             <div class="fw-bold text-dark">{{ $p->title }}</div>
                             <small class="text-muted">{{ Str::limit(strip_tags($p->content), 60) }}</small>
                         </td>
                         <td>
-                            <span class="badge bg-light text-dark border font-monospace">/{{ $p->slug }}</span>
+                            <span class="badge bg-light text-dark border font-monospace rounded-2">/{{ $p->slug }}</span>
                         </td>
                         <td>
                             @if($p->contact_email || $p->contact_phone)
@@ -46,28 +46,28 @@
                         </td>
                         <td>
                             @if($p->is_active)
-                                <span class="badge bg-success-subtle text-success border"><i class="bi bi-check-circle me-1"></i> Aktif</span>
+                                <span class="badge bg-success-subtle text-success border border-success-subtle rounded-2"><i class="bi bi-check-circle me-1"></i> Aktif</span>
                             @else
-                                <span class="badge bg-secondary-subtle text-secondary border"><i class="bi bi-eye-slash me-1"></i> Sembunyi</span>
+                                <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle rounded-2"><i class="bi bi-eye-slash me-1"></i> Sembunyi</span>
                             @endif
                         </td>
                         <td>
                             <small class="text-muted">{{ $p->updated_at ? $p->updated_at->format('d/m/Y H:i') : '-' }}</small>
                         </td>
                         <td class="text-center">
-                            <div class="d-flex gap-2 justify-content-center">
-                                <a href="{{ url($p->slug) }}" target="_blank" class="btn btn-sm btn-outline-secondary rounded-3" title="Lihat Halaman Publik">
+                            <div class="d-flex gap-1.5 justify-content-center flex-wrap">
+                                <a href="{{ url($p->slug) }}" target="_blank" class="btn btn-sm btn-outline-secondary rounded-2 px-2.5 py-1" title="Lihat Halaman Publik" style="min-height: 34px;">
                                     <i class="bi bi-box-arrow-up-right me-1"></i> Lihat
                                 </a>
-                                <a href="{{ route('admin.pages.edit', $p->id) }}" class="btn btn-sm btn-primary rounded-3 fw-bold">
-                                    <i class="bi bi-pencil-square me-1"></i> Edit Materi & Detail
+                                <a href="{{ route('admin.pages.edit', $p->id) }}" class="btn btn-sm btn-primary rounded-2 fw-semibold px-2.5 py-1 shadow-xs" style="min-height: 34px;">
+                                    <i class="bi bi-pencil-square me-1"></i> Edit
                                 </a>
                             </div>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="text-center text-muted py-4">Belum ada halaman publik yang diatur.</td>
+                        <td colspan="7" class="text-center text-muted py-5">Belum ada halaman publik yang diatur.</td>
                     </tr>
                 @endforelse
             </tbody>
