@@ -51,6 +51,19 @@
             background-color: var(--sk-bg);
             color: #334155;
             min-height: 100vh;
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+
+        html {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+
+        .main-content {
+            min-width: 0;
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
         h1, h2, h3, h4, h5, h6, .navbar-brand {
