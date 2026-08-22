@@ -81,13 +81,40 @@ class ExpenseController extends Controller
             ->get();
 
         [$startDate, $endDate] = $this->calculatePeriodDates($currentYear, $currentPeriode);
-        $realisasiPeriode = Expense::where('school_id', $schoolId)
+
+        // 1. Pengeluaran talangan yang SUDAH DIGANTI (status 'Dibayar') pada periode terpilih (riil keluar dari kas BOSP)
+        $talanganDigantiPeriode = Expense::where('school_id', $schoolId)
+            ->where('status', 'Dibayar')
+            ->whereBetween('tanggal', [$startDate->toDateString(), $endDate->toDateString()])
+            ->sum('nominal');
+
+        // 2. Pengeluaran talangan yang BELUM DIGANTI (status 'Belum Diajukan', 'Diajukan', 'Disetujui') pada periode terpilih
+        $talanganPendingPeriode = Expense::where('school_id', $schoolId)
+            ->whereIn('status', ['Belum Diajukan', 'Diajukan', 'Disetujui'])
+            ->whereBetween('tanggal', [$startDate->toDateString(), $endDate->toDateString()])
+            ->sum('nominal');
+
+        // 3. Total seluruh catatan talangan pada periode terpilih
+        $totalBelanjaPeriode = Expense::where('school_id', $schoolId)
             ->whereBetween('tanggal', [$startDate->toDateString(), $endDate->toDateString()])
             ->sum('nominal');
 
         $nominalDanaBosp = $danaBosp ? (float) $danaBosp->nominal_cair : 0;
-        $sisaSaldoBosp = $nominalDanaBosp - $realisasiPeriode;
-        $persentaseSerapan = $nominalDanaBosp > 0 ? min(100, round(($realisasiPeriode / $nominalDanaBosp) * 100, 1)) : 0;
+
+        // 4. Saldo Terkini Kas BOSP = Dana BOSP Cair - Pengeluaran Talangan yang Sudah Diganti (Reimburse)
+        $saldoTerkiniBosp = $nominalDanaBosp - $talanganDigantiPeriode;
+
+        // 5. Estimasi sisa saldo jika semua talangan pending dicairkan
+        $estimasiSisaSaldo = $nominalDanaBosp - $totalBelanjaPeriode;
+
+        // 6. Persentase serapan kas BOSP riil (dari talangan yang sudah dibayarkan/diganti)
+        $persentaseSerapan = $nominalDanaBosp > 0 ? min(100, round(($talanganDigantiPeriode / $nominalDanaBosp) * 100, 1)) : 0;
+        $persentasePending = $nominalDanaBosp > 0 ? min(100 - $persentaseSerapan, round(($talanganPendingPeriode / $nominalDanaBosp) * 100, 1)) : 0;
+        $persentaseKomitmen = $nominalDanaBosp > 0 ? min(100, round(($totalBelanjaPeriode / $nominalDanaBosp) * 100, 1)) : 0;
+
+        // Backwards-compatible aliases
+        $realisasiPeriode = $talanganDigantiPeriode;
+        $sisaSaldoBosp = $saldoTerkiniBosp;
 
         return view('expenses.index', compact(
             'categories',
@@ -101,8 +128,15 @@ class ExpenseController extends Controller
             'currentPeriode',
             'nominalDanaBosp',
             'realisasiPeriode',
+            'talanganDigantiPeriode',
+            'talanganPendingPeriode',
+            'totalBelanjaPeriode',
+            'saldoTerkiniBosp',
             'sisaSaldoBosp',
+            'estimasiSisaSaldo',
             'persentaseSerapan',
+            'persentasePending',
+            'persentaseKomitmen',
             'startDate',
             'endDate'
         ));

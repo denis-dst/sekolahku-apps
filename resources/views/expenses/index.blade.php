@@ -20,9 +20,12 @@
                             <i class="bi bi-check-circle me-1"></i> Cair: {{ $danaBosp->tanggal_cair->format('d/m/Y') }}
                         </span>
                     @endif
+                    <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-2.5 py-1 rounded-pill" style="font-size: 0.75rem;">
+                        <i class="bi bi-clock-history me-1"></i> {{ $startDate->translatedFormat('d M') }} - {{ $endDate->translatedFormat('d M Y') }}
+                    </span>
                 </div>
-                <h5 class="fw-bold text-dark m-0">Anggaran & Realisasi Dana BOSP</h5>
-                <small class="text-muted">Pantau dana pencairan awal BOSP, serapan operasional, dan sisa saldo kas sekolah.</small>
+                <h5 class="fw-bold text-dark m-0">Anggaran & Saldo Terkini Kas Dana BOSP</h5>
+                <small class="text-muted">Pantau dana pencairan awal BOSP, pengeluaran talangan yang sudah diganti (reimburse), dan saldo kas terkini sekolah.</small>
             </div>
 
             <div class="d-flex align-items-center gap-2 flex-wrap">
@@ -60,7 +63,7 @@
             <div class="col-12 col-md-4">
                 <div class="p-3 bg-white border rounded-4 shadow-2xs h-100">
                     <div class="d-flex justify-content-between align-items-start mb-1">
-                        <span class="text-muted small fw-semibold text-uppercase" style="font-size: 0.75rem;">Dana BOSP Cair (Awal)</span>
+                        <span class="text-muted small fw-semibold text-uppercase" style="font-size: 0.75rem;">Dana BOSP Cair (Awal Periode)</span>
                         <div class="p-1.5 bg-primary-subtle text-primary rounded-3">
                             <i class="bi bi-box-arrow-in-down fs-6"></i>
                         </div>
@@ -79,15 +82,21 @@
             <div class="col-12 col-md-4">
                 <div class="p-3 bg-white border rounded-4 shadow-2xs h-100">
                     <div class="d-flex justify-content-between align-items-start mb-1">
-                        <span class="text-muted small fw-semibold text-uppercase" style="font-size: 0.75rem;">Realisasi Belanja Periode Ini</span>
+                        <span class="text-muted small fw-semibold text-uppercase" style="font-size: 0.75rem;">Talangan Sudah Diganti (Realisasi Kas)</span>
                         <div class="p-1.5 bg-danger-subtle text-danger rounded-3">
-                            <i class="bi bi-cart-check fs-6"></i>
+                            <i class="bi bi-cash-coin fs-6"></i>
                         </div>
                     </div>
-                    <h3 class="fw-bold text-danger m-0">Rp {{ number_format($realisasiPeriode, 0, ',', '.') }}</h3>
-                    <div class="small text-muted mt-1 d-flex justify-content-between align-items-center" style="font-size: 0.78rem;">
-                        <span>Serapan Anggaran:</span>
-                        <strong class="text-dark">{{ $persentaseSerapan }}%</strong>
+                    <h3 class="fw-bold text-danger m-0">Rp {{ number_format($talanganDigantiPeriode, 0, ',', '.') }}</h3>
+                    <div class="small text-muted mt-1" style="font-size: 0.78rem;">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Serapan Kas Riil: <strong class="text-dark">{{ $persentaseSerapan }}%</strong></span>
+                            @if($talanganPendingPeriode > 0)
+                                <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle py-0.5 px-1.5" title="Talangan diajukan yang belum dibayarkan">
+                                    Pending: Rp {{ number_format($talanganPendingPeriode, 0, ',', '.') }}
+                                </span>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
@@ -95,19 +104,24 @@
             <div class="col-12 col-md-4">
                 <div class="p-3 bg-white border rounded-4 shadow-2xs h-100">
                     <div class="d-flex justify-content-between align-items-start mb-1">
-                        <span class="text-muted small fw-semibold text-uppercase" style="font-size: 0.75rem;">Sisa Saldo Kas BOSP</span>
-                        <div class="p-1.5 {{ $sisaSaldoBosp >= 0 ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger' }} rounded-3">
+                        <span class="text-muted small fw-semibold text-uppercase" style="font-size: 0.75rem;">Saldo Terkini Kas BOSP</span>
+                        <div class="p-1.5 {{ $saldoTerkiniBosp >= 0 ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger' }} rounded-3">
                             <i class="bi bi-safe fs-6"></i>
                         </div>
                     </div>
-                    <h3 class="fw-bold {{ $sisaSaldoBosp >= 0 ? 'text-success' : 'text-danger' }} m-0">
-                        Rp {{ number_format($sisaSaldoBosp, 0, ',', '.') }}
+                    <h3 class="fw-bold {{ $saldoTerkiniBosp >= 0 ? 'text-success' : 'text-danger' }} m-0">
+                        Rp {{ number_format($saldoTerkiniBosp, 0, ',', '.') }}
                     </h3>
                     <div class="small text-muted mt-1" style="font-size: 0.78rem;">
-                        @if($sisaSaldoBosp >= 0)
-                            <span class="text-success"><i class="bi bi-shield-check me-1"></i>Kondisi Kas Aman / Tersedia</span>
+                        @if($saldoTerkiniBosp >= 0)
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-success"><i class="bi bi-shield-check me-1"></i>Kas Riil Tersedia</span>
+                                @if($talanganPendingPeriode > 0)
+                                    <span class="text-muted" title="Estimasi sisa saldo jika seluruh talangan pending diganti">(Est. Sisa: Rp {{ number_format($estimasiSisaSaldo, 0, ',', '.') }})</span>
+                                @endif
+                            </div>
                         @else
-                            <span class="text-danger"><i class="bi bi-shield-exclamation me-1"></i>Defisit (Belanja melebihi dana awal)</span>
+                            <span class="text-danger"><i class="bi bi-shield-exclamation me-1"></i>Defisit (Pengeluaran melebihi dana awal cair)</span>
                         @endif
                     </div>
                 </div>
@@ -118,17 +132,42 @@
         @if($nominalDanaBosp > 0)
             <div class="mt-3 pt-2">
                 <div class="d-flex justify-content-between align-items-center small mb-1">
-                    <span class="text-muted" style="font-size: 0.78rem;">Progress Serapan Dana BOSP ({{ $currentPeriode }} {{ $currentYear }}):</span>
-                    <span class="fw-bold text-dark" style="font-size: 0.78rem;">{{ $persentaseSerapan }}% Terpakai</span>
+                    <span class="text-muted" style="font-size: 0.78rem;">
+                        Progress Serapan Kas BOSP Periode {{ $currentPeriode }} {{ $currentYear }}:
+                    </span>
+                    <span class="fw-bold text-dark" style="font-size: 0.78rem;">
+                        {{ $persentaseSerapan }}% Terpakai (Reimburse Selesai)
+                        @if($talanganPendingPeriode > 0)
+                            <span class="text-warning fw-semibold ms-1">(+{{ $persentasePending }}% Pending)</span>
+                        @endif
+                    </span>
                 </div>
-                <div class="progress" style="height: 9px; border-radius: 10px; background-color: #e2e8f0;">
-                    <div class="progress-bar {{ $persentaseSerapan > 90 ? 'bg-danger' : ($persentaseSerapan > 70 ? 'bg-warning' : 'bg-primary') }}" 
+                <div class="progress" style="height: 10px; border-radius: 10px; background-color: #e2e8f0;">
+                    <div class="progress-bar bg-primary" 
                          role="progressbar" 
-                         style="width: {{ $persentaseSerapan }}%; border-radius: 10px;" 
+                         style="width: {{ $persentaseSerapan }}%; border-radius: 10px 0 0 10px;" 
                          aria-valuenow="{{ $persentaseSerapan }}" 
                          aria-valuemin="0" 
-                         aria-valuemax="100">
+                         aria-valuemax="100"
+                         title="Sudah Diganti: {{ $persentaseSerapan }}%">
                     </div>
+                    @if($talanganPendingPeriode > 0)
+                        <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" 
+                             role="progressbar" 
+                             style="width: {{ $persentasePending }}%;" 
+                             aria-valuenow="{{ $persentasePending }}" 
+                             aria-valuemin="0" 
+                             aria-valuemax="100"
+                             title="Pending Penggantian: {{ $persentasePending }}%">
+                        </div>
+                    @endif
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-1 text-muted" style="font-size: 0.72rem;">
+                    <span><i class="bi bi-dot text-primary fs-6"></i> Sudah Diganti: Rp {{ number_format($talanganDigantiPeriode, 0, ',', '.') }}</span>
+                    @if($talanganPendingPeriode > 0)
+                        <span><i class="bi bi-dot text-warning fs-6"></i> Belum Diganti: Rp {{ number_format($talanganPendingPeriode, 0, ',', '.') }}</span>
+                    @endif
+                    <span class="fw-semibold text-dark"><i class="bi bi-dot text-success fs-6"></i> Saldo Terkini: Rp {{ number_format($saldoTerkiniBosp, 0, ',', '.') }}</span>
                 </div>
             </div>
         @endif
@@ -138,19 +177,19 @@
     <div class="row g-3 mb-4">
         <div class="col-12 col-md-4">
             <div class="card-custom p-3 border-start border-primary border-4">
-                <span class="text-muted small fw-semibold text-uppercase">Total Talangan Dicatat</span>
+                <span class="text-muted small fw-semibold text-uppercase">Total Seluruh Talangan Dicatat</span>
                 <h4 class="fw-bold m-0 text-dark">Rp {{ number_format($totalTalangan, 0, ',', '.') }}</h4>
             </div>
         </div>
         <div class="col-12 col-md-4">
             <div class="card-custom p-3 border-start border-warning border-4">
-                <span class="text-muted small fw-semibold text-uppercase">Belum Diganti (Pending)</span>
+                <span class="text-muted small fw-semibold text-uppercase">Belum Diganti (Menunggu Reimburse)</span>
                 <h4 class="fw-bold m-0 text-warning">Rp {{ number_format($totalPending, 0, ',', '.') }}</h4>
             </div>
         </div>
         <div class="col-12 col-md-4">
             <div class="card-custom p-3 border-start border-success border-4">
-                <span class="text-muted small fw-semibold text-uppercase">Sudah Direimburse (Dibayar)</span>
+                <span class="text-muted small fw-semibold text-uppercase">Sudah Diganti (Telah Direimburse)</span>
                 <h4 class="fw-bold m-0 text-success">Rp {{ number_format($totalDibayar, 0, ',', '.') }}</h4>
             </div>
         </div>
