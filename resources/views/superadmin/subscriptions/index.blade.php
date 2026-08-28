@@ -165,44 +165,42 @@
                     @if($t->subscription_status == 'pending')
                     <div class="modal fade" id="approveModal{{ $t->id }}" tabindex="-1">
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                            <div class="modal-content rounded-4 border-0 shadow-lg">
+                            <form action="{{ route('admin.subscriptions.approve', $t->id) }}" method="POST" class="modal-content rounded-4 border-0 shadow-lg">
+                                @csrf
                                 <div class="modal-header border-0 pb-0">
                                     <h5 class="modal-title fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>ACC & Aktivasi Lisensi Yayasan</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
-                                <form action="{{ route('admin.subscriptions.approve', $t->id) }}" method="POST">
-                                    @csrf
-                                    <div class="modal-body p-3 p-sm-4">
-                                        <div class="p-3 bg-light-subtle rounded-3 mb-3 border">
-                                            <div class="fw-bold text-dark">{{ $t->name }}</div>
-                                            <div class="small text-muted">Paket Permintaan: <strong>{{ $plan?->name ?? 'Pro' }}</strong></div>
-                                            <div class="small text-muted">Admin: {{ $t->users->first()?->name }} ({{ $t->users->first()?->email }})</div>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label class="form-label fw-semibold text-secondary small">Durasi Masa Aktif Lisensi</label>
-                                            <select name="duration_months" class="form-select bg-light" style="min-height: 42px;">
-                                                <option value="1">1 Bulan</option>
-                                                <option value="3">3 Bulan</option>
-                                                <option value="6">6 Bulan</option>
-                                                <option value="12" selected>1 Tahun (12 Bulan)</option>
-                                                <option value="24">2 Tahun (24 Bulan)</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <label class="form-label fw-semibold text-secondary small">Catatan / Referensi Pembayaran (Opsional)</label>
-                                            <input type="text" name="notes" class="form-control bg-light" placeholder="Contoh: Bukti transfer BCA An. Yayasan" style="min-height: 42px;">
-                                        </div>
+                                <div class="modal-body p-3 p-sm-4">
+                                    <div class="p-3 bg-light-subtle rounded-3 mb-3 border">
+                                        <div class="fw-bold text-dark">{{ $t->name }}</div>
+                                        <div class="small text-muted">Paket Permintaan: <strong>{{ $plan?->name ?? 'Pro' }}</strong></div>
+                                        <div class="small text-muted">Admin: {{ $t->users->first()?->name }} ({{ $t->users->first()?->email }})</div>
                                     </div>
-                                    <div class="modal-footer border-0 pt-0">
-                                        <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
-                                        <button type="submit" class="btn btn-success rounded-3 px-4 fw-bold shadow-xs" style="min-height: 40px;">
-                                            <i class="bi bi-check-lg me-1"></i> Konfirmasi & Aktifkan
-                                        </button>
+
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold text-secondary small">Durasi Masa Aktif Lisensi</label>
+                                        <select name="duration_months" class="form-select bg-light" style="min-height: 42px;">
+                                            <option value="1">1 Bulan</option>
+                                            <option value="3">3 Bulan</option>
+                                            <option value="6">6 Bulan</option>
+                                            <option value="12" selected>1 Tahun (12 Bulan)</option>
+                                            <option value="24">2 Tahun (24 Bulan)</option>
+                                        </select>
                                     </div>
-                                </form>
-                            </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold text-secondary small">Catatan / Referensi Pembayaran (Opsional)</label>
+                                        <input type="text" name="notes" class="form-control bg-light" placeholder="Contoh: Bukti transfer BCA An. Yayasan" style="min-height: 42px;">
+                                    </div>
+                                </div>
+                                <div class="modal-footer border-0 pt-0">
+                                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                                    <button type="submit" class="btn btn-success rounded-3 px-4 fw-bold shadow-xs" style="min-height: 40px;">
+                                        <i class="bi bi-check-lg me-1"></i> Konfirmasi & Aktifkan
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     @endif
@@ -210,62 +208,60 @@
                     <!-- Modal Assign / Change Subscription -->
                     <div class="modal fade" id="assignPlanModal{{ $t->id }}" tabindex="-1">
                         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-                            <div class="modal-content rounded-4 border-0 shadow-lg">
+                            <form action="{{ route('admin.subscriptions.update', $t->id) }}" method="POST" class="modal-content rounded-4 border-0 shadow-lg">
+                                @csrf
+                                @method('PUT')
                                 <div class="modal-header border-0 pb-0">
                                     <h5 class="modal-title fw-bold text-dark">Kelola Langganan — {{ $t->name }}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
-                                <form action="{{ route('admin.subscriptions.update', $t->id) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="modal-body p-3 p-sm-4">
-                                        <div class="row g-3">
-                                            <div class="col-12 col-md-6">
-                                                <label class="form-label fw-semibold text-secondary small">Pilih Paket Langganan</label>
-                                                <select name="subscription_plan_id" class="form-select bg-light" required style="min-height: 42px;">
-                                                    @foreach($plans as $p)
-                                                        <option value="{{ $p->id }}" {{ $t->subscription_plan_id == $p->id ? 'selected' : '' }}>
-                                                             {{ $p->name }} (Rp {{ number_format($p->price, 0, ',', '.') }}/bln)
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <label class="form-label fw-semibold text-secondary small">Status Langganan</label>
-                                                <select name="subscription_status" class="form-select bg-light" style="min-height: 42px;">
-                                                    <option value="pending" {{ $t->subscription_status == 'pending' ? 'selected' : '' }}>Menunggu ACC (Pending)</option>
-                                                    <option value="active" {{ $t->subscription_status == 'active' ? 'selected' : '' }}>Aktif (Active)</option>
-                                                    <option value="expired" {{ $t->subscription_status == 'expired' ? 'selected' : '' }}>Kadaluarsa (Expired)</option>
-                                                    <option value="suspended" {{ $t->subscription_status == 'suspended' ? 'selected' : '' }}>Ditangguhkan (Suspended)</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <label class="form-label fw-semibold text-secondary small">Tambah Durasi (Bulan)</label>
-                                                <select name="duration_months" class="form-select bg-light" style="min-height: 42px;">
-                                                    <option value="0">Tetap / Tanpa Perubahan Durasi</option>
-                                                    <option value="1">+1 Bulan</option>
-                                                    <option value="3">+3 Bulan</option>
-                                                    <option value="6">+6 Bulan</option>
-                                                    <option value="12">+1 Tahun (12 Bulan)</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <label class="form-label fw-semibold text-secondary small">Atau Set Tanggal Kadaluarsa Spesifik</label>
-                                                <input type="date" name="custom_expires_at" class="form-control bg-light" value="{{ $t->subscription_expires_at ? $t->subscription_expires_at->format('Y-m-d') : '' }}" style="min-height: 42px;">
-                                                <small class="text-muted" style="font-size:0.75rem;">Kosongkan jika ingin seumur hidup / unlimited.</small>
-                                            </div>
-                                            <div class="col-12">
-                                                <label class="form-label fw-semibold text-secondary small">Catatan Superadmin / Memo Pembayaran</label>
-                                                <textarea name="notes" class="form-control bg-light" rows="3" placeholder="Contoh: Pembayaran tahunan via Transfer Bank manual No. Invoice #INV-202608-001">{{ $t->notes }}</textarea>
-                                            </div>
+                                <div class="modal-body p-3 p-sm-4">
+                                    <div class="row g-3">
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label fw-semibold text-secondary small">Pilih Paket Langganan</label>
+                                            <select name="subscription_plan_id" class="form-select bg-light" required style="min-height: 42px;">
+                                                @foreach($plans as $p)
+                                                    <option value="{{ $p->id }}" {{ $t->subscription_plan_id == $p->id ? 'selected' : '' }}>
+                                                         {{ $p->name }} (Rp {{ number_format($p->price, 0, ',', '.') }}/bln)
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label fw-semibold text-secondary small">Status Langganan</label>
+                                            <select name="subscription_status" class="form-select bg-light" style="min-height: 42px;">
+                                                <option value="pending" {{ $t->subscription_status == 'pending' ? 'selected' : '' }}>Menunggu ACC (Pending)</option>
+                                                <option value="active" {{ $t->subscription_status == 'active' ? 'selected' : '' }}>Aktif (Active)</option>
+                                                <option value="expired" {{ $t->subscription_status == 'expired' ? 'selected' : '' }}>Kadaluarsa (Expired)</option>
+                                                <option value="suspended" {{ $t->subscription_status == 'suspended' ? 'selected' : '' }}>Ditangguhkan (Suspended)</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label fw-semibold text-secondary small">Tambah Durasi (Bulan)</label>
+                                            <select name="duration_months" class="form-select bg-light" style="min-height: 42px;">
+                                                <option value="0">Tetap / Tanpa Perubahan Durasi</option>
+                                                <option value="1">+1 Bulan</option>
+                                                <option value="3">+3 Bulan</option>
+                                                <option value="6">+6 Bulan</option>
+                                                <option value="12">+1 Tahun (12 Bulan)</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <label class="form-label fw-semibold text-secondary small">Atau Set Tanggal Kadaluarsa Spesifik</label>
+                                            <input type="date" name="custom_expires_at" class="form-control bg-light" value="{{ $t->subscription_expires_at ? $t->subscription_expires_at->format('Y-m-d') : '' }}" style="min-height: 42px;">
+                                            <small class="text-muted" style="font-size:0.75rem;">Kosongkan jika ingin seumur hidup / unlimited.</small>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label fw-semibold text-secondary small">Catatan Superadmin / Memo Pembayaran</label>
+                                            <textarea name="notes" class="form-control bg-light" rows="3" placeholder="Contoh: Pembayaran tahunan via Transfer Bank manual No. Invoice #INV-202608-001">{{ $t->notes }}</textarea>
                                         </div>
                                     </div>
-                                    <div class="modal-footer border-0 pt-0">
-                                        <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
-                                        <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold shadow-xs" style="min-height: 40px;">Simpan Langganan</button>
-                                    </div>
-                                </form>
-                            </div>
+                                </div>
+                                <div class="modal-footer border-0 pt-0">
+                                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                                    <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold shadow-xs" style="min-height: 40px;">Simpan Langganan</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 @empty

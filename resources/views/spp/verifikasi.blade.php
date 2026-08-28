@@ -69,27 +69,25 @@
 
                     <!-- Modal Reject -->
                     <div class="modal fade" id="rejectModal{{ $p->id }}" tabindex="-1">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content rounded-4 border-0 shadow-lg">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <form action="{{ route('spp.verifikasi.store', $p->id) }}" method="POST" class="modal-content rounded-4 border-0 shadow-lg">
+                                @csrf
+                                <input type="hidden" name="status_verifikasi" value="Rejected">
                                 <div class="modal-header border-0 pb-0">
                                     <h5 class="modal-title fw-bold text-danger"><i class="bi bi-exclamation-triangle-fill me-1"></i> Tolak Pembayaran SPP</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
-                                <form action="{{ route('spp.verifikasi.store', $p->id) }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="status_verifikasi" value="Rejected">
-                                    <div class="modal-body p-3 p-sm-4">
-                                        <div class="mb-3">
-                                            <label class="form-label fw-semibold text-dark">Alasan Penolakan <span class="text-danger">*</span></label>
-                                            <textarea name="catatan_verifikasi" class="form-control bg-light" rows="3" placeholder="Contoh: Bukti transfer buram/nominal tidak sesuai" required></textarea>
-                                        </div>
+                                <div class="modal-body p-3 p-sm-4">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold text-dark">Alasan Penolakan <span class="text-danger">*</span></label>
+                                        <textarea name="catatan_verifikasi" class="form-control bg-light" rows="3" placeholder="Contoh: Bukti transfer buram/nominal tidak sesuai" required></textarea>
                                     </div>
-                                    <div class="modal-footer border-0 pt-0">
-                                        <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
-                                        <button type="submit" class="btn btn-danger rounded-3 px-4 fw-bold" style="min-height: 40px;">Konfirmasi Tolak</button>
-                                    </div>
-                                </form>
-                            </div>
+                                </div>
+                                <div class="modal-footer border-0 pt-0">
+                                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                                    <button type="submit" class="btn btn-danger rounded-3 px-4 fw-bold" style="min-height: 40px;">Konfirmasi Tolak</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 @empty

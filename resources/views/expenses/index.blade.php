@@ -438,147 +438,143 @@
     <!-- Modal Fast Entry Expense (<30s) -->
     <div class="modal fade" id="newExpenseModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content rounded-4 border-0 shadow-lg">
+            <form action="{{ route('expenses.store') }}" method="POST" enctype="multipart/form-data" class="modal-content rounded-4 border-0 shadow-lg">
+                @csrf
                 <div class="modal-header border-0 pb-0">
                     <h5 class="modal-title fw-bold text-dark"><i class="bi bi-lightning-fill text-warning me-2"></i>Input Talangan Pribadi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('expenses.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="modal-body p-3 p-sm-4">
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Kategori Pengeluaran BOSP <span class="text-danger">*</span></label>
-                            <select name="expense_category_id" class="form-select bg-light" required style="min-height: 42px;">
-                                <option value="">-- Pilih Kategori BOSP --</option>
-                                @foreach($categories as $cat)
-                                    <option value="{{ $cat->id }}">{{ $cat->nama_kategori }} ({{ $cat->kode_bosp ?: 'BOSP' }})</option>
-                                @endforeach
-                            </select>
+                <div class="modal-body p-3 p-sm-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Kategori Pengeluaran BOSP <span class="text-danger">*</span></label>
+                        <select name="expense_category_id" class="form-select bg-light" required style="min-height: 42px;">
+                            <option value="">-- Pilih Kategori BOSP --</option>
+                            @foreach($categories as $cat)
+                                <option value="{{ $cat->id }}">{{ $cat->nama_kategori }} ({{ $cat->kode_bosp ?: 'BOSP' }})</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col-12 col-sm-6">
+                            <label class="form-label fw-semibold">Tanggal Transaksi <span class="text-danger">*</span></label>
+                            <input type="date" name="tanggal" class="form-control bg-light" value="{{ date('Y-m-d') }}" required style="min-height: 42px;">
                         </div>
-                        <div class="row g-2 mb-3">
-                            <div class="col-12 col-sm-6">
-                                <label class="form-label fw-semibold">Tanggal Transaksi <span class="text-danger">*</span></label>
-                                <input type="date" name="tanggal" class="form-control bg-light" value="{{ date('Y-m-d') }}" required style="min-height: 42px;">
+                        <div class="col-12 col-sm-6">
+                            <label class="form-label fw-semibold">Nominal Talangan (Rp) <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light fw-bold text-muted">Rp</span>
+                                <input type="text" inputmode="numeric" name="nominal" id="nominal" class="form-control bg-light fw-bold rupiah-input"
+                                    placeholder="50.000" required autocomplete="off" style="min-height: 42px;">
                             </div>
-                            <div class="col-12 col-sm-6">
-                                <label class="form-label fw-semibold">Nominal Talangan (Rp) <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light fw-bold text-muted">Rp</span>
-                                    <input type="text" inputmode="numeric" name="nominal" id="nominal" class="form-control bg-light fw-bold rupiah-input"
-                                        placeholder="50.000" required autocomplete="off" style="min-height: 42px;">
-                                </div>
-                                <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">
-                                    <i class="bi bi-info-circle me-1"></i>Hanya angka tanpa simbol
-                                </small>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Uraian / Keperluan <span class="text-danger">*</span></label>
-                            <textarea name="uraian" rows="2" class="form-control bg-light"
-                                placeholder="Contoh: Beli Kertas HVS 2 Rim & Map Raport" required></textarea>
-                        </div>
-                        <div class="row g-2 mb-3">
-                            <div class="col-12 col-sm-6">
-                                <label class="form-label fw-semibold">Toko / Vendor</label>
-                                <input type="text" name="toko_vendor" class="form-control bg-light"
-                                    placeholder="Contoh: Toko ATK Sejahtera" style="min-height: 42px;">
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <label class="form-label fw-semibold">Lokasi</label>
-                                <input type="text" name="lokasi" class="form-control bg-light"
-                                    placeholder="Contoh: Sukajadi" style="min-height: 42px;">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Upload Foto Struk / Nota (Multi-Upload)</label>
-                            <input type="file" name="receipts[]" class="form-control bg-light"
-                                accept="image/*,application/pdf" multiple style="min-height: 42px;">
-                            <small class="text-muted">Mendukung file JPG, PNG, HEIC, atau PDF (Maks 5MB per file)</small>
+                            <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">
+                                <i class="bi bi-info-circle me-1"></i>Hanya angka tanpa simbol
+                            </small>
                         </div>
                     </div>
-                    <div class="modal-footer border-0 pt-0">
-                        <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
-                        <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold" style="min-height: 40px;">
-                            <i class="bi bi-check-lg me-1"></i> Simpan Catatan Talangan
-                        </button>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Uraian / Keperluan <span class="text-danger">*</span></label>
+                        <textarea name="uraian" rows="2" class="form-control bg-light"
+                            placeholder="Contoh: Beli Kertas HVS 2 Rim & Map Raport" required></textarea>
                     </div>
-                </form>
-            </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col-12 col-sm-6">
+                            <label class="form-label fw-semibold">Toko / Vendor</label>
+                            <input type="text" name="toko_vendor" class="form-control bg-light"
+                                placeholder="Contoh: Toko ATK Sejahtera" style="min-height: 42px;">
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <label class="form-label fw-semibold">Lokasi</label>
+                            <input type="text" name="lokasi" class="form-control bg-light"
+                                placeholder="Contoh: Sukajadi" style="min-height: 42px;">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Upload Foto Struk / Nota (Multi-Upload)</label>
+                        <input type="file" name="receipts[]" class="form-control bg-light"
+                            accept="image/*,application/pdf" multiple style="min-height: 42px;">
+                        <small class="text-muted">Mendukung file JPG, PNG, HEIC, atau PDF (Maks 5MB per file)</small>
+                    </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                    <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold" style="min-height: 40px;">
+                        <i class="bi bi-check-lg me-1"></i> Simpan Catatan Talangan
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
     <!-- Modal Input/Edit Dana BOSP Awal Cair -->
     <div class="modal fade" id="bospModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content rounded-4 border-0 shadow-lg">
+            <form action="{{ route('expenses.dana-bosp.store') }}" method="POST" class="modal-content rounded-4 border-0 shadow-lg">
+                @csrf
                 <div class="modal-header border-0 pb-0">
                     <h5 class="modal-title fw-bold text-dark">
                         <i class="bi bi-cash-coin text-primary me-2"></i>{{ $danaBosp ? 'Perbarui Dana BOSP Awal Cair' : 'Input Dana BOSP Awal Cair' }}
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('expenses.dana-bosp.store') }}" method="POST">
-                    @csrf
-                    <div class="modal-body p-3 p-sm-4">
-                        <div class="row g-3">
-                            <div class="col-12 col-sm-6">
-                                <label class="form-label fw-semibold">Tahun Anggaran <span class="text-danger">*</span></label>
-                                <select name="tahun" class="form-select bg-light" required style="min-height: 42px;">
-                                    @for($y = date('Y') + 1; $y >= 2024; $y--)
-                                        <option value="{{ $y }}" {{ $currentYear == $y ? 'selected' : '' }}>{{ $y }}</option>
-                                    @endfor
-                                </select>
+                <div class="modal-body p-3 p-sm-4">
+                    <div class="row g-3">
+                        <div class="col-12 col-sm-6">
+                            <label class="form-label fw-semibold">Tahun Anggaran <span class="text-danger">*</span></label>
+                            <select name="tahun" class="form-select bg-light" required style="min-height: 42px;">
+                                @for($y = date('Y') + 1; $y >= 2024; $y--)
+                                    <option value="{{ $y }}" {{ $currentYear == $y ? 'selected' : '' }}>{{ $y }}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <label class="form-label fw-semibold">Tahap / Periode <span class="text-danger">*</span></label>
+                            <select name="periode" class="form-select bg-light" required style="min-height: 42px;">
+                                <option value="Tahap 1 (Semester I)" {{ $currentPeriode == 'Tahap 1 (Semester I)' ? 'selected' : '' }}>Tahap 1 (Semester I)</option>
+                                <option value="Tahap 2 (Semester II)" {{ $currentPeriode == 'Tahap 2 (Semester II)' ? 'selected' : '' }}>Tahap 2 (Semester II)</option>
+                                <option value="Triwulan 1" {{ $currentPeriode == 'Triwulan 1' ? 'selected' : '' }}>Triwulan 1</option>
+                                <option value="Triwulan 2" {{ $currentPeriode == 'Triwulan 2' ? 'selected' : '' }}>Triwulan 2</option>
+                                <option value="Triwulan 3" {{ $currentPeriode == 'Triwulan 3' ? 'selected' : '' }}>Triwulan 3</option>
+                                <option value="Triwulan 4" {{ $currentPeriode == 'Triwulan 4' ? 'selected' : '' }}>Triwulan 4</option>
+                                <option value="Tahunan" {{ $currentPeriode == 'Tahunan' ? 'selected' : '' }}>Tahunan</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Sumber Dana BOSP <span class="text-danger">*</span></label>
+                            <select name="sumber_dana" class="form-select bg-light" required style="min-height: 42px;">
+                                <option value="BOSP Reguler" {{ ($danaBosp?->sumber_dana == 'BOSP Reguler') ? 'selected' : '' }}>BOSP Reguler (Kemendikbud)</option>
+                                <option value="BOSP Kinerja" {{ ($danaBosp?->sumber_dana == 'BOSP Kinerja') ? 'selected' : '' }}>BOSP Kinerja</option>
+                                <option value="BOSP Daerah / BOSDA" {{ ($danaBosp?->sumber_dana == 'BOSP Daerah / BOSDA') ? 'selected' : '' }}>BOSP Daerah / BOSDA</option>
+                                <option value="BOS Afirmasi" {{ ($danaBosp?->sumber_dana == 'BOS Afirmasi') ? 'selected' : '' }}>BOS Afirmasi</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Nominal Dana Cair Awal (Rp) <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light fw-bold text-muted">Rp</span>
+                                <input type="text" inputmode="numeric" name="nominal_cair" class="form-control bg-light fw-bold rupiah-input"
+                                    placeholder="50.000.000" value="{{ $danaBosp ? number_format($danaBosp->nominal_cair, 0, ',', '.') : '' }}" required autocomplete="off" style="min-height: 42px;">
                             </div>
-                            <div class="col-12 col-sm-6">
-                                <label class="form-label fw-semibold">Tahap / Periode <span class="text-danger">*</span></label>
-                                <select name="periode" class="form-select bg-light" required style="min-height: 42px;">
-                                    <option value="Tahap 1 (Semester I)" {{ $currentPeriode == 'Tahap 1 (Semester I)' ? 'selected' : '' }}>Tahap 1 (Semester I)</option>
-                                    <option value="Tahap 2 (Semester II)" {{ $currentPeriode == 'Tahap 2 (Semester II)' ? 'selected' : '' }}>Tahap 2 (Semester II)</option>
-                                    <option value="Triwulan 1" {{ $currentPeriode == 'Triwulan 1' ? 'selected' : '' }}>Triwulan 1</option>
-                                    <option value="Triwulan 2" {{ $currentPeriode == 'Triwulan 2' ? 'selected' : '' }}>Triwulan 2</option>
-                                    <option value="Triwulan 3" {{ $currentPeriode == 'Triwulan 3' ? 'selected' : '' }}>Triwulan 3</option>
-                                    <option value="Triwulan 4" {{ $currentPeriode == 'Triwulan 4' ? 'selected' : '' }}>Triwulan 4</option>
-                                    <option value="Tahunan" {{ $currentPeriode == 'Tahunan' ? 'selected' : '' }}>Tahunan</option>
-                                </select>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label fw-semibold">Sumber Dana BOSP <span class="text-danger">*</span></label>
-                                <select name="sumber_dana" class="form-select bg-light" required style="min-height: 42px;">
-                                    <option value="BOSP Reguler" {{ ($danaBosp?->sumber_dana == 'BOSP Reguler') ? 'selected' : '' }}>BOSP Reguler (Kemendikbud)</option>
-                                    <option value="BOSP Kinerja" {{ ($danaBosp?->sumber_dana == 'BOSP Kinerja') ? 'selected' : '' }}>BOSP Kinerja</option>
-                                    <option value="BOSP Daerah / BOSDA" {{ ($danaBosp?->sumber_dana == 'BOSP Daerah / BOSDA') ? 'selected' : '' }}>BOSP Daerah / BOSDA</option>
-                                    <option value="BOS Afirmasi" {{ ($danaBosp?->sumber_dana == 'BOS Afirmasi') ? 'selected' : '' }}>BOS Afirmasi</option>
-                                </select>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label fw-semibold">Nominal Dana Cair Awal (Rp) <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light fw-bold text-muted">Rp</span>
-                                    <input type="text" inputmode="numeric" name="nominal_cair" class="form-control bg-light fw-bold rupiah-input"
-                                        placeholder="50.000.000" value="{{ $danaBosp ? number_format($danaBosp->nominal_cair, 0, ',', '.') : '' }}" required autocomplete="off" style="min-height: 42px;">
-                                </div>
-                                <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">
-                                    <i class="bi bi-info-circle me-1"></i>Hanya angka tanpa simbol dan huruf
-                                </small>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label fw-semibold">Tanggal Pencairan / Masuk Rekening</label>
-                                <input type="date" name="tanggal_cair" class="form-control bg-light" value="{{ $danaBosp && $danaBosp->tanggal_cair ? $danaBosp->tanggal_cair->format('Y-m-d') : date('Y-m-d') }}" style="min-height: 42px;">
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label fw-semibold">Catatan / Keterangan Pencairan</label>
-                                <textarea name="catatan" rows="2" class="form-control bg-light" placeholder="Contoh: Pencairan BOSP Reguler Tahap 1 via Bank Jabar/BJB">{{ $danaBosp?->catatan }}</textarea>
-                            </div>
+                            <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">
+                                <i class="bi bi-info-circle me-1"></i>Hanya angka tanpa simbol dan huruf
+                            </small>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Tanggal Pencairan / Masuk Rekening</label>
+                            <input type="date" name="tanggal_cair" class="form-control bg-light" value="{{ $danaBosp && $danaBosp->tanggal_cair ? $danaBosp->tanggal_cair->format('Y-m-d') : date('Y-m-d') }}" style="min-height: 42px;">
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-semibold">Catatan / Keterangan Pencairan</label>
+                            <textarea name="catatan" rows="2" class="form-control bg-light" placeholder="Contoh: Pencairan BOSP Reguler Tahap 1 via Bank Jabar/BJB">{{ $danaBosp?->catatan }}</textarea>
                         </div>
                     </div>
-                    <div class="modal-footer border-0 pt-0">
-                        <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
-                        <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold" style="min-height: 40px;">
-                            <i class="bi bi-check-lg me-1"></i> Simpan Dana BOSP Cair
-                        </button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                    <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold" style="min-height: 40px;">
+                        <i class="bi bi-check-lg me-1"></i> Simpan Dana BOSP Cair
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 

@@ -86,65 +86,63 @@
         <!-- Modal Edit Plan -->
         <div class="modal fade" id="editPlanModal{{ $p->id }}" tabindex="-1">
             <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content rounded-4 border-0 shadow-lg">
+                <form action="{{ route('admin.plans.update', $p->id) }}" method="POST" class="modal-content rounded-4 border-0 shadow-lg">
+                    @csrf
+                    @method('PUT')
                     <div class="modal-header border-0 pb-0">
                         <h5 class="modal-title fw-bold text-dark">Edit Paket Langganan — {{ $p->name }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <form action="{{ route('admin.plans.update', $p->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <div class="modal-body p-3 p-sm-4">
-                            <div class="row g-3">
-                                <div class="col-12 col-md-6">
-                                    <label class="form-label fw-semibold text-secondary small">Nama Paket <span class="text-danger">*</span></label>
-                                    <input type="text" name="name" class="form-control bg-light" value="{{ $p->name }}" required style="min-height: 42px;">
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <label class="form-label fw-semibold text-secondary small">Harga Per Bulan (Rp) <span class="text-danger">*</span></label>
-                                    <input type="number" name="price" class="form-control bg-light" value="{{ (int)$p->price }}" required style="min-height: 42px;">
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <label class="form-label fw-semibold text-secondary small">Batas Siswa (0 = Unlimited) <span class="text-danger">*</span></label>
-                                    <input type="number" name="max_siswas" class="form-control bg-light" value="{{ $p->max_siswas }}" required style="min-height: 42px;">
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <label class="form-label fw-semibold text-secondary small">Batas Unit Sekolah <span class="text-danger">*</span></label>
-                                    <input type="number" name="max_schools" class="form-control bg-light" value="{{ $p->max_schools }}" required style="min-height: 42px;">
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label fw-semibold text-secondary small">Deskripsi Singkat</label>
-                                    <textarea name="description" class="form-control bg-light" rows="2">{{ $p->description }}</textarea>
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label fw-semibold text-secondary small">Aktifkan Fitur-Fitur Paket Ini:</label>
-                                    <div class="row g-2 border p-3 rounded-3 bg-light-subtle">
-                                        @foreach($availableFeatures as $fKey => $fLabel)
-                                            <div class="col-12 col-md-6">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="features[]" value="{{ $fKey }}" id="f_{{ $p->id }}_{{ $fKey }}" {{ $p->hasFeature($fKey) ? 'checked' : '' }}>
-                                                    <label class="form-check-label small fw-semibold text-dark" for="f_{{ $p->id }}_{{ $fKey }}">
-                                                        {{ $fLabel }}
-                                                    </label>
-                                                </div>
+                    <div class="modal-body p-3 p-sm-4">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <label class="form-label fw-semibold text-secondary small">Nama Paket <span class="text-danger">*</span></label>
+                                <input type="text" name="name" class="form-control bg-light" value="{{ $p->name }}" required style="min-height: 42px;">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label fw-semibold text-secondary small">Harga Per Bulan (Rp) <span class="text-danger">*</span></label>
+                                <input type="number" name="price" class="form-control bg-light" value="{{ (int)$p->price }}" required style="min-height: 42px;">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label fw-semibold text-secondary small">Batas Siswa (0 = Unlimited) <span class="text-danger">*</span></label>
+                                <input type="number" name="max_siswas" class="form-control bg-light" value="{{ $p->max_siswas }}" required style="min-height: 42px;">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label fw-semibold text-secondary small">Batas Unit Sekolah <span class="text-danger">*</span></label>
+                                <input type="number" name="max_schools" class="form-control bg-light" value="{{ $p->max_schools }}" required style="min-height: 42px;">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold text-secondary small">Deskripsi Singkat</label>
+                                <textarea name="description" class="form-control bg-light" rows="2">{{ $p->description }}</textarea>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold text-secondary small">Aktifkan Fitur-Fitur Paket Ini:</label>
+                                <div class="row g-2 border p-3 rounded-3 bg-light-subtle">
+                                    @foreach($availableFeatures as $fKey => $fLabel)
+                                        <div class="col-12 col-md-6">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="features[]" value="{{ $fKey }}" id="f_{{ $p->id }}_{{ $fKey }}" {{ $p->hasFeature($fKey) ? 'checked' : '' }}>
+                                                <label class="form-check-label small fw-semibold text-dark" for="f_{{ $p->id }}_{{ $fKey }}">
+                                                    {{ $fLabel }}
+                                                </label>
                                             </div>
-                                        @endforeach
-                                    </div>
+                                        </div>
+                                    @endforeach
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" name="is_active" id="active_{{ $p->id }}" {{ $p->is_active ? 'checked' : '' }}>
-                                        <label class="form-check-label fw-semibold text-dark small" for="active_{{ $p->id }}">Status Paket Aktif & Bisa Dipilih</label>
-                                    </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" name="is_active" id="active_{{ $p->id }}" {{ $p->is_active ? 'checked' : '' }}>
+                                    <label class="form-check-label fw-semibold text-dark small" for="active_{{ $p->id }}">Status Paket Aktif & Bisa Dipilih</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer border-0 pt-0">
-                            <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
-                            <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold shadow-xs" style="min-height: 40px;">Simpan Perubahan</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="modal-footer border-0 pt-0">
+                        <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                        <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold shadow-xs" style="min-height: 40px;">Simpan Perubahan</button>
+                    </div>
+                </form>
             </div>
         </div>
     @endforeach
@@ -153,58 +151,56 @@
 <!-- Modal New Plan -->
 <div class="modal fade" id="newPlanModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content rounded-4 border-0 shadow-lg">
+        <form action="{{ route('admin.plans.store') }}" method="POST" class="modal-content rounded-4 border-0 shadow-lg">
+            @csrf
             <div class="modal-header border-0 pb-0">
                 <h5 class="modal-title fw-bold text-dark">Tambah Paket Kustom Baru</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('admin.plans.store') }}" method="POST">
-                @csrf
-                <div class="modal-body p-3 p-sm-4">
-                    <div class="row g-3">
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">Nama Paket <span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control bg-light" placeholder="Contoh: Paket Pro Plus" required style="min-height: 42px;">
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">Kode Unik (Slug) <span class="text-danger">*</span></label>
-                            <input type="text" name="code" class="form-control bg-light" placeholder="pro_plus" required style="min-height: 42px;">
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">Harga Bulanan (Rp) <span class="text-danger">*</span></label>
-                            <input type="number" name="price" class="form-control bg-light" placeholder="250000" required style="min-height: 42px;">
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">Batas Siswa (0 = Unlimited) <span class="text-danger">*</span></label>
-                            <input type="number" name="max_siswas" class="form-control bg-light" value="0" required style="min-height: 42px;">
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">Batas Unit Sekolah <span class="text-danger">*</span></label>
-                            <input type="number" name="max_schools" class="form-control bg-light" value="1" required style="min-height: 42px;">
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label fw-semibold text-secondary small">Pilih Fitur Terkait:</label>
-                            <div class="row g-2 border p-3 rounded-3 bg-light-subtle">
-                                @foreach($availableFeatures as $fKey => $fLabel)
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="features[]" value="{{ $fKey }}" id="new_f_{{ $fKey }}" checked>
-                                            <label class="form-check-label small fw-semibold text-dark" for="new_f_{{ $fKey }}">
-                                                {{ $fLabel }}
-                                            </label>
-                                        </div>
+            <div class="modal-body p-3 p-sm-4">
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Nama Paket <span class="text-danger">*</span></label>
+                        <input type="text" name="name" class="form-control bg-light" placeholder="Contoh: Paket Pro Plus" required style="min-height: 42px;">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Kode Unik (Slug) <span class="text-danger">*</span></label>
+                        <input type="text" name="code" class="form-control bg-light" placeholder="pro_plus" required style="min-height: 42px;">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Harga Bulanan (Rp) <span class="text-danger">*</span></label>
+                        <input type="number" name="price" class="form-control bg-light" placeholder="250000" required style="min-height: 42px;">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Batas Siswa (0 = Unlimited) <span class="text-danger">*</span></label>
+                        <input type="number" name="max_siswas" class="form-control bg-light" value="0" required style="min-height: 42px;">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Batas Unit Sekolah <span class="text-danger">*</span></label>
+                        <input type="number" name="max_schools" class="form-control bg-light" value="1" required style="min-height: 42px;">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold text-secondary small">Pilih Fitur Terkait:</label>
+                        <div class="row g-2 border p-3 rounded-3 bg-light-subtle">
+                            @foreach($availableFeatures as $fKey => $fLabel)
+                                <div class="col-12 col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="features[]" value="{{ $fKey }}" id="new_f_{{ $fKey }}" checked>
+                                        <label class="form-check-label small fw-semibold text-dark" for="new_f_{{ $fKey }}">
+                                            {{ $fLabel }}
+                                        </label>
                                     </div>
-                                @endforeach
-                            </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
-                    <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold shadow-xs" style="min-height: 40px;">Buat Paket</button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold shadow-xs" style="min-height: 40px;">Buat Paket</button>
+            </div>
+        </form>
     </div>
 </div>
 @endsection

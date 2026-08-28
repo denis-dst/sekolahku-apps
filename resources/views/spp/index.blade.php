@@ -69,7 +69,8 @@
                     <!-- Modal Payment QRIS & Upload Proof -->
                     <div class="modal fade" id="payModal{{ $t->id }}" tabindex="-1">
                         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                            <div class="modal-content rounded-4 border-0 shadow-lg">
+                            <form action="{{ route('spp.upload-bukti', $t->id) }}" method="POST" enctype="multipart/form-data" class="modal-content rounded-4 border-0 shadow-lg">
+                                @csrf
                                 <div class="modal-header border-0 pb-0">
                                     <h5 class="modal-title fw-bold text-dark">Pembayaran SPP - {{ $t->bulan }} {{ $t->tahun }}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -105,32 +106,32 @@
                                         </div>
                                     @endif
 
-                                    <!-- Upload Proof Form -->
-                                    <form action="{{ route('spp.upload-bukti', $t->id) }}" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="mb-3 text-start">
-                                            <label class="form-label small fw-semibold">Metode Pembayaran <span class="text-danger">*</span></label>
-                                            <select name="metode_pembayaran" class="form-select bg-light" style="min-height: 42px;">
-                                                <option value="Manual QRIS">Scan Manual QRIS</option>
-                                                <option value="Transfer Bank">Transfer Bank</option>
-                                                <option value="Cash">Setor Tunai (Cash)</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3 text-start">
-                                            <label class="form-label small fw-semibold">Nominal Yang Dibayar <span class="text-danger">*</span></label>
-                                            <input type="number" name="nominal_bayar" class="form-control bg-light fw-bold" value="{{ (int)$t->total_tagihan }}" required style="min-height: 42px;">
-                                        </div>
-                                        <div class="mb-4 text-start">
-                                            <label class="form-label small fw-semibold">Foto Bukti Transfer / Resi Nota <span class="text-danger">*</span></label>
-                                            <input type="file" name="bukti_pembayaran" class="form-control bg-light" accept="image/*" required style="min-height: 42px;">
-                                            <small class="text-muted" style="font-size:0.75rem;">Upload foto resi/struk/bukti transfer dari HP Anda.</small>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary w-100 py-2.5 rounded-3 fw-bold shadow-xs" style="min-height: 44px;">
-                                            <i class="bi bi-upload me-1"></i> Unggah Bukti Pembayaran
-                                        </button>
-                                    </form>
+                                    <!-- Upload Proof Form Fields -->
+                                    <div class="mb-3 text-start">
+                                        <label class="form-label small fw-semibold">Metode Pembayaran <span class="text-danger">*</span></label>
+                                        <select name="metode_pembayaran" class="form-select bg-light" style="min-height: 42px;">
+                                            <option value="Manual QRIS">Scan Manual QRIS</option>
+                                            <option value="Transfer Bank">Transfer Bank</option>
+                                            <option value="Cash">Setor Tunai (Cash)</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 text-start">
+                                        <label class="form-label small fw-semibold">Nominal Yang Dibayar <span class="text-danger">*</span></label>
+                                        <input type="number" name="nominal_bayar" class="form-control bg-light fw-bold" value="{{ (int)$t->total_tagihan }}" required style="min-height: 42px;">
+                                    </div>
+                                    <div class="mb-2 text-start">
+                                        <label class="form-label small fw-semibold">Foto Bukti Transfer / Resi Nota <span class="text-danger">*</span></label>
+                                        <input type="file" name="bukti_pembayaran" class="form-control bg-light" accept="image/*" required style="min-height: 42px;">
+                                        <small class="text-muted" style="font-size:0.75rem;">Upload foto resi/struk/bukti transfer dari HP Anda.</small>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="modal-footer border-0 pt-0">
+                                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                                    <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold shadow-xs" style="min-height: 40px;">
+                                        <i class="bi bi-upload me-1"></i> Unggah Bukti Pembayaran
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 @empty
@@ -149,38 +150,36 @@
 <!-- Modal Generate SPP Massal -->
 @hasanyrole('Superadmin|School Admin|Bendahara')
 <div class="modal fade" id="generateSppModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content rounded-4 border-0 shadow-lg">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <form action="{{ route('spp.generate') }}" method="POST" class="modal-content rounded-4 border-0 shadow-lg">
+            @csrf
             <div class="modal-header border-0 pb-0">
                 <h5 class="modal-title fw-bold text-dark">Buat Tagihan SPP Bulanan Massal</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('spp.generate') }}" method="POST">
-                @csrf
-                <div class="modal-body p-3 p-sm-4">
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Bulan <span class="text-danger">*</span></label>
-                        <select name="bulan" class="form-select bg-light" style="min-height: 42px;">
-                            @foreach(['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'] as $m)
-                                <option value="{{ $m }}" {{ date('F') == $m ? 'selected' : '' }}>{{ $m }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Tahun <span class="text-danger">*</span></label>
-                        <input type="number" name="tahun" class="form-control bg-light" value="{{ date('Y') }}" required style="min-height: 42px;">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Nominal SPP (Rp) <span class="text-danger">*</span></label>
-                        <input type="number" name="nominal" class="form-control bg-light fw-bold" placeholder="150000" value="150000" required style="min-height: 42px;">
-                    </div>
+            <div class="modal-body p-3 p-sm-4">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Bulan <span class="text-danger">*</span></label>
+                    <select name="bulan" class="form-select bg-light" style="min-height: 42px;">
+                        @foreach(['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'] as $m)
+                            <option value="{{ $m }}" {{ date('F') == $m ? 'selected' : '' }}>{{ $m }}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
-                    <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold" style="min-height: 40px;">Generate Tagihan</button>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Tahun <span class="text-danger">*</span></label>
+                    <input type="number" name="tahun" class="form-control bg-light" value="{{ date('Y') }}" required style="min-height: 42px;">
                 </div>
-            </form>
-        </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Nominal SPP (Rp) <span class="text-danger">*</span></label>
+                    <input type="number" name="nominal" class="form-control bg-light fw-bold" placeholder="150000" value="150000" required style="min-height: 42px;">
+                </div>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold" style="min-height: 40px;">Generate Tagihan</button>
+            </div>
+        </form>
     </div>
 </div>
 @endhasanyrole

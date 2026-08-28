@@ -116,35 +116,33 @@
 
                             <!-- Edit Modal for Category -->
                             <div class="modal fade" id="editCategoryModal{{ $cat->id }}" tabindex="-1">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content rounded-4 border-0 shadow">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                    <form action="{{ route('expenses.categories.update', $cat->id) }}" method="POST" class="modal-content rounded-4 border-0 shadow">
+                                        @csrf
+                                        @method('PUT')
                                         <div class="modal-header border-0 pb-0">
                                             <h5 class="modal-title fw-bold">Edit Kategori BOSP</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                         </div>
-                                        <form action="{{ route('expenses.categories.update', $cat->id) }}" method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="modal-body p-4">
-                                                <div class="mb-3">
-                                                    <label class="form-label fw-semibold text-secondary small">Nama Kategori <span class="text-danger">*</span></label>
-                                                    <input type="text" name="nama_kategori" class="form-control bg-light" value="{{ $cat->nama_kategori }}" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label fw-semibold text-secondary small">Kode / Komponen BOSP</label>
-                                                    <input type="text" name="kode_bosp" class="form-control bg-light" value="{{ $cat->kode_bosp }}">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label fw-semibold text-secondary small">Keterangan</label>
-                                                    <textarea name="keterangan" rows="2" class="form-control bg-light">{{ $cat->keterangan }}</textarea>
-                                                </div>
+                                        <div class="modal-body p-4">
+                                            <div class="mb-3">
+                                                <label class="form-label fw-semibold text-secondary small">Nama Kategori <span class="text-danger">*</span></label>
+                                                <input type="text" name="nama_kategori" class="form-control bg-light" value="{{ $cat->nama_kategori }}" required>
                                             </div>
-                                            <div class="modal-footer border-0 pt-0">
-                                                <button type="button" class="btn btn-light rounded-3" data-bs-dismiss="modal">Batal</button>
-                                                <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold">Simpan Perubahan</button>
+                                            <div class="mb-3">
+                                                <label class="form-label fw-semibold text-secondary small">Kode / Komponen BOSP</label>
+                                                <input type="text" name="kode_bosp" class="form-control bg-light" value="{{ $cat->kode_bosp }}">
                                             </div>
-                                        </form>
-                                    </div>
+                                            <div class="mb-3">
+                                                <label class="form-label fw-semibold text-secondary small">Keterangan</label>
+                                                <textarea name="keterangan" rows="2" class="form-control bg-light">{{ $cat->keterangan }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer border-0 pt-0">
+                                            <button type="button" class="btn btn-light rounded-3" data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold">Simpan Perubahan</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         @empty

@@ -132,135 +132,131 @@
 <!-- Modal Import Excel Siswa -->
 <div class="modal fade" id="importExcelModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content rounded-4 border-0 shadow-lg">
+        <form action="{{ route('siswa.import-excel') }}" method="POST" enctype="multipart/form-data" class="modal-content rounded-4 border-0 shadow-lg">
+            @csrf
             <div class="modal-header border-0 pb-0">
                 <h5 class="modal-title fw-bold text-dark"><i class="bi bi-file-earmark-excel-fill text-success me-2"></i>Import Data Siswa dari Excel</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('siswa.import-excel') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body p-3 p-sm-4">
-                    <!-- Instruction Alert -->
-                    <div class="p-3 bg-light-subtle rounded-3 border mb-3">
-                        <div class="fw-bold text-dark small mb-1"><i class="bi bi-info-circle text-primary me-1"></i> Petunjuk Pengisian:</div>
-                        <ul class="text-muted small ps-3 mb-2" style="font-size: 0.82rem;">
-                            <li>Gunakan format template resmi agar susunan kolom sesuai.</li>
-                            <li>Kolom <strong>Nama Lengkap*</strong> dan <strong>Jenis Kelamin* (L/P)</strong> wajib diisi.</li>
-                            <li>Kolom <strong>Nama Rombel / Kelas</strong> otomatis dicocokkan dengan data rombel sekolah.</li>
-                        </ul>
-                        <a href="{{ route('siswa.template-excel') }}" class="btn btn-outline-success btn-sm rounded-2 w-100 fw-semibold" style="min-height: 38px;">
-                            <i class="bi bi-download me-1"></i> Unduh File Template Excel (.xlsx)
-                        </a>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold text-secondary small">Rombel Default (Opsional)</label>
-                        <select name="fallback_rombel_id" class="form-select bg-light" style="min-height: 42px;">
-                            <option value="">-- Tetapkan jika kolom Rombel di Excel kosong --</option>
-                            @foreach($rombels as $r)
-                                <option value="{{ $r->id }}">{{ $r->nama_rombel }} (Tingkat {{ $r->tingkat }})</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="mb-2">
-                        <label class="form-label fw-semibold text-secondary small">Pilih File Excel / CSV <span class="text-danger">*</span></label>
-                        <input type="file" name="file" class="form-control bg-light" accept=".xlsx, .xls, .csv" required style="min-height: 42px;">
-                        <small class="text-muted">Mendukung format .xlsx, .xls, atau .csv (Maksimal 10 MB)</small>
-                    </div>
+            <div class="modal-body p-3 p-sm-4">
+                <!-- Instruction Alert -->
+                <div class="p-3 bg-light-subtle rounded-3 border mb-3">
+                    <div class="fw-bold text-dark small mb-1"><i class="bi bi-info-circle text-primary me-1"></i> Petunjuk Pengisian:</div>
+                    <ul class="text-muted small ps-3 mb-2" style="font-size: 0.82rem;">
+                        <li>Gunakan format template resmi agar susunan kolom sesuai.</li>
+                        <li>Kolom <strong>Nama Lengkap*</strong> dan <strong>Jenis Kelamin* (L/P)</strong> wajib diisi.</li>
+                        <li>Kolom <strong>Nama Rombel / Kelas</strong> otomatis dicocokkan dengan data rombel sekolah.</li>
+                    </ul>
+                    <a href="{{ route('siswa.template-excel') }}" class="btn btn-outline-success btn-sm rounded-2 w-100 fw-semibold" style="min-height: 38px;">
+                        <i class="bi bi-download me-1"></i> Unduh File Template Excel (.xlsx)
+                    </a>
                 </div>
-                <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
-                    <button type="submit" class="btn btn-success rounded-3 px-4 fw-bold" style="min-height: 40px;">
-                        <i class="bi bi-upload me-1"></i> Mulai Import Data
-                    </button>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-secondary small">Rombel Default (Opsional)</label>
+                    <select name="fallback_rombel_id" class="form-select bg-light" style="min-height: 42px;">
+                        <option value="">-- Tetapkan jika kolom Rombel di Excel kosong --</option>
+                        @foreach($rombels as $r)
+                            <option value="{{ $r->id }}">{{ $r->nama_rombel }} (Tingkat {{ $r->tingkat }})</option>
+                        @endforeach
+                    </select>
                 </div>
-            </form>
-        </div>
+
+                <div class="mb-2">
+                    <label class="form-label fw-semibold text-secondary small">Pilih File Excel / CSV <span class="text-danger">*</span></label>
+                    <input type="file" name="file" class="form-control bg-light" accept=".xlsx, .xls, .csv" required style="min-height: 42px;">
+                    <small class="text-muted">Mendukung format .xlsx, .xls, atau .csv (Maksimal 10 MB)</small>
+                </div>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                <button type="submit" class="btn btn-success rounded-3 px-4 fw-bold" style="min-height: 40px;">
+                    <i class="bi bi-upload me-1"></i> Mulai Import Data
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 
 <!-- Modal New Siswa Manual -->
 <div class="modal fade" id="newSiswaModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content rounded-4 border-0 shadow-lg">
+        <form action="{{ route('siswa.store') }}" method="POST" enctype="multipart/form-data" class="modal-content rounded-4 border-0 shadow-lg">
+            @csrf
             <div class="modal-header border-0 pb-0">
                 <h5 class="modal-title fw-bold text-dark"><i class="bi bi-person-plus-fill text-primary me-2"></i>Tambah Data Siswa Baru</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('siswa.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body p-3 p-sm-4">
-                    <div class="row g-3">
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">Nama Lengkap Siswa <span class="text-danger">*</span></label>
-                            <input type="text" name="nama_lengkap" class="form-control bg-light" placeholder="Nama lengkap siswa" required style="min-height: 42px;">
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">Nama Panggilan</label>
-                            <input type="text" name="nama_panggilan" class="form-control bg-light" placeholder="Nama panggilan" style="min-height: 42px;">
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">NISN</label>
-                            <input type="text" name="nisn" class="form-control bg-light" placeholder="0011223344" style="min-height: 42px;">
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">NIK</label>
-                            <input type="text" name="nik" class="form-control bg-light" placeholder="Nomor Induk Kependudukan" style="min-height: 42px;">
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">Pilih Rombel / Kelas</label>
-                            <select name="rombel_id" class="form-select bg-light" style="min-height: 42px;">
-                                <option value="">-- Pilih Rombel --</option>
-                                @foreach($rombels as $r)
-                                    <option value="{{ $r->id }}">{{ $r->nama_rombel }} (Tingkat {{ $r->tingkat }})</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">Jenis Kelamin <span class="text-danger">*</span></label>
-                            <select name="jenis_kelamin" class="form-select bg-light" required style="min-height: 42px;">
-                                <option value="L">Laki-laki</option>
-                                <option value="P">Perempuan</option>
-                            </select>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">Tempat Lahir</label>
-                            <input type="text" name="tempat_lahir" class="form-control bg-light" placeholder="Kota kelahiran" style="min-height: 42px;">
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">Tanggal Lahir</label>
-                            <input type="date" name="tanggal_lahir" class="form-control bg-light" style="min-height: 42px;">
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">Nama Orang Tua / Wali</label>
-                            <input type="text" name="nama_ortu" class="form-control bg-light" placeholder="Nama ayah/ibu/wali" style="min-height: 42px;">
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">No. HP WhatsApp Orang Tua</label>
-                            <input type="text" name="no_hp_ortu" class="form-control bg-light" placeholder="081234567890" style="min-height: 42px;">
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label fw-semibold text-secondary small">Alamat Tempat Tinggal</label>
-                            <textarea name="alamat" rows="2" class="form-control bg-light" placeholder="Alamat lengkap..."></textarea>
-                        </div>
-                        <div class="col-12 border-top pt-3">
-                            <label class="form-label fw-semibold text-primary small">Buat Akun Siswa (Opsional untuk Login & Absen Mandiri)</label>
-                            <div class="row g-2">
-                                <div class="col-12 col-sm-6"><input type="email" name="email_siswa" class="form-control bg-light" placeholder="email.siswa@sekolah.sch.id" style="min-height: 42px;"></div>
-                                <div class="col-12 col-sm-6"><input type="password" name="password" class="form-control bg-light" placeholder="Kata Sandi Login" style="min-height: 42px;"></div>
-                            </div>
+            <div class="modal-body p-3 p-sm-4">
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Nama Lengkap Siswa <span class="text-danger">*</span></label>
+                        <input type="text" name="nama_lengkap" class="form-control bg-light" placeholder="Nama lengkap siswa" required style="min-height: 42px;">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Nama Panggilan</label>
+                        <input type="text" name="nama_panggilan" class="form-control bg-light" placeholder="Nama panggilan" style="min-height: 42px;">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">NISN</label>
+                        <input type="text" name="nisn" class="form-control bg-light" placeholder="0011223344" style="min-height: 42px;">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">NIK</label>
+                        <input type="text" name="nik" class="form-control bg-light" placeholder="Nomor Induk Kependudukan" style="min-height: 42px;">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Pilih Rombel / Kelas</label>
+                        <select name="rombel_id" class="form-select bg-light" style="min-height: 42px;">
+                            <option value="">-- Pilih Rombel --</option>
+                            @foreach($rombels as $r)
+                                <option value="{{ $r->id }}">{{ $r->nama_rombel }} (Tingkat {{ $r->tingkat }})</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Jenis Kelamin <span class="text-danger">*</span></label>
+                        <select name="jenis_kelamin" class="form-select bg-light" required style="min-height: 42px;">
+                            <option value="L">Laki-laki</option>
+                            <option value="P">Perempuan</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Tempat Lahir</label>
+                        <input type="text" name="tempat_lahir" class="form-control bg-light" placeholder="Kota kelahiran" style="min-height: 42px;">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Tanggal Lahir</label>
+                        <input type="date" name="tanggal_lahir" class="form-control bg-light" style="min-height: 42px;">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Nama Orang Tua / Wali</label>
+                        <input type="text" name="nama_ortu" class="form-control bg-light" placeholder="Nama ayah/ibu/wali" style="min-height: 42px;">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">No. HP WhatsApp Orang Tua</label>
+                        <input type="text" name="no_hp_ortu" class="form-control bg-light" placeholder="081234567890" style="min-height: 42px;">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold text-secondary small">Alamat Tempat Tinggal</label>
+                        <textarea name="alamat" rows="2" class="form-control bg-light" placeholder="Alamat lengkap..."></textarea>
+                    </div>
+                    <div class="col-12 border-top pt-3">
+                        <label class="form-label fw-semibold text-primary small">Buat Akun Siswa (Opsional untuk Login & Absen Mandiri)</label>
+                        <div class="row g-2">
+                            <div class="col-12 col-sm-6"><input type="email" name="email_siswa" class="form-control bg-light" placeholder="email.siswa@sekolah.sch.id" style="min-height: 42px;"></div>
+                            <div class="col-12 col-sm-6"><input type="password" name="password" class="form-control bg-light" placeholder="Kata Sandi Login" style="min-height: 42px;"></div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
-                    <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold" style="min-height: 40px;">
-                        <i class="bi bi-check-lg me-1"></i> Simpan Data Siswa
-                    </button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold" style="min-height: 40px;">
+                    <i class="bi bi-check-lg me-1"></i> Simpan Data Siswa
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 @endsection

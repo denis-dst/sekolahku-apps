@@ -92,52 +92,48 @@
 <!-- Modal New Role -->
 <div class="modal fade" id="newRoleModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content rounded-4 border-0 shadow-lg">
+        <form action="{{ route('admin.roles.store') }}" method="POST" class="modal-content rounded-4 border-0 shadow-lg">
+            @csrf
             <div class="modal-header border-0 pb-0">
                 <h5 class="modal-title fw-bold text-dark">Tambah Peran (Role) Baru</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('admin.roles.store') }}" method="POST">
-                @csrf
-                <div class="modal-body p-3 p-sm-4">
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold text-secondary small">Nama Peran / Role <span class="text-danger">*</span></label>
-                        <input type="text" name="name" class="form-control bg-light" placeholder="Contoh: Guru BK, Kurikulum" required style="min-height: 42px;">
-                        <small class="text-muted" style="font-size:0.75rem;">Nama peran yang akan diberikan kepada pengguna.</small>
-                    </div>
+            <div class="modal-body p-3 p-sm-4">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-secondary small">Nama Peran / Role <span class="text-danger">*</span></label>
+                    <input type="text" name="name" class="form-control bg-light" placeholder="Contoh: Guru BK, Kurikulum" required style="min-height: 42px;">
+                    <small class="text-muted" style="font-size:0.75rem;">Nama peran yang akan diberikan kepada pengguna.</small>
                 </div>
-                <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
-                    <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold shadow-xs" style="min-height: 40px;">Buat Peran</button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold shadow-xs" style="min-height: 40px;">Buat Peran</button>
+            </div>
+        </form>
     </div>
 </div>
 
 <!-- Modal New Permission -->
 <div class="modal fade" id="newPermissionModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content rounded-4 border-0 shadow-lg">
+        <form action="{{ route('admin.permissions.store') }}" method="POST" class="modal-content rounded-4 border-0 shadow-lg">
+            @csrf
             <div class="modal-header border-0 pb-0">
                 <h5 class="modal-title fw-bold text-dark">Tambah Hak Akses (Permission) Baru</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('admin.permissions.store') }}" method="POST">
-                @csrf
-                <div class="modal-body p-3 p-sm-4">
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold text-secondary small">Nama Permission (Slug) <span class="text-danger">*</span></label>
-                        <input type="text" name="name" class="form-control bg-light" placeholder="Contoh: manage-inventory" required style="min-height: 42px;">
-                        <small class="text-muted" style="font-size:0.75rem;">Gunakan format huruf kecil dengan tanda strip (-).</small>
-                    </div>
+            <div class="modal-body p-3 p-sm-4">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-secondary small">Nama Permission (Slug) <span class="text-danger">*</span></label>
+                    <input type="text" name="name" class="form-control bg-light" placeholder="Contoh: manage-inventory" required style="min-height: 42px;">
+                    <small class="text-muted" style="font-size:0.75rem;">Gunakan format huruf kecil dengan tanda strip (-).</small>
                 </div>
-                <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
-                    <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold shadow-xs" style="min-height: 40px;">Buat Permission</button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold shadow-xs" style="min-height: 40px;">Buat Permission</button>
+            </div>
+        </form>
     </div>
 </div>
 

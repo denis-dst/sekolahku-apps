@@ -51,43 +51,41 @@
 <!-- Modal New Guru -->
 <div class="modal fade" id="newGuruModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content rounded-4 border-0 shadow-lg">
+        <form action="{{ route('guru.store') }}" method="POST" class="modal-content rounded-4 border-0 shadow-lg">
+            @csrf
             <div class="modal-header border-0 pb-0">
                 <h5 class="modal-title fw-bold text-dark">Tambah Guru & Akun Login</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('guru.store') }}" method="POST">
-                @csrf
-                <div class="modal-body p-3 p-sm-4">
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold text-secondary small">Nama Lengkap & Gelar <span class="text-danger">*</span></label>
-                        <input type="text" name="nama_lengkap" class="form-control bg-light" placeholder="Nurhayati, S.Pd." required style="min-height: 42px;">
+            <div class="modal-body p-3 p-sm-4">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-secondary small">Nama Lengkap & Gelar <span class="text-danger">*</span></label>
+                    <input type="text" name="nama_lengkap" class="form-control bg-light" placeholder="Nurhayati, S.Pd." required style="min-height: 42px;">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-secondary small">Alamat Email (Login) <span class="text-danger">*</span></label>
+                    <input type="email" name="email" class="form-control bg-light" placeholder="guru@sekolah.sch.id" required style="min-height: 42px;">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-secondary small">Kata Sandi</label>
+                    <input type="password" name="password" class="form-control bg-light" placeholder="Default: password" style="min-height: 42px;">
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col-12 col-sm-6">
+                        <label class="form-label fw-semibold text-secondary small">NIP</label>
+                        <input type="text" name="nip" class="form-control bg-light" placeholder="1980xxxx" style="min-height: 42px;">
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold text-secondary small">Alamat Email (Login) <span class="text-danger">*</span></label>
-                        <input type="email" name="email" class="form-control bg-light" placeholder="guru@sekolah.sch.id" required style="min-height: 42px;">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold text-secondary small">Kata Sandi</label>
-                        <input type="password" name="password" class="form-control bg-light" placeholder="Default: password" style="min-height: 42px;">
-                    </div>
-                    <div class="row g-2 mb-3">
-                        <div class="col-12 col-sm-6">
-                            <label class="form-label fw-semibold text-secondary small">NIP</label>
-                            <input type="text" name="nip" class="form-control bg-light" placeholder="1980xxxx" style="min-height: 42px;">
-                        </div>
-                        <div class="col-12 col-sm-6">
-                            <label class="form-label fw-semibold text-secondary small">No. HP WhatsApp</label>
-                            <input type="text" name="no_hp" class="form-control bg-light" placeholder="081234567890" style="min-height: 42px;">
-                        </div>
+                    <div class="col-12 col-sm-6">
+                        <label class="form-label fw-semibold text-secondary small">No. HP WhatsApp</label>
+                        <input type="text" name="no_hp" class="form-control bg-light" placeholder="081234567890" style="min-height: 42px;">
                     </div>
                 </div>
-                <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
-                    <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold" style="min-height: 40px;">Simpan Guru</button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold" style="min-height: 40px;">Simpan Guru</button>
+            </div>
+        </form>
     </div>
 </div>
 @endsection

@@ -66,48 +66,46 @@
 @hasanyrole('Superadmin|School Admin|Guru')
 <div class="modal fade" id="newAnekdotModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content rounded-4 border-0 shadow-lg">
+        <form action="{{ route('anekdot.store') }}" method="POST" enctype="multipart/form-data" class="modal-content rounded-4 border-0 shadow-lg">
+            @csrf
             <div class="modal-header border-0 pb-0">
                 <h5 class="modal-title fw-bold text-dark">Tambah Catatan Anekdot Perkembangan</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('anekdot.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="modal-body p-3 p-sm-4">
-                    <div class="row g-3">
-                        <div class="col-12 col-md-7">
-                            <label class="form-label fw-semibold text-secondary small">Pilih Siswa <span class="text-danger">*</span></label>
-                            <select name="siswa_id" class="form-select bg-light" required style="min-height: 42px;">
-                                <option value="">-- Pilih Siswa --</option>
-                                @foreach($siswas as $s)
-                                    <option value="{{ $s->id }}">{{ $s->nama_lengkap }} ({{ $s->rombel->nama_rombel ?? 'Rombel N/A' }})</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-12 col-md-5">
-                            <label class="form-label fw-semibold text-secondary small">Tanggal Kejadian <span class="text-danger">*</span></label>
-                            <input type="date" name="tanggal" class="form-control bg-light" value="{{ date('Y-m-d') }}" required style="min-height: 42px;">
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label fw-semibold text-secondary small">Uraian Peristiwa (Perilaku/Kejadian Khusus) <span class="text-danger">*</span></label>
-                            <textarea name="peristiwa" class="form-control bg-light" rows="3" placeholder="Jelaskan peristiwa yang diamati secara objektif..." required></textarea>
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label fw-semibold text-secondary small">Analisis Capaian Perkembangan</label>
-                            <textarea name="analisis_capaian" class="form-control bg-light" rows="2" placeholder="Capaian nilai agama, jati diri, literasi, atau STEAM yang teramati..."></textarea>
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label fw-semibold text-secondary small">Lampiran Foto Dokumentasi (Opsional)</label>
-                            <input type="file" name="lampirans[]" class="form-control bg-light" accept="image/*,application/pdf" multiple style="min-height: 42px;">
-                        </div>
+            <div class="modal-body p-3 p-sm-4">
+                <div class="row g-3">
+                    <div class="col-12 col-md-7">
+                        <label class="form-label fw-semibold text-secondary small">Pilih Siswa <span class="text-danger">*</span></label>
+                        <select name="siswa_id" class="form-select bg-light" required style="min-height: 42px;">
+                            <option value="">-- Pilih Siswa --</option>
+                            @foreach($siswas as $s)
+                                <option value="{{ $s->id }}">{{ $s->nama_lengkap }} ({{ $s->rombel->nama_rombel ?? 'Rombel N/A' }})</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-5">
+                        <label class="form-label fw-semibold text-secondary small">Tanggal Kejadian <span class="text-danger">*</span></label>
+                        <input type="date" name="tanggal" class="form-control bg-light" value="{{ date('Y-m-d') }}" required style="min-height: 42px;">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold text-secondary small">Uraian Peristiwa (Perilaku/Kejadian Khusus) <span class="text-danger">*</span></label>
+                        <textarea name="peristiwa" class="form-control bg-light" rows="3" placeholder="Jelaskan peristiwa yang diamati secara objektif..." required></textarea>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold text-secondary small">Analisis Capaian Perkembangan</label>
+                        <textarea name="analisis_capaian" class="form-control bg-light" rows="2" placeholder="Capaian nilai agama, jati diri, literasi, atau STEAM yang teramati..."></textarea>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold text-secondary small">Lampiran Foto Dokumentasi (Opsional)</label>
+                        <input type="file" name="lampirans[]" class="form-control bg-light" accept="image/*,application/pdf" multiple style="min-height: 42px;">
                     </div>
                 </div>
-                <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
-                    <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold" style="min-height: 40px;">Simpan Anekdot</button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold" style="min-height: 40px;">Simpan Anekdot</button>
+            </div>
+        </form>
     </div>
 </div>
 @endhasanyrole

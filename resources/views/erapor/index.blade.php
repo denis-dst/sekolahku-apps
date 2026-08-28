@@ -59,51 +59,49 @@
                     <!-- Modal Score Input -->
                     <div class="modal fade" id="scoreModal{{ $s->id }}" tabindex="-1">
                         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-                            <div class="modal-content rounded-4 border-0 shadow-lg">
+                            <form action="{{ route('erapor.assessment.store') }}" method="POST" class="modal-content rounded-4 border-0 shadow-lg">
+                                @csrf
+                                <input type="hidden" name="siswa_id" value="{{ $s->id }}">
                                 <div class="modal-header border-0 pb-0">
                                     <h5 class="modal-title fw-bold text-dark">Input Penilaian Rapor - {{ $s->nama_lengkap }}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
-                                <form action="{{ route('erapor.assessment.store') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="siswa_id" value="{{ $s->id }}">
-                                    <div class="modal-body p-3 p-sm-4">
-                                        <div class="mb-3">
-                                            <label class="form-label fw-semibold text-secondary small">Elemen / Mata Pelajaran <span class="text-danger">*</span></label>
-                                            <select name="mata_pelajaran" class="form-select bg-light" style="min-height: 42px;">
-                                                <option value="Nilai Agama dan Budi Pekerti">Nilai Agama dan Budi Pekerti</option>
-                                                <option value="Jati Diri">Jati Diri</option>
-                                                <option value="Dasar-dasar Literasi & STEAM">Dasar-dasar Literasi & STEAM</option>
-                                                <option value="Bahasa Indonesia">Bahasa Indonesia</option>
-                                                <option value="Matematika">Matematika</option>
-                                                <option value="Pendidikan Pancasila">Pendidikan Pancasila</option>
+                                <div class="modal-body p-3 p-sm-4">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold text-secondary small">Elemen / Mata Pelajaran <span class="text-danger">*</span></label>
+                                        <select name="mata_pelajaran" class="form-select bg-light" style="min-height: 42px;">
+                                            <option value="Nilai Agama dan Budi Pekerti">Nilai Agama dan Budi Pekerti</option>
+                                            <option value="Jati Diri">Jati Diri</option>
+                                            <option value="Dasar-dasar Literasi & STEAM">Dasar-dasar Literasi & STEAM</option>
+                                            <option value="Bahasa Indonesia">Bahasa Indonesia</option>
+                                            <option value="Matematika">Matematika</option>
+                                            <option value="Pendidikan Pancasila">Pendidikan Pancasila</option>
+                                        </select>
+                                    </div>
+                                    <div class="row g-2 mb-3">
+                                        <div class="col-12 col-sm-6">
+                                            <label class="form-label fw-semibold text-secondary small">Jenis Penilaian <span class="text-danger">*</span></label>
+                                            <select name="jenis_penilaian" class="form-select bg-light" style="min-height: 42px;">
+                                                <option value="Sumatif">Sumatif (Capaian Akhir)</option>
+                                                <option value="Formatif">Formatif (Proses Harian)</option>
+                                                <option value="P5">Projek P5 (Profil Pelajar Pancasila)</option>
                                             </select>
                                         </div>
-                                        <div class="row g-2 mb-3">
-                                            <div class="col-12 col-sm-6">
-                                                <label class="form-label fw-semibold text-secondary small">Jenis Penilaian <span class="text-danger">*</span></label>
-                                                <select name="jenis_penilaian" class="form-select bg-light" style="min-height: 42px;">
-                                                    <option value="Sumatif">Sumatif (Capaian Akhir)</option>
-                                                    <option value="Formatif">Formatif (Proses Harian)</option>
-                                                    <option value="P5">Projek P5 (Profil Pelajar Pancasila)</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-12 col-sm-6">
-                                                <label class="form-label fw-semibold text-secondary small">Nilai Angka (Opsional)</label>
-                                                <input type="number" step="0.1" name="nilai_angka" class="form-control bg-light" placeholder="Contoh: 85.5" style="min-height: 42px;">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label fw-semibold text-secondary small">Deskripsi Capaian Narasi <span class="text-danger">*</span></label>
-                                            <textarea name="capaian_narasi" class="form-control bg-light" rows="4" placeholder="Ananda menunjukkan perkembangan sangat baik dalam..." required></textarea>
+                                        <div class="col-12 col-sm-6">
+                                            <label class="form-label fw-semibold text-secondary small">Nilai Angka (Opsional)</label>
+                                            <input type="number" step="0.1" name="nilai_angka" class="form-control bg-light" placeholder="Contoh: 85.5" style="min-height: 42px;">
                                         </div>
                                     </div>
-                                    <div class="modal-footer border-0 pt-0">
-                                        <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
-                                        <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold" style="min-height: 40px;">Simpan Penilaian</button>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-semibold text-secondary small">Deskripsi Capaian Narasi <span class="text-danger">*</span></label>
+                                        <textarea name="capaian_narasi" class="form-control bg-light" rows="4" placeholder="Ananda menunjukkan perkembangan sangat baik dalam..." required></textarea>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                                <div class="modal-footer border-0 pt-0">
+                                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                                    <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold" style="min-height: 40px;">Simpan Penilaian</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 @empty

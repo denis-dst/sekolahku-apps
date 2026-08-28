@@ -130,59 +130,57 @@
 <!-- Modal Tambah Unit Sekolah -->
 <div class="modal fade" id="addSchoolModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content rounded-4 border-0 shadow-lg">
+        <form action="{{ route('schools.store') }}" method="POST" class="modal-content rounded-4 border-0 shadow-lg">
+            @csrf
             <div class="modal-header border-0 pb-0">
                 <h5 class="modal-title fw-bold text-dark"><i class="bi bi-building-add text-primary me-2"></i>Daftarkan Unit Sekolah Baru</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form action="{{ route('schools.store') }}" method="POST">
-                @csrf
-                <div class="modal-body p-3 p-sm-4">
-                    <div class="row g-3">
-                        <div class="col-12 col-md-8">
-                            <label class="form-label fw-semibold text-secondary small">Nama Unit Sekolah <span class="text-danger">*</span></label>
-                            <input type="text" name="name" class="form-control bg-light" placeholder="Contoh: SD Islam Al-Falah 02" required style="min-height: 42px;">
-                        </div>
-                        <div class="col-12 col-md-4">
-                            <label class="form-label fw-semibold text-secondary small">NPSN (Opsional)</label>
-                            <input type="text" name="npsn" class="form-control bg-light" placeholder="20109988" style="min-height: 42px;">
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">Jenjang Pendidikan <span class="text-danger">*</span></label>
-                            <select name="jenjang" class="form-select bg-light" required style="min-height: 42px;">
-                                <option value="PAUD/TK/RA">PAUD / TK / RA</option>
-                                <option value="SD/MI">SD / MI</option>
-                                <option value="SMP/MTs">SMP / MTs</option>
-                                <option value="SMA/SMK/MA">SMA / SMK / MA</option>
-                                <option value="Pesantren">Pondok Pesantren</option>
-                            </select>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">No. HP / Telepon Unit</label>
-                            <input type="text" name="phone" class="form-control bg-light" placeholder="081234567890" style="min-height: 42px;">
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label fw-semibold text-secondary small">Alamat Sekolah</label>
-                            <textarea name="address" rows="2" class="form-control bg-light" placeholder="Jl. Raya Pendidikan No..."></textarea>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">Nama Kepala Sekolah</label>
-                            <input type="text" name="kepala_sekolah_nama" class="form-control bg-light" placeholder="Dra. Hj. Siti..." style="min-height: 42px;">
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold text-secondary small">Nama Bendahara Sekolah</label>
-                            <input type="text" name="bendahara_nama" class="form-control bg-light" placeholder="Ahmadi, S.E." style="min-height: 42px;">
-                        </div>
+            <div class="modal-body p-3 p-sm-4">
+                <div class="row g-3">
+                    <div class="col-12 col-md-8">
+                        <label class="form-label fw-semibold text-secondary small">Nama Unit Sekolah <span class="text-danger">*</span></label>
+                        <input type="text" name="name" class="form-control bg-light" placeholder="Contoh: SD Islam Al-Falah 02" required style="min-height: 42px;">
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <label class="form-label fw-semibold text-secondary small">NPSN (Opsional)</label>
+                        <input type="text" name="npsn" class="form-control bg-light" placeholder="20109988" style="min-height: 42px;">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Jenjang Pendidikan <span class="text-danger">*</span></label>
+                        <select name="jenjang" class="form-select bg-light" required style="min-height: 42px;">
+                            <option value="PAUD/TK/RA">PAUD / TK / RA</option>
+                            <option value="SD/MI">SD / MI</option>
+                            <option value="SMP/MTs">SMP / MTs</option>
+                            <option value="SMA/SMK/MA">SMA / SMK / MA</option>
+                            <option value="Pesantren">Pondok Pesantren</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">No. HP / Telepon Unit</label>
+                        <input type="text" name="phone" class="form-control bg-light" placeholder="081234567890" style="min-height: 42px;">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label fw-semibold text-secondary small">Alamat Sekolah</label>
+                        <textarea name="address" rows="2" class="form-control bg-light" placeholder="Jl. Raya Pendidikan No..."></textarea>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Nama Kepala Sekolah</label>
+                        <input type="text" name="kepala_sekolah_nama" class="form-control bg-light" placeholder="Dra. Hj. Siti..." style="min-height: 42px;">
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label class="form-label fw-semibold text-secondary small">Nama Bendahara Sekolah</label>
+                        <input type="text" name="bendahara_nama" class="form-control bg-light" placeholder="Ahmadi, S.E." style="min-height: 42px;">
                     </div>
                 </div>
-                <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
-                    <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold shadow-xs" style="min-height: 40px;">
-                        <i class="bi bi-check-lg me-1"></i> Simpan Unit Sekolah
-                    </button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="modal-footer border-0 pt-0">
+                <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold shadow-xs" style="min-height: 40px;">
+                    <i class="bi bi-check-lg me-1"></i> Simpan Unit Sekolah
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 @endsection
