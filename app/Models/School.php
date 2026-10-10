@@ -78,6 +78,11 @@ class School extends Model
         return $this->hasMany(DanaBosp::class);
     }
 
+    public function revitalisasiProyeks()
+    {
+        return $this->hasMany(RevitalisasiProyek::class);
+    }
+
     public function subscriptionPlan()
     {
         return $this->tenant ? $this->tenant->subscriptionPlan() : null;

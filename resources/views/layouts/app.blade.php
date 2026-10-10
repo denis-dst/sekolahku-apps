@@ -443,6 +443,12 @@
                     </a>
                 @endif
 
+                @if(Auth::user()->hasRole('Superadmin') || Auth::user()->can('manage-expenses') || Auth::user()->can('manage-school') || Auth::user()->can('manage-revitalisasi'))
+                    <a class="nav-link {{ request()->is('revitalisasi*') ? 'active' : '' }}" href="{{ route('revitalisasi.index') }}">
+                        <i class="bi bi-book-half"></i> Pembukuan Revitalisasi
+                    </a>
+                @endif
+
                 @if(Auth::user()->hasRole('Superadmin') || Auth::user()->can('manage-anekdot'))
                     <a class="nav-link {{ request()->is('anekdot*') ? 'active' : '' }}" href="{{ route('anekdot.index') }}">
                         <i class="bi bi-journal-bookmark-fill"></i> Catatan Anekdot

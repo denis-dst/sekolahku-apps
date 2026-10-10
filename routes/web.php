@@ -13,6 +13,7 @@ use App\Http\Controllers\PembayaranSppController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ExpenseCategoryController;
 use App\Http\Controllers\ERaporController;
+use App\Http\Controllers\RevitalisasiController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\Superadmin\SubscriptionPlanController;
 use App\Http\Controllers\Superadmin\TenantSubscriptionController;
@@ -150,4 +151,23 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/erapor', [ERaporController::class, 'index'])->name('erapor.index');
     Route::post('/erapor/assessment', [ERaporController::class, 'storeAssessment'])->name('erapor.assessment.store');
     Route::get('/erapor/pdf/{siswa}', [ERaporController::class, 'exportPdf'])->name('erapor.pdf');
+
+    // Pembukuan Revitalisasi (Buku Bank, Buku Kas Umum, Buku Pembantu Kas Tunai, Kuitansi, Excel/PDF)
+    Route::get('/revitalisasi', [RevitalisasiController::class, 'index'])->name('revitalisasi.index');
+    Route::post('/revitalisasi/proyek', [RevitalisasiController::class, 'proyekStore'])->name('revitalisasi.proyek.store');
+    Route::put('/revitalisasi/proyek/{proyek}', [RevitalisasiController::class, 'proyekUpdate'])->name('revitalisasi.proyek.update');
+    Route::delete('/revitalisasi/proyek/{proyek}', [RevitalisasiController::class, 'proyekDestroy'])->name('revitalisasi.proyek.destroy');
+    Route::post('/revitalisasi/proyek/{proyek}/seed', [RevitalisasiController::class, 'seedSimulasi'])->name('revitalisasi.proyek.seed');
+
+    Route::get('/revitalisasi/proyek/{proyek}/bku', [RevitalisasiController::class, 'bku'])->name('revitalisasi.bku');
+    Route::get('/revitalisasi/proyek/{proyek}/bpkt', [RevitalisasiController::class, 'bpkt'])->name('revitalisasi.bpkt');
+    Route::get('/revitalisasi/proyek/{proyek}/bb', [RevitalisasiController::class, 'bb'])->name('revitalisasi.bb');
+
+    Route::post('/revitalisasi/proyek/{proyek}/transaksi', [RevitalisasiController::class, 'transaksiStore'])->name('revitalisasi.transaksi.store');
+    Route::put('/revitalisasi/transaksi/{transaksi}', [RevitalisasiController::class, 'transaksiUpdate'])->name('revitalisasi.transaksi.update');
+    Route::delete('/revitalisasi/transaksi/{transaksi}', [RevitalisasiController::class, 'transaksiDestroy'])->name('revitalisasi.transaksi.destroy');
+
+    Route::get('/revitalisasi/transaksi/{transaksi}/kuitansi', [RevitalisasiController::class, 'kuitansi'])->name('revitalisasi.kuitansi');
+    Route::get('/revitalisasi/proyek/{proyek}/export-excel', [RevitalisasiController::class, 'exportExcel'])->name('revitalisasi.export-excel');
+    Route::get('/revitalisasi/proyek/{proyek}/export-pdf', [RevitalisasiController::class, 'exportPdf'])->name('revitalisasi.export-pdf');
 });
