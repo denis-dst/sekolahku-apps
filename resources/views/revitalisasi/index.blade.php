@@ -4,6 +4,32 @@
 @section('page_title', 'Pembukuan Revitalisasi')
 
 @section('content')
+    @if(isset($isSuperadmin) && $isSuperadmin && isset($allSchools) && $allSchools->count() > 0)
+        <!-- Superadmin Multi-School Selector Bar -->
+        <div class="card-custom p-3 mb-3 bg-white border-start border-4 border-warning shadow-xs">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-stretch align-items-md-center gap-2">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-warning text-dark fw-bold px-2.5 py-1.5 rounded-2">
+                        <i class="bi bi-shield-lock-fill me-1"></i> Mode Superadmin
+                    </span>
+                    <span class="small fw-semibold text-secondary">
+                        Anda memiliki hak akses penuh untuk mengelola pembukuan seluruh unit sekolah:
+                    </span>
+                </div>
+                <form action="{{ route('revitalisasi.index') }}" method="GET" class="d-flex align-items-center gap-2">
+                    <label class="small fw-bold text-dark text-nowrap mb-0">Pilih Sekolah:</label>
+                    <select name="school_id" class="form-select form-select-sm fw-bold border-warning bg-warning-subtle" onchange="this.form.submit()" style="min-width: 250px;">
+                        @foreach($allSchools as $sc)
+                            <option value="{{ $sc->id }}" {{ $school->id == $sc->id ? 'selected' : '' }}>
+                                {{ $sc->name }} (NPSN: {{ $sc->npsn ?: '-' }})
+                            </option>
+                        @endforeach
+                    </select>
+                </form>
+            </div>
+        </div>
+    @endif
+
     <!-- Header Informasi Proyek & Pemilihan Periode -->
     <div class="card-custom p-3 p-sm-4 mb-4 border-top border-4 border-primary shadow-xs bg-white">
         <div class="d-flex flex-column flex-lg-row justify-content-between align-items-stretch align-items-lg-center gap-3 mb-3 pb-3 border-bottom">
@@ -26,13 +52,16 @@
                 </div>
                 <h4 class="fw-bold text-dark m-0">{{ $proyek->nama_kegiatan }}</h4>
                 <p class="text-muted small mb-0 mt-1">
-                    Format Pembukuan Resmi Bantuan Pemerintah: <strong>Buku Kas Umum (BKU)</strong>, <strong>Buku Pembantu Kas Tunai (BPKT)</strong>, dan <strong>Buku Bank (BB)</strong>.
+                    Format Pembukuan Resmi Bantuan Pemerintah: <strong>Buku Kas Umum (BKU)</strong>, <strong>Buku Pembantu Kas Tunai (BPKT)</strong>, dan <strong>Buku Bank (BB)</strong> • Unit: <strong>{{ $school->name ?? 'Sekolah' }}</strong>
                 </p>
             </div>
 
             <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-2">
                 <!-- Dropdown Pilih Proyek -->
                 <form action="{{ route('revitalisasi.index') }}" method="GET" class="d-flex align-items-center gap-2">
+                    @if(request('school_id'))
+                        <input type="hidden" name="school_id" value="{{ request('school_id') }}">
+                    @endif
                     <select name="proyek_id" class="form-select form-select-sm bg-white border fw-semibold" onchange="this.form.submit()" style="min-width: 220px; min-height: 38px;">
                         @foreach($allProyeks as $p)
                             <option value="{{ $p->id }}" {{ $proyek->id == $p->id ? 'selected' : '' }}>
@@ -41,6 +70,10 @@
                         @endforeach
                     </select>
                 </form>
+
+                <button class="btn btn-outline-primary btn-sm rounded-3 fw-semibold shadow-2xs d-flex align-items-center justify-content-center gap-1.5" data-bs-toggle="modal" data-bs-target="#createProyekModal" style="min-height: 38px;">
+                    <i class="bi bi-folder-plus"></i> Tambah Periode
+                </button>
 
                 <button class="btn btn-outline-secondary btn-sm rounded-3 fw-semibold shadow-2xs d-flex align-items-center justify-content-center gap-1.5" data-bs-toggle="modal" data-bs-target="#editProyekModal" style="min-height: 38px;">
                     <i class="bi bi-sliders"></i> Info Proyek & TTD
@@ -613,6 +646,116 @@
                         <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary btn-sm fw-bold px-3">
                             <i class="bi bi-save me-1"></i> Perbarui Transaksi
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Tambah Periode Proyek Baru -->
+    <div class="modal fade" id="createProyekModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <form action="{{ route('revitalisasi.proyek.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-header bg-light border-bottom">
+                        <h5 class="modal-title fw-bold">
+                            <i class="bi bi-folder-plus text-primary me-1.5"></i> Tambah Periode Proyek Revitalisasi Baru
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        @if(isset($isSuperadmin) && $isSuperadmin && isset($allSchools) && $allSchools->count() > 0)
+                            <div class="mb-3 p-3 bg-warning-subtle rounded-3 border border-warning">
+                                <label class="form-label small fw-bold text-dark"><i class="bi bi-building me-1"></i> Unit Sekolah Sasaran (Superadmin)</label>
+                                <select name="school_id" class="form-select fw-semibold" required>
+                                    @foreach($allSchools as $sc)
+                                        <option value="{{ $sc->id }}" {{ $school->id == $sc->id ? 'selected' : '' }}>
+                                            {{ $sc->name }} (NPSN: {{ $sc->npsn ?: '-' }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endif
+
+                        <h6 class="fw-bold text-primary mb-2 border-bottom pb-1">1. Informasi Kegiatan & Rekening Bank</h6>
+                        <div class="row g-3 mb-4">
+                            <div class="col-12 col-md-8">
+                                <label class="form-label small fw-bold">Nama Kegiatan Revitalisasi <span class="text-danger">*</span></label>
+                                <input type="text" name="nama_kegiatan" class="form-control" required placeholder="Contoh: Bantuan Revitalisasi Sarana dan Prasarana PAUD 2026" value="Bantuan Revitalisasi Sarana dan Prasarana PAUD {{ date('Y') }}">
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <label class="form-label small fw-bold">Tahun Anggaran <span class="text-danger">*</span></label>
+                                <input type="number" name="tahun_anggaran" class="form-control" required min="2020" max="2035" value="{{ date('Y') }}">
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label small fw-bold">Pagu Anggaran Total (Rp) <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light fw-bold">Rp</span>
+                                    <input type="number" name="pagu_anggaran" class="form-control fw-bold" required min="0" step="any" placeholder="Contoh: 200000000" value="200000000">
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label small fw-bold">Nama Bank Penampung</label>
+                                <input type="text" name="nama_bank" class="form-control" placeholder="Contoh: Bank Mandiri / BRI" value="Bank Mandiri">
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label small fw-bold">Nomor Rekening Bank</label>
+                                <input type="text" name="nomor_rekening" class="form-control" placeholder="Nomor Rekening Kas Bank" value="123-00-987654-1">
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label small fw-bold">Atas Nama Rekening</label>
+                                <input type="text" name="atas_nama_rekening" class="form-control" placeholder="Atas Nama Rekening" value="Panitia P2SP {{ $school->name ?? 'Sekolah' }}">
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label small fw-bold">Lokasi Penerbitan Laporan</label>
+                                <input type="text" name="lokasi_surat" class="form-control" value="Jakarta">
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label small fw-bold">Tanggal Tutup Buku Kas</label>
+                                <input type="date" name="tanggal_tutup_buku" class="form-control" value="{{ date('Y-m-d') }}">
+                            </div>
+                        </div>
+
+                        <h6 class="fw-bold text-primary mb-2 border-bottom pb-1">2. Empat (4) Pejabat Penandatangan Laporan</h6>
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <label class="form-label small fw-bold">1. Kepala Sekolah (Penanggung Jawab)</label>
+                                <input type="text" name="penanggung_jawab_nama" class="form-control mb-1.5" placeholder="Nama Lengkap & Gelar" value="{{ $school->kepala_sekolah_nama ?? 'Dra. Hj. Nurjanah, M.Pd' }}">
+                                <input type="text" name="penanggung_jawab_nip" class="form-control" placeholder="NIP / NUPTK / -" value="{{ $school->kepala_sekolah_nip ?? '19700512 199503 2 001' }}">
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label small fw-bold">2. Ketua Tim P2SP / Panitia</label>
+                                <input type="text" name="ketua_p2sp_nama" class="form-control mb-1.5" placeholder="Nama Lengkap & Gelar" value="Ahmad Suhendar, S.T">
+                                <input type="text" name="ketua_p2sp_nip" class="form-control" placeholder="NIP / -" value="-">
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label small fw-bold">3. Bendahara Kegiatan</label>
+                                <input type="text" name="bendahara_nama" class="form-control mb-1.5" placeholder="Nama Lengkap & Gelar" value="{{ $school->bendahara_nama ?? 'Siti Rahmawati, S.E' }}">
+                                <input type="text" name="bendahara_nip" class="form-control" placeholder="NIP / -" value="{{ $school->bendahara_nip ?? '19850210 201001 2 015' }}">
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label small fw-bold">4. Pengawas / Tim Teknis</label>
+                                <input type="text" name="pengawas_nama" class="form-control mb-1.5" placeholder="Nama Lengkap & Gelar" value="Ir. Bambang Trihatmojo">
+                                <input type="text" name="pengawas_nip" class="form-control" placeholder="NIP / -" value="-">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-light border-top">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary btn-sm fw-bold px-3">
+                            <i class="bi bi-save me-1"></i> Buat Periode Proyek
                         </button>
                     </div>
                 </form>

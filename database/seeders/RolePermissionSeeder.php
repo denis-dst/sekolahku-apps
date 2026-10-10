@@ -35,6 +35,7 @@ class RolePermissionSeeder extends Seeder
             'manage-reimbursements',
             'manage-supervisi',
             'manage-assets',
+            'manage-revitalisasi',
         ];
 
         foreach ($permissions as $permission) {
@@ -46,13 +47,13 @@ class RolePermissionSeeder extends Seeder
         $superadmin->givePermissionTo(Permission::all());
 
         $yayasan = Role::findOrCreate('Yayasan Admin', 'web');
-        $yayasan->givePermissionTo(['manage-yayasan', 'manage-school', 'manage-supervisi']);
+        $yayasan->givePermissionTo(['manage-yayasan', 'manage-school', 'manage-supervisi', 'manage-revitalisasi']);
 
         $schoolAdmin = Role::findOrCreate('School Admin', 'web');
-        $schoolAdmin->givePermissionTo(['manage-school', 'manage-users', 'manage-master-data', 'manage-presensi', 'manage-anekdot', 'manage-planning', 'manage-assessments', 'manage-erapor', 'manage-spp', 'verify-spp-bukti', 'approve-expenses', 'manage-supervisi', 'manage-assets']);
+        $schoolAdmin->givePermissionTo(['manage-school', 'manage-users', 'manage-master-data', 'manage-presensi', 'manage-anekdot', 'manage-planning', 'manage-assessments', 'manage-erapor', 'manage-spp', 'verify-spp-bukti', 'approve-expenses', 'manage-supervisi', 'manage-assets', 'manage-revitalisasi']);
 
         $bendahara = Role::findOrCreate('Bendahara', 'web');
-        $bendahara->givePermissionTo(['manage-spp', 'verify-spp-bukti', 'manage-expenses', 'approve-expenses', 'manage-reimbursements']);
+        $bendahara->givePermissionTo(['manage-spp', 'verify-spp-bukti', 'manage-expenses', 'approve-expenses', 'manage-reimbursements', 'manage-revitalisasi']);
 
         $guru = Role::findOrCreate('Guru', 'web');
         $guru->givePermissionTo(['manage-presensi', 'manage-anekdot', 'manage-planning', 'manage-assessments', 'manage-erapor', 'manage-expenses']);

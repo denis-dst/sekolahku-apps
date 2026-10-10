@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
+use App\Models\School;
+
 class RevitalisasiController extends Controller
 {
     /**
@@ -20,11 +22,20 @@ class RevitalisasiController extends Controller
      */
     public function index(Request $request)
     {
-        $school = Auth::user()->school;
+        $user = Auth::user();
+        $isSuperadmin = $user->hasRole('Superadmin');
+        $allSchools = $isSuperadmin ? School::orderBy('name')->get() : collect();
+
+        if ($isSuperadmin && $request->filled('school_id')) {
+            $school = School::find($request->school_id) ?: School::first();
+        } else {
+            $school = $user->school ?: School::first();
+        }
+
         $schoolId = $school ? $school->id : null;
 
         if (!$schoolId) {
-            return redirect()->route('dashboard')->with('error', 'Akun Anda belum terhubung dengan data sekolah.');
+            return redirect()->route('dashboard')->with('error', 'Belum ada data sekolah yang terdaftar di sistem.');
         }
 
         $allProyeks = RevitalisasiProyek::where('school_id', $schoolId)
@@ -98,7 +109,9 @@ class RevitalisasiController extends Controller
             'proyek',
             'transaksis',
             'summary',
-            'school'
+            'school',
+            'allSchools',
+            'isSuperadmin'
         ));
     }
 
@@ -315,9 +328,13 @@ class RevitalisasiController extends Controller
      */
     public function proyekStore(Request $request)
     {
-        $schoolId = Auth::user()->school_id;
+        $user = Auth::user();
+        $schoolId = ($user->hasRole('Superadmin') && $request->filled('school_id'))
+            ? (int) $request->school_id
+            : ($user->school_id ?: (School::first()?->id));
 
         $validated = $request->validate([
+            'school_id' => 'nullable|exists:schools,id',
             'nama_kegiatan' => 'required|string|max:255',
             'tahun_anggaran' => 'required|integer|min:2020|max:2035',
             'nomor_pks' => 'nullable|string|max:255',
@@ -343,7 +360,7 @@ class RevitalisasiController extends Controller
 
         $proyek = RevitalisasiProyek::create($validated);
 
-        return redirect()->route('revitalisasi.index', ['proyek_id' => $proyek->id])
+        return redirect()->route('revitalisasi.index', ['proyek_id' => $proyek->id, 'school_id' => $schoolId])
             ->with('success', 'Data Proyek Revitalisasi berhasil dibuat.');
     }
 
