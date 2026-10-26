@@ -6,53 +6,71 @@
 @section('content')
     <!-- Card Informasi Dana BOSP Awal Sesuai Periode -->
     <div class="card-custom p-3 p-sm-4 mb-4 border-top border-4 border-primary shadow-xs bg-white">
-        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-stretch align-items-lg-center gap-3 mb-3 pb-3 border-bottom">
+        <div
+            class="d-flex flex-column flex-lg-row justify-content-between align-items-stretch align-items-lg-center gap-3 mb-3 pb-3 border-bottom">
             <div>
                 <div class="d-flex align-items-center gap-2 mb-1.5 flex-wrap">
-                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2.5 py-1 rounded-2 fw-bold" style="font-size: 0.78rem;">
+                    <span
+                        class="badge bg-primary-subtle text-primary border border-primary-subtle px-2.5 py-1 rounded-2 fw-bold"
+                        style="font-size: 0.78rem;">
                         <i class="bi bi-wallet-fill me-1"></i> {{ $danaBosp->sumber_dana ?? 'BOSP Reguler' }}
                     </span>
-                    <span class="badge bg-light text-dark border px-2.5 py-1 rounded-2 fw-semibold" style="font-size: 0.78rem;">
+                    <span class="badge bg-light text-dark border px-2.5 py-1 rounded-2 fw-semibold"
+                        style="font-size: 0.78rem;">
                         <i class="bi bi-calendar3 me-1 text-primary"></i> {{ $currentPeriode }} {{ $currentYear }}
                     </span>
                     @if($danaBosp && $danaBosp->tanggal_cair)
-                        <span class="badge bg-success-subtle text-success border border-success-subtle px-2.5 py-1 rounded-2" style="font-size: 0.75rem;">
+                        <span class="badge bg-success-subtle text-success border border-success-subtle px-2.5 py-1 rounded-2"
+                            style="font-size: 0.75rem;">
                             <i class="bi bi-check-circle me-1"></i> Cair: {{ $danaBosp->tanggal_cair->format('d/m/Y') }}
                         </span>
                     @endif
                     <span class="badge bg-light text-secondary border px-2.5 py-1 rounded-2" style="font-size: 0.75rem;">
-                        <i class="bi bi-clock-history me-1"></i> {{ $startDate->translatedFormat('d M') }} - {{ $endDate->translatedFormat('d M Y') }}
+                        <i class="bi bi-clock-history me-1"></i> {{ $startDate->translatedFormat('d M') }} -
+                        {{ $endDate->translatedFormat('d M Y') }}
                     </span>
                 </div>
                 <h5 class="fw-bold text-dark m-0">Anggaran & Saldo Terkini Kas Dana BOSP</h5>
-                <small class="text-muted">Pantau dana pencairan awal BOSP, pengeluaran talangan yang sudah diganti (reimburse), dan saldo kas terkini sekolah.</small>
+                <small class="text-muted">Pantau dana pencairan awal BOSP, pengeluaran talangan yang sudah diganti
+                    (reimburse), dan saldo kas terkini sekolah.</small>
             </div>
 
             <div class="d-flex flex-column flex-sm-row align-items-stretch align-items-sm-center gap-2">
                 <!-- Dropdown Pilih Periode BOSP -->
-                <form action="{{ route('expenses.index') }}" method="GET" class="d-flex align-items-center gap-1.5 flex-grow-1 flex-sm-grow-0" id="bospPeriodForm">
+                <form action="{{ route('expenses.index') }}" method="GET"
+                    class="d-flex align-items-center gap-1.5 flex-grow-1 flex-sm-grow-0" id="bospPeriodForm">
                     @if(request('search')) <input type="hidden" name="search" value="{{ request('search') }}"> @endif
-                    @if(request('category_id')) <input type="hidden" name="category_id" value="{{ request('category_id') }}"> @endif
+                    @if(request('category_id')) <input type="hidden" name="category_id"
+                    value="{{ request('category_id') }}"> @endif
                     @if(request('status')) <input type="hidden" name="status" value="{{ request('status') }}"> @endif
 
-                    <select name="bosp_year" class="form-select form-select-sm bg-white border fw-semibold" onchange="this.form.submit()" style="min-width: 85px; min-height: 38px;">
+                    <select name="bosp_year" class="form-select form-select-sm bg-white border fw-semibold"
+                        onchange="this.form.submit()" style="min-width: 85px; min-height: 38px;">
                         @for($y = date('Y') + 1; $y >= 2024; $y--)
                             <option value="{{ $y }}" {{ $currentYear == $y ? 'selected' : '' }}>{{ $y }}</option>
                         @endfor
                     </select>
 
-                    <select name="bosp_periode" class="form-select form-select-sm bg-white border fw-semibold flex-grow-1" onchange="this.form.submit()" style="min-width: 175px; min-height: 38px;">
+                    <select name="bosp_periode" class="form-select form-select-sm bg-white border fw-semibold flex-grow-1"
+                        onchange="this.form.submit()" style="min-width: 175px; min-height: 38px;">
                         <option value="Tahap 1 (Semester I)" {{ $currentPeriode == 'Tahap 1 (Semester I)' ? 'selected' : '' }}>Tahap 1 (Semester I)</option>
                         <option value="Tahap 2 (Semester II)" {{ $currentPeriode == 'Tahap 2 (Semester II)' ? 'selected' : '' }}>Tahap 2 (Semester II)</option>
-                        <option value="Triwulan 1" {{ $currentPeriode == 'Triwulan 1' ? 'selected' : '' }}>Triwulan 1 (Jan - Mar)</option>
-                        <option value="Triwulan 2" {{ $currentPeriode == 'Triwulan 2' ? 'selected' : '' }}>Triwulan 2 (Apr - Jun)</option>
-                        <option value="Triwulan 3" {{ $currentPeriode == 'Triwulan 3' ? 'selected' : '' }}>Triwulan 3 (Jul - Sep)</option>
-                        <option value="Triwulan 4" {{ $currentPeriode == 'Triwulan 4' ? 'selected' : '' }}>Triwulan 4 (Okt - Des)</option>
-                        <option value="Tahunan" {{ $currentPeriode == 'Tahunan' ? 'selected' : '' }}>Tahunan (Jan - Des)</option>
+                        <option value="Triwulan 1" {{ $currentPeriode == 'Triwulan 1' ? 'selected' : '' }}>Triwulan 1 (Jan -
+                            Mar)</option>
+                        <option value="Triwulan 2" {{ $currentPeriode == 'Triwulan 2' ? 'selected' : '' }}>Triwulan 2 (Apr -
+                            Jun)</option>
+                        <option value="Triwulan 3" {{ $currentPeriode == 'Triwulan 3' ? 'selected' : '' }}>Triwulan 3 (Jul -
+                            Sep)</option>
+                        <option value="Triwulan 4" {{ $currentPeriode == 'Triwulan 4' ? 'selected' : '' }}>Triwulan 4 (Okt -
+                            Des)</option>
+                        <option value="Tahunan" {{ $currentPeriode == 'Tahunan' ? 'selected' : '' }}>Tahunan (Jan - Des)
+                        </option>
                     </select>
                 </form>
 
-                <button class="btn btn-primary btn-sm rounded-3 fw-bold shadow-xs d-flex align-items-center justify-content-center gap-1.5" data-bs-toggle="modal" data-bs-target="#bospModal" style="min-height: 38px;">
+                <button
+                    class="btn btn-primary btn-sm rounded-3 fw-bold shadow-xs d-flex align-items-center justify-content-center gap-1.5"
+                    data-bs-toggle="modal" data-bs-target="#bospModal" style="min-height: 38px;">
                     <i class="bi bi-pencil-square"></i> {{ $danaBosp ? 'Edit Dana BOSP' : 'Input Dana BOSP Cair' }}
                 </button>
             </div>
@@ -64,18 +82,23 @@
                 <div class="p-3.5 bg-light-subtle border rounded-3 w-100 d-flex flex-column justify-content-between">
                     <div>
                         <div class="d-flex justify-content-between align-items-start gap-2 mb-2" style="min-height: 38px;">
-                            <span class="text-muted small fw-bold text-uppercase" style="font-size: 0.72rem; letter-spacing: 0.4px;">Dana BOSP Cair (Awal Periode)</span>
+                            <span class="text-muted small fw-bold text-uppercase"
+                                style="font-size: 0.72rem; letter-spacing: 0.4px;">Dana BOSP Cair (Awal Periode)</span>
                             <div class="p-1.5 bg-primary-subtle text-primary rounded-2 flex-shrink-0">
                                 <i class="bi bi-box-arrow-in-down fs-6"></i>
                             </div>
                         </div>
-                        <h3 class="fw-bold text-primary m-0" style="font-size: clamp(1.4rem, 2.5vw, 1.7rem);">Rp {{ number_format($nominalDanaBosp, 0, ',', '.') }}</h3>
+                        <h3 class="fw-bold text-primary m-0" style="font-size: clamp(1.4rem, 2.5vw, 1.7rem);">Rp
+                            {{ number_format($nominalDanaBosp, 0, ',', '.') }}</h3>
                     </div>
-                    <div class="pt-2 mt-2 border-top border-light-subtle small text-muted d-flex align-items-center" style="min-height: 28px; font-size: 0.76rem;">
+                    <div class="pt-2 mt-2 border-top border-light-subtle small text-muted d-flex align-items-center"
+                        style="min-height: 28px; font-size: 0.76rem;">
                         @if($danaBosp)
-                            <span class="text-truncate" title="{{ $danaBosp->catatan ?: $danaBosp->sumber_dana }}"><i class="bi bi-info-circle me-1"></i>{{ $danaBosp->catatan ?: ($danaBosp->sumber_dana . ' Cair') }}</span>
+                            <span class="text-truncate" title="{{ $danaBosp->catatan ?: $danaBosp->sumber_dana }}"><i
+                                    class="bi bi-info-circle me-1"></i>{{ $danaBosp->catatan ?: ($danaBosp->sumber_dana . ' Cair') }}</span>
                         @else
-                            <span class="text-danger"><i class="bi bi-exclamation-circle me-1"></i>Belum diatur untuk periode ini</span>
+                            <span class="text-danger"><i class="bi bi-exclamation-circle me-1"></i>Belum diatur untuk periode
+                                ini</span>
                         @endif
                     </div>
                 </div>
@@ -85,17 +108,23 @@
                 <div class="p-3.5 bg-light-subtle border rounded-3 w-100 d-flex flex-column justify-content-between">
                     <div>
                         <div class="d-flex justify-content-between align-items-start gap-2 mb-2" style="min-height: 38px;">
-                            <span class="text-muted small fw-bold text-uppercase" style="font-size: 0.72rem; letter-spacing: 0.4px;">Talangan Sudah Diganti (Realisasi Kas)</span>
+                            <span class="text-muted small fw-bold text-uppercase"
+                                style="font-size: 0.72rem; letter-spacing: 0.4px;">Talangan Sudah Diganti (Realisasi
+                                Kas)</span>
                             <div class="p-1.5 bg-danger-subtle text-danger rounded-2 flex-shrink-0">
                                 <i class="bi bi-cash-coin fs-6"></i>
                             </div>
                         </div>
-                        <h3 class="fw-bold text-danger m-0" style="font-size: clamp(1.4rem, 2.5vw, 1.7rem);">Rp {{ number_format($talanganDigantiPeriode, 0, ',', '.') }}</h3>
+                        <h3 class="fw-bold text-danger m-0" style="font-size: clamp(1.4rem, 2.5vw, 1.7rem);">Rp
+                            {{ number_format($talanganDigantiPeriode, 0, ',', '.') }}</h3>
                     </div>
-                    <div class="pt-2 mt-2 border-top border-light-subtle small text-muted d-flex justify-content-between align-items-center flex-wrap gap-1" style="min-height: 28px; font-size: 0.76rem;">
+                    <div class="pt-2 mt-2 border-top border-light-subtle small text-muted d-flex justify-content-between align-items-center flex-wrap gap-1"
+                        style="min-height: 28px; font-size: 0.76rem;">
                         <span>Serapan Kas Riil: <strong class="text-dark">{{ $persentaseSerapan }}%</strong></span>
                         @if($talanganPendingPeriode > 0)
-                            <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle py-0.5 px-1.5 rounded-2" title="Talangan diajukan yang belum dibayarkan">
+                            <span
+                                class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle py-0.5 px-1.5 rounded-2"
+                                title="Talangan diajukan yang belum dibayarkan">
                                 Pending: Rp {{ number_format($talanganPendingPeriode, 0, ',', '.') }}
                             </span>
                         @endif
@@ -107,20 +136,25 @@
                 <div class="p-3.5 bg-light-subtle border rounded-3 w-100 d-flex flex-column justify-content-between">
                     <div>
                         <div class="d-flex justify-content-between align-items-start gap-2 mb-2" style="min-height: 38px;">
-                            <span class="text-muted small fw-bold text-uppercase" style="font-size: 0.72rem; letter-spacing: 0.4px;">Saldo Terkini Kas BOSP</span>
-                            <div class="p-1.5 {{ $saldoTerkiniBosp >= 0 ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger' }} rounded-2 flex-shrink-0">
+                            <span class="text-muted small fw-bold text-uppercase"
+                                style="font-size: 0.72rem; letter-spacing: 0.4px;">Saldo Terkini Kas BOSP</span>
+                            <div
+                                class="p-1.5 {{ $saldoTerkiniBosp >= 0 ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger' }} rounded-2 flex-shrink-0">
                                 <i class="bi bi-safe fs-6"></i>
                             </div>
                         </div>
-                        <h3 class="fw-bold {{ $saldoTerkiniBosp >= 0 ? 'text-success' : 'text-danger' }} m-0" style="font-size: clamp(1.4rem, 2.5vw, 1.7rem);">
+                        <h3 class="fw-bold {{ $saldoTerkiniBosp >= 0 ? 'text-success' : 'text-danger' }} m-0"
+                            style="font-size: clamp(1.4rem, 2.5vw, 1.7rem);">
                             Rp {{ number_format($saldoTerkiniBosp, 0, ',', '.') }}
                         </h3>
                     </div>
-                    <div class="pt-2 mt-2 border-top border-light-subtle small text-muted d-flex justify-content-between align-items-center flex-wrap gap-1" style="min-height: 28px; font-size: 0.76rem;">
+                    <div class="pt-2 mt-2 border-top border-light-subtle small text-muted d-flex justify-content-between align-items-center flex-wrap gap-1"
+                        style="min-height: 28px; font-size: 0.76rem;">
                         @if($saldoTerkiniBosp >= 0)
                             <span class="text-success"><i class="bi bi-shield-check me-1"></i>Kas Riil Tersedia</span>
                             @if($talanganPendingPeriode > 0)
-                                <span class="text-muted" title="Estimasi sisa saldo jika seluruh talangan pending diganti">(Est. Sisa: Rp {{ number_format($estimasiSisaSaldo, 0, ',', '.') }})</span>
+                                <span class="text-muted" title="Estimasi sisa saldo jika seluruh talangan pending diganti">(Est.
+                                    Sisa: Rp {{ number_format($estimasiSisaSaldo, 0, ',', '.') }})</span>
                             @endif
                         @else
                             <span class="text-danger"><i class="bi bi-shield-exclamation me-1"></i>Defisit Kas</span>
@@ -145,31 +179,28 @@
                     </span>
                 </div>
                 <div class="progress" style="height: 8px; border-radius: 6px; background-color: #e2e8f0;">
-                    <div class="progress-bar bg-primary" 
-                         role="progressbar" 
-                         style="width: {{ $persentaseSerapan }}%; border-radius: 6px 0 0 6px;" 
-                         aria-valuenow="{{ $persentaseSerapan }}" 
-                         aria-valuemin="0" 
-                         aria-valuemax="100"
-                         title="Sudah Diganti: {{ $persentaseSerapan }}%">
+                    <div class="progress-bar bg-primary" role="progressbar"
+                        style="width: {{ $persentaseSerapan }}%; border-radius: 6px 0 0 6px;"
+                        aria-valuenow="{{ $persentaseSerapan }}" aria-valuemin="0" aria-valuemax="100"
+                        title="Sudah Diganti: {{ $persentaseSerapan }}%">
                     </div>
                     @if($talanganPendingPeriode > 0)
-                        <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" 
-                             role="progressbar" 
-                             style="width: {{ $persentasePending }}%;" 
-                             aria-valuenow="{{ $persentasePending }}" 
-                             aria-valuemin="0" 
-                             aria-valuemax="100"
-                             title="Pending Penggantian: {{ $persentasePending }}%">
+                        <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar"
+                            style="width: {{ $persentasePending }}%;" aria-valuenow="{{ $persentasePending }}" aria-valuemin="0"
+                            aria-valuemax="100" title="Pending Penggantian: {{ $persentasePending }}%">
                         </div>
                     @endif
                 </div>
-                <div class="d-flex justify-content-between align-items-center mt-1.5 text-muted flex-wrap gap-2" style="font-size: 0.73rem;">
-                    <span><i class="bi bi-dot text-primary fs-6"></i> Sudah Diganti: <strong>Rp {{ number_format($talanganDigantiPeriode, 0, ',', '.') }}</strong></span>
+                <div class="d-flex justify-content-between align-items-center mt-1.5 text-muted flex-wrap gap-2"
+                    style="font-size: 0.73rem;">
+                    <span><i class="bi bi-dot text-primary fs-6"></i> Sudah Diganti: <strong>Rp
+                            {{ number_format($talanganDigantiPeriode, 0, ',', '.') }}</strong></span>
                     @if($talanganPendingPeriode > 0)
-                        <span><i class="bi bi-dot text-warning fs-6"></i> Belum Diganti: <strong>Rp {{ number_format($talanganPendingPeriode, 0, ',', '.') }}</strong></span>
+                        <span><i class="bi bi-dot text-warning fs-6"></i> Belum Diganti: <strong>Rp
+                                {{ number_format($talanganPendingPeriode, 0, ',', '.') }}</strong></span>
                     @endif
-                    <span class="text-dark"><i class="bi bi-dot text-success fs-6"></i> Saldo Terkini: <strong class="text-success">Rp {{ number_format($saldoTerkiniBosp, 0, ',', '.') }}</strong></span>
+                    <span class="text-dark"><i class="bi bi-dot text-success fs-6"></i> Saldo Terkini: <strong
+                            class="text-success">Rp {{ number_format($saldoTerkiniBosp, 0, ',', '.') }}</strong></span>
                 </div>
             </div>
         @endif
@@ -178,44 +209,59 @@
     <!-- KPI Summary Cards (Talangan Status) -->
     <div class="row g-3 mb-4 align-items-stretch">
         <div class="col-12 col-md-4 d-flex">
-            <div class="card-custom p-3.5 w-100 rounded-3 shadow-xs d-flex flex-column justify-content-between" style="border: 2px solid #0d6efd; background: #ffffff;">
+            <div class="card-custom p-3.5 w-100 rounded-3 shadow-xs d-flex flex-column justify-content-between"
+                style="border: 2px solid #0d6efd; background: #ffffff;">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2" style="min-height: 36px;">
-                    <span class="text-muted small fw-bold text-uppercase" style="font-size: 0.73rem; letter-spacing: 0.3px; line-height: 1.35;">Total Seluruh Talangan Dicatat</span>
+                    <span class="text-muted small fw-bold text-uppercase"
+                        style="font-size: 0.73rem; letter-spacing: 0.3px; line-height: 1.35;">Total Seluruh Talangan
+                        Dicatat</span>
                     <div class="p-1.5 bg-primary-subtle text-primary rounded-2 flex-shrink-0">
                         <i class="bi bi-receipt fs-6"></i>
                     </div>
                 </div>
                 <div>
-                    <h4 class="fw-bold m-0 text-dark" style="font-size: clamp(1.3rem, 2vw, 1.55rem);">Rp {{ number_format($totalTalangan, 0, ',', '.') }}</h4>
-                    <small class="text-muted d-block mt-1" style="font-size: 0.75rem;">Semua catatan transaksi pengeluaran</small>
+                    <h4 class="fw-bold m-0 text-dark" style="font-size: clamp(1.3rem, 2vw, 1.55rem);">Rp
+                        {{ number_format($totalTalangan, 0, ',', '.') }}</h4>
+                    <small class="text-muted d-block mt-1" style="font-size: 0.75rem;">Semua catatan transaksi
+                        pengeluaran</small>
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-4 d-flex">
-            <div class="card-custom p-3.5 w-100 rounded-3 shadow-xs d-flex flex-column justify-content-between" style="border: 2px solid #eab308; background: #ffffff;">
+            <div class="card-custom p-3.5 w-100 rounded-3 shadow-xs d-flex flex-column justify-content-between"
+                style="border: 2px solid #eab308; background: #ffffff;">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2" style="min-height: 36px;">
-                    <span class="text-muted small fw-bold text-uppercase" style="font-size: 0.73rem; letter-spacing: 0.3px; line-height: 1.35;">Belum Diganti (Menunggu Reimburse)</span>
+                    <span class="text-muted small fw-bold text-uppercase"
+                        style="font-size: 0.73rem; letter-spacing: 0.3px; line-height: 1.35;">Belum Diganti (Menunggu
+                        Reimburse)</span>
                     <div class="p-1.5 bg-warning-subtle text-warning-emphasis rounded-2 flex-shrink-0">
                         <i class="bi bi-hourglass-split fs-6"></i>
                     </div>
                 </div>
                 <div>
-                    <h4 class="fw-bold m-0 text-warning" style="font-size: clamp(1.3rem, 2vw, 1.55rem);">Rp {{ number_format($totalPending, 0, ',', '.') }}</h4>
-                    <small class="text-muted d-block mt-1" style="font-size: 0.75rem;">Status Belum Diajukan / Diajukan / Disetujui</small>
+                    <h4 class="fw-bold m-0 text-warning" style="font-size: clamp(1.3rem, 2vw, 1.55rem);">Rp
+                        {{ number_format($totalPending, 0, ',', '.') }}</h4>
+                    <small class="text-muted d-block mt-1" style="font-size: 0.75rem;">Status Belum Diajukan / Diajukan /
+                        Disetujui</small>
                 </div>
             </div>
         </div>
         <div class="col-12 col-md-4 d-flex">
-            <div class="card-custom p-3.5 w-100 rounded-3 shadow-xs d-flex flex-column justify-content-between" style="border: 2px solid #10b981; background: #ffffff;">
+            <div class="card-custom p-3.5 w-100 rounded-3 shadow-xs d-flex flex-column justify-content-between"
+                style="border: 2px solid #10b981; background: #ffffff;">
                 <div class="d-flex justify-content-between align-items-start gap-2 mb-2" style="min-height: 36px;">
-                    <span class="text-muted small fw-bold text-uppercase" style="font-size: 0.73rem; letter-spacing: 0.3px; line-height: 1.35;">Sudah Diganti (Telah Direimburse)</span>
+                    <span class="text-muted small fw-bold text-uppercase"
+                        style="font-size: 0.73rem; letter-spacing: 0.3px; line-height: 1.35;">Sudah Diganti (Telah
+                        Direimburse)</span>
                     <div class="p-1.5 bg-success-subtle text-success rounded-2 flex-shrink-0">
                         <i class="bi bi-check-circle-fill fs-6"></i>
                     </div>
                 </div>
                 <div>
-                    <h4 class="fw-bold m-0 text-success" style="font-size: clamp(1.3rem, 2vw, 1.55rem);">Rp {{ number_format($totalDibayar, 0, ',', '.') }}</h4>
-                    <small class="text-muted d-block mt-1" style="font-size: 0.75rem;">Dana talangan telah dicairkan ke pengaju</small>
+                    <h4 class="fw-bold m-0 text-success" style="font-size: clamp(1.3rem, 2vw, 1.55rem);">Rp
+                        {{ number_format($totalDibayar, 0, ',', '.') }}</h4>
+                    <small class="text-muted d-block mt-1" style="font-size: 0.75rem;">Dana talangan telah dicairkan ke
+                        pengaju</small>
                 </div>
             </div>
         </div>
@@ -228,7 +274,8 @@
                 <div class="input-group">
                     <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
                     <input type="text" name="search" class="form-control bg-light border-start-0"
-                        placeholder="Cari uraian, vendor, toko..." value="{{ request('search') }}" style="min-height: 42px;">
+                        placeholder="Cari uraian, vendor, toko..." value="{{ request('search') }}"
+                        style="min-height: 42px;">
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-md-3">
@@ -244,7 +291,8 @@
             <div class="col-12 col-sm-6 col-md-3">
                 <select name="status" class="form-select bg-light" style="min-height: 42px;">
                     <option value="">Semua Status</option>
-                    <option value="Belum Diajukan" {{ request('status') == 'Belum Diajukan' ? 'selected' : '' }}>Belum Diajukan</option>
+                    <option value="Belum Diajukan" {{ request('status') == 'Belum Diajukan' ? 'selected' : '' }}>Belum
+                        Diajukan</option>
                     <option value="Diajukan" {{ request('status') == 'Diajukan' ? 'selected' : '' }}>Diajukan</option>
                     <option value="Disetujui" {{ request('status') == 'Disetujui' ? 'selected' : '' }}>Disetujui</option>
                     <option value="Dibayar" {{ request('status') == 'Dibayar' ? 'selected' : '' }}>Dibayar (Selesai)</option>
@@ -256,7 +304,9 @@
                     <i class="bi bi-filter me-1"></i> Filter
                 </button>
                 @if(request()->hasAny(['search', 'category_id', 'status', 'date_from', 'date_to']))
-                    <a href="{{ route('expenses.index') }}" class="btn btn-light border d-flex align-items-center justify-content-center px-3" title="Reset Filter" style="min-height: 42px;">
+                    <a href="{{ route('expenses.index') }}"
+                        class="btn btn-light border d-flex align-items-center justify-content-center px-3" title="Reset Filter"
+                        style="min-height: 42px;">
                         <i class="bi bi-arrow-counterclockwise"></i>
                     </a>
                 @endif
@@ -266,21 +316,27 @@
 
     <!-- Main Table Card -->
     <div class="card-custom p-3 p-sm-4 mb-4 bg-white">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
+        <div
+            class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
             <div>
-                <h5 class="fw-bold m-0 text-dark"><i class="bi bi-cash-stack me-2 text-primary"></i>Pencatatan Talangan Pribadi BOSP</h5>
-                <small class="text-muted">Kelola pengeluaran operasional talangan pribadi yang akan direimburse melalui dana BOSP</small>
+                <h5 class="fw-bold m-0 text-dark"><i class="bi bi-cash-stack me-2 text-primary"></i>Pencatatan Talangan
+                    Pribadi BOSP</h5>
+                <small class="text-muted">Kelola pengeluaran operasional talangan pribadi yang akan direimburse melalui dana
+                    BOSP</small>
             </div>
             <div class="d-flex flex-wrap gap-2 w-100 w-md-auto">
                 <a href="{{ route('expenses.categories.index') }}"
-                    class="btn btn-outline-secondary btn-sm rounded-3 px-3 fw-semibold d-flex align-items-center justify-content-center gap-1 flex-fill flex-md-grow-0" style="min-height: 38px;">
+                    class="btn btn-outline-secondary btn-sm rounded-3 px-3 fw-semibold d-flex align-items-center justify-content-center gap-1 flex-fill flex-md-grow-0"
+                    style="min-height: 38px;">
                     <i class="bi bi-tags"></i> Kategori BOSP
                 </a>
                 <a href="{{ route('expenses.report') }}"
-                    class="btn btn-outline-danger btn-sm rounded-3 px-3 fw-semibold d-flex align-items-center justify-content-center gap-1 flex-fill flex-md-grow-0" style="min-height: 38px;">
+                    class="btn btn-outline-danger btn-sm rounded-3 px-3 fw-semibold d-flex align-items-center justify-content-center gap-1 flex-fill flex-md-grow-0"
+                    style="min-height: 38px;">
                     <i class="bi bi-file-earmark-pdf"></i> Rekap LPJ
                 </a>
-                <button class="btn btn-primary btn-sm rounded-3 px-3 fw-semibold d-flex align-items-center justify-content-center gap-1 flex-fill flex-md-grow-0"
+                <button
+                    class="btn btn-primary btn-sm rounded-3 px-3 fw-semibold d-flex align-items-center justify-content-center gap-1 flex-fill flex-md-grow-0"
                     data-bs-toggle="modal" data-bs-target="#newExpenseModal" style="min-height: 38px;">
                     <i class="bi bi-plus-lg"></i> Input Talangan (&lt; 30 dtk)
                 </button>
@@ -317,7 +373,8 @@
                             </td>
                             <td>
                                 <div class="fw-semibold text-dark">{{ $e->uraian }}</div>
-                                <small class="text-muted">{{ $e->toko_vendor ? 'Toko/Vendor: ' . $e->toko_vendor : 'Vendor N/A' }}</small>
+                                <small
+                                    class="text-muted">{{ $e->toko_vendor ? 'Toko/Vendor: ' . $e->toko_vendor : 'Vendor N/A' }}</small>
                             </td>
                             <td class="fw-bold text-dark text-nowrap">Rp {{ number_format($e->nominal, 0, ',', '.') }}</td>
                             <td>
@@ -332,22 +389,22 @@
                             </td>
                             <td>
                                 @php $badge = $e->status_badge; @endphp
-                                <span class="badge {{ $badge['class'] }} rounded-2 px-2.5 py-1.5"
-                                    style="font-size: 0.78rem;">
+                                <span class="badge {{ $badge['class'] }} rounded-2 px-2.5 py-1.5" style="font-size: 0.78rem;">
                                     <i class="bi {{ $badge['icon'] }} me-1"></i> {{ $e->status }}
                                 </span>
                             </td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center align-items-center gap-1.5">
                                     <a href="{{ route('expenses.show', $e->id) }}"
-                                        class="btn btn-sm btn-outline-primary rounded-2 px-2.5 py-1" title="Detail & Timeline" style="min-height: 34px; display: inline-flex; align-items: center;">
+                                        class="btn btn-sm btn-outline-primary rounded-2 px-2.5 py-1" title="Detail & Timeline"
+                                        style="min-height: 34px; display: inline-flex; align-items: center;">
                                         <i class="bi bi-eye"></i>
                                     </a>
 
                                     @hasanyrole('Superadmin|School Admin|Bendahara')
                                     <div class="dropdown">
-                                        <button class="btn btn-sm btn-light border dropdown-toggle rounded-2 px-2.5 py-1" type="button"
-                                            data-bs-toggle="dropdown" style="min-height: 34px;">
+                                        <button class="btn btn-sm btn-light border dropdown-toggle rounded-2 px-2.5 py-1"
+                                            type="button" data-bs-toggle="dropdown" style="min-height: 34px;">
                                             Proses
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0">
@@ -355,7 +412,8 @@
                                                 <form action="{{ route('expenses.update-status', $e->id) }}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="status" value="Diajukan">
-                                                    <button type="submit" class="dropdown-item d-flex align-items-center gap-2 py-2">
+                                                    <button type="submit"
+                                                        class="dropdown-item d-flex align-items-center gap-2 py-2">
                                                         <i class="bi bi-send text-warning"></i> Ajukan Klaim
                                                     </button>
                                                 </form>
@@ -438,33 +496,41 @@
     <!-- Modal Fast Entry Expense (<30s) -->
     <div class="modal fade" id="newExpenseModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <form action="{{ route('expenses.store') }}" method="POST" enctype="multipart/form-data" class="modal-content rounded-4 border-0 shadow-lg">
+            <form action="{{ route('expenses.store') }}" method="POST" enctype="multipart/form-data"
+                class="modal-content rounded-4 border-0 shadow-lg">
                 @csrf
                 <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title fw-bold text-dark"><i class="bi bi-lightning-fill text-warning me-2"></i>Input Talangan Pribadi</h5>
+                    <h5 class="modal-title fw-bold text-dark"><i class="bi bi-lightning-fill text-warning me-2"></i>Input
+                        Talangan Pribadi</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body p-3 p-sm-4">
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Kategori Pengeluaran BOSP <span class="text-danger">*</span></label>
+                        <label class="form-label fw-semibold">Kategori Pengeluaran BOSP <span
+                                class="text-danger">*</span></label>
                         <select name="expense_category_id" class="form-select bg-light" required style="min-height: 42px;">
                             <option value="">-- Pilih Kategori BOSP --</option>
                             @foreach($categories as $cat)
-                                <option value="{{ $cat->id }}">{{ $cat->nama_kategori }} ({{ $cat->kode_bosp ?: 'BOSP' }})</option>
+                                <option value="{{ $cat->id }}">{{ $cat->nama_kategori }} ({{ $cat->kode_bosp ?: 'BOSP' }})
+                                </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="row g-2 mb-3">
                         <div class="col-12 col-sm-6">
-                            <label class="form-label fw-semibold">Tanggal Transaksi <span class="text-danger">*</span></label>
-                            <input type="date" name="tanggal" class="form-control bg-light" value="{{ date('Y-m-d') }}" required style="min-height: 42px;">
+                            <label class="form-label fw-semibold">Tanggal Transaksi <span
+                                    class="text-danger">*</span></label>
+                            <input type="date" name="tanggal" class="form-control bg-light" value="{{ date('Y-m-d') }}"
+                                required style="min-height: 42px;">
                         </div>
                         <div class="col-12 col-sm-6">
-                            <label class="form-label fw-semibold">Nominal Talangan (Rp) <span class="text-danger">*</span></label>
+                            <label class="form-label fw-semibold">Nominal Talangan (Rp) <span
+                                    class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light fw-bold text-muted">Rp</span>
-                                <input type="text" inputmode="numeric" name="nominal" id="nominal" class="form-control bg-light fw-bold rupiah-input"
-                                    placeholder="50.000" required autocomplete="off" style="min-height: 42px;">
+                                <input type="text" inputmode="numeric" name="nominal" id="nominal"
+                                    class="form-control bg-light fw-bold rupiah-input" placeholder="50.000" required
+                                    autocomplete="off" style="min-height: 42px;">
                             </div>
                             <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">
                                 <i class="bi bi-info-circle me-1"></i>Hanya angka tanpa simbol
@@ -484,19 +550,20 @@
                         </div>
                         <div class="col-12 col-sm-6">
                             <label class="form-label fw-semibold">Lokasi</label>
-                            <input type="text" name="lokasi" class="form-control bg-light"
-                                placeholder="Contoh: Sukajadi" style="min-height: 42px;">
+                            <input type="text" name="lokasi" class="form-control bg-light" placeholder="Contoh: Sukajadi"
+                                style="min-height: 42px;">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Upload Foto Struk / Nota (Multi-Upload)</label>
-                        <input type="file" name="receipts[]" class="form-control bg-light"
-                            accept="image/*,application/pdf" multiple style="min-height: 42px;">
+                        <input type="file" name="receipts[]" class="form-control bg-light" accept="image/*,application/pdf"
+                            multiple style="min-height: 42px;">
                         <small class="text-muted">Mendukung file JPG, PNG, HEIC, atau PDF (Maks 5MB per file)</small>
                     </div>
                 </div>
                 <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal"
+                        style="min-height: 40px;">Batal</button>
                     <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold" style="min-height: 40px;">
                         <i class="bi bi-check-lg me-1"></i> Simpan Catatan Talangan
                     </button>
@@ -508,11 +575,13 @@
     <!-- Modal Input/Edit Dana BOSP Awal Cair -->
     <div class="modal fade" id="bospModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <form action="{{ route('expenses.dana-bosp.store') }}" method="POST" class="modal-content rounded-4 border-0 shadow-lg">
+            <form action="{{ route('expenses.dana-bosp.store') }}" method="POST"
+                class="modal-content rounded-4 border-0 shadow-lg">
                 @csrf
                 <div class="modal-header border-0 pb-0">
                     <h5 class="modal-title fw-bold text-dark">
-                        <i class="bi bi-cash-coin text-primary me-2"></i>{{ $danaBosp ? 'Perbarui Dana BOSP Awal Cair' : 'Input Dana BOSP Awal Cair' }}
+                        <i
+                            class="bi bi-cash-coin text-primary me-2"></i>{{ $danaBosp ? 'Perbarui Dana BOSP Awal Cair' : 'Input Dana BOSP Awal Cair' }}
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
@@ -531,15 +600,20 @@
                             <select name="periode" class="form-select bg-light" required style="min-height: 42px;">
                                 <option value="Tahap 1 (Semester I)" {{ $currentPeriode == 'Tahap 1 (Semester I)' ? 'selected' : '' }}>Tahap 1 (Semester I)</option>
                                 <option value="Tahap 2 (Semester II)" {{ $currentPeriode == 'Tahap 2 (Semester II)' ? 'selected' : '' }}>Tahap 2 (Semester II)</option>
-                                <option value="Triwulan 1" {{ $currentPeriode == 'Triwulan 1' ? 'selected' : '' }}>Triwulan 1</option>
-                                <option value="Triwulan 2" {{ $currentPeriode == 'Triwulan 2' ? 'selected' : '' }}>Triwulan 2</option>
-                                <option value="Triwulan 3" {{ $currentPeriode == 'Triwulan 3' ? 'selected' : '' }}>Triwulan 3</option>
-                                <option value="Triwulan 4" {{ $currentPeriode == 'Triwulan 4' ? 'selected' : '' }}>Triwulan 4</option>
+                                <option value="Triwulan 1" {{ $currentPeriode == 'Triwulan 1' ? 'selected' : '' }}>Triwulan 1
+                                </option>
+                                <option value="Triwulan 2" {{ $currentPeriode == 'Triwulan 2' ? 'selected' : '' }}>Triwulan 2
+                                </option>
+                                <option value="Triwulan 3" {{ $currentPeriode == 'Triwulan 3' ? 'selected' : '' }}>Triwulan 3
+                                </option>
+                                <option value="Triwulan 4" {{ $currentPeriode == 'Triwulan 4' ? 'selected' : '' }}>Triwulan 4
+                                </option>
                                 <option value="Tahunan" {{ $currentPeriode == 'Tahunan' ? 'selected' : '' }}>Tahunan</option>
                             </select>
                         </div>
                         <div class="col-12">
-                            <label class="form-label fw-semibold">Sumber Dana BOSP <span class="text-danger">*</span></label>
+                            <label class="form-label fw-semibold">Sumber Dana BOSP <span
+                                    class="text-danger">*</span></label>
                             <select name="sumber_dana" class="form-select bg-light" required style="min-height: 42px;">
                                 <option value="BOSP Reguler" {{ ($danaBosp?->sumber_dana == 'BOSP Reguler') ? 'selected' : '' }}>BOSP Reguler (Kemendikbud)</option>
                                 <option value="BOSP Kinerja" {{ ($danaBosp?->sumber_dana == 'BOSP Kinerja') ? 'selected' : '' }}>BOSP Kinerja</option>
@@ -548,11 +622,14 @@
                             </select>
                         </div>
                         <div class="col-12">
-                            <label class="form-label fw-semibold">Nominal Dana Cair Awal (Rp) <span class="text-danger">*</span></label>
+                            <label class="form-label fw-semibold">Nominal Dana Cair Awal (Rp) <span
+                                    class="text-danger">*</span></label>
                             <div class="input-group">
                                 <span class="input-group-text bg-light fw-bold text-muted">Rp</span>
-                                <input type="text" inputmode="numeric" name="nominal_cair" class="form-control bg-light fw-bold rupiah-input"
-                                    placeholder="50.000.000" value="{{ $danaBosp ? number_format($danaBosp->nominal_cair, 0, ',', '.') : '' }}" required autocomplete="off" style="min-height: 42px;">
+                                <input type="text" inputmode="numeric" name="nominal_cair"
+                                    class="form-control bg-light fw-bold rupiah-input" placeholder="50.000.000"
+                                    value="{{ $danaBosp ? number_format($danaBosp->nominal_cair, 0, ',', '.') : '' }}"
+                                    required autocomplete="off" style="min-height: 42px;">
                             </div>
                             <small class="text-muted d-block mt-1" style="font-size: 0.73rem;">
                                 <i class="bi bi-info-circle me-1"></i>Hanya angka tanpa simbol dan huruf
@@ -560,16 +637,20 @@
                         </div>
                         <div class="col-12">
                             <label class="form-label fw-semibold">Tanggal Pencairan / Masuk Rekening</label>
-                            <input type="date" name="tanggal_cair" class="form-control bg-light" value="{{ $danaBosp && $danaBosp->tanggal_cair ? $danaBosp->tanggal_cair->format('Y-m-d') : date('Y-m-d') }}" style="min-height: 42px;">
+                            <input type="date" name="tanggal_cair" class="form-control bg-light"
+                                value="{{ $danaBosp && $danaBosp->tanggal_cair ? $danaBosp->tanggal_cair->format('Y-m-d') : date('Y-m-d') }}"
+                                style="min-height: 42px;">
                         </div>
                         <div class="col-12">
                             <label class="form-label fw-semibold">Catatan / Keterangan Pencairan</label>
-                            <textarea name="catatan" rows="2" class="form-control bg-light" placeholder="Contoh: Pencairan BOSP Reguler Tahap 1 via Bank Jabar/BJB">{{ $danaBosp?->catatan }}</textarea>
+                            <textarea name="catatan" rows="2" class="form-control bg-light"
+                                placeholder="Contoh: Pencairan BOSP Reguler Tahap 1 via Bank Jabar/BJB">{{ $danaBosp?->catatan }}</textarea>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal" style="min-height: 40px;">Batal</button>
+                    <button type="button" class="btn btn-light rounded-3 px-3" data-bs-dismiss="modal"
+                        style="min-height: 40px;">Batal</button>
                     <button type="submit" class="btn btn-primary rounded-3 px-4 fw-bold" style="min-height: 40px;">
                         <i class="bi bi-check-lg me-1"></i> Simpan Dana BOSP Cair
                     </button>
@@ -579,7 +660,7 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             function formatRupiah(value) {
                 let numberString = value.replace(/[^,\d]/g, '').toString();
                 let split = numberString.split(',');
@@ -596,8 +677,8 @@
                 return rupiah;
             }
 
-            document.querySelectorAll('.rupiah-input').forEach(function(input) {
-                input.addEventListener('input', function() {
+            document.querySelectorAll('.rupiah-input').forEach(function (input) {
+                input.addEventListener('input', function () {
                     this.value = formatRupiah(this.value);
                 });
                 if (input.value) {
