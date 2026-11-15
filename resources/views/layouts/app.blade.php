@@ -509,6 +509,13 @@
                         <i class="bi bi-shield-lock-fill"></i> Role & Hak Akses (RBAC)
                     </a>
                 @endrole
+
+                <div class="sidebar-section-title mt-2" style="color:#059669;">
+                    APPS & API
+                </div>
+                <a class="nav-link {{ request()->is('ingetin*') ? 'active' : '' }}" href="{{ route('ingetin.dashboard') }}">
+                    <i class="bi bi-moon-stars-fill" style="color:#059669;"></i> Ingetin Mobile Hub
+                </a>
             </nav>
 
             <!-- User Footer Box -->
