@@ -171,3 +171,51 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/revitalisasi/proyek/{proyek}/export-excel', [RevitalisasiController::class, 'exportExcel'])->name('revitalisasi.export-excel');
     Route::get('/revitalisasi/proyek/{proyek}/export-pdf', [RevitalisasiController::class, 'exportPdf'])->name('revitalisasi.export-pdf');
 });
+
+// ==========================================
+// INGETIN APPS & REST API HUB
+// ==========================================
+Route::prefix('ingetin')->name('ingetin.')->group(function () {
+    // Auth routes
+    Route::get('/login', [\App\Http\Controllers\Ingetin\IngetinAdminController::class, 'showLogin'])->name('login');
+    Route::post('/login', [\App\Http\Controllers\Ingetin\IngetinAdminController::class, 'login'])->name('login.post');
+    Route::match(['get', 'post'], '/logout', [\App\Http\Controllers\Ingetin\IngetinAdminController::class, 'logout'])->name('logout');
+
+    // Admin Management Dashboard
+    Route::get('/', [\App\Http\Controllers\Ingetin\IngetinAdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [\App\Http\Controllers\Ingetin\IngetinAdminController::class, 'dashboard']);
+
+    // Admin Actions
+    Route::post('/settings/general', [\App\Http\Controllers\Ingetin\IngetinAdminController::class, 'updateSettings'])->name('settings.update');
+    Route::post('/settings/stats', [\App\Http\Controllers\Ingetin\IngetinAdminController::class, 'updateStats'])->name('stats.update');
+    Route::post('/settings/pin', [\App\Http\Controllers\Ingetin\IngetinAdminController::class, 'updatePin'])->name('pin.update');
+    Route::post('/dzikir/store', [\App\Http\Controllers\Ingetin\IngetinAdminController::class, 'storeDzikir'])->name('dzikir.store');
+    Route::post('/dzikir/{id}/delete', [\App\Http\Controllers\Ingetin\IngetinAdminController::class, 'deleteDzikir'])->name('dzikir.delete');
+    Route::post('/hadith/store', [\App\Http\Controllers\Ingetin\IngetinAdminController::class, 'storeHadith'])->name('hadith.store');
+    Route::post('/hadith/{id}/delete', [\App\Http\Controllers\Ingetin\IngetinAdminController::class, 'deleteHadith'])->name('hadith.delete');
+
+    // REST API Endpoints under /ingetin/api/...
+    Route::prefix('api')->group(function () {
+        Route::get('/settings', [\App\Http\Controllers\Ingetin\IngetinApiController::class, 'settings']);
+        Route::get('/settings.php', [\App\Http\Controllers\Ingetin\IngetinApiController::class, 'settings']);
+        Route::get('/dzikir', [\App\Http\Controllers\Ingetin\IngetinApiController::class, 'dzikir']);
+        Route::get('/dzikir.php', [\App\Http\Controllers\Ingetin\IngetinApiController::class, 'dzikir']);
+        Route::get('/hadith', [\App\Http\Controllers\Ingetin\IngetinApiController::class, 'hadith']);
+        Route::get('/hadith.php', [\App\Http\Controllers\Ingetin\IngetinApiController::class, 'hadith']);
+        Route::get('/prayers', [\App\Http\Controllers\Ingetin\IngetinApiController::class, 'prayers']);
+        Route::get('/prayers.php', [\App\Http\Controllers\Ingetin\IngetinApiController::class, 'prayers']);
+    });
+});
+
+// REST API Endpoints under /api/ingetin/...
+Route::prefix('api/ingetin')->group(function () {
+    Route::get('/settings', [\App\Http\Controllers\Ingetin\IngetinApiController::class, 'settings']);
+    Route::get('/settings.php', [\App\Http\Controllers\Ingetin\IngetinApiController::class, 'settings']);
+    Route::get('/dzikir', [\App\Http\Controllers\Ingetin\IngetinApiController::class, 'dzikir']);
+    Route::get('/dzikir.php', [\App\Http\Controllers\Ingetin\IngetinApiController::class, 'dzikir']);
+    Route::get('/hadith', [\App\Http\Controllers\Ingetin\IngetinApiController::class, 'hadith']);
+    Route::get('/hadith.php', [\App\Http\Controllers\Ingetin\IngetinApiController::class, 'hadith']);
+    Route::get('/prayers', [\App\Http\Controllers\Ingetin\IngetinApiController::class, 'prayers']);
+    Route::get('/prayers.php', [\App\Http\Controllers\Ingetin\IngetinApiController::class, 'prayers']);
+});
+
