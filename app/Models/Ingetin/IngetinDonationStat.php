@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class IngetinDonationStat extends Model
 {
-    protected $connection = 'ingetin';
-    protected $table = 'donation_stats';
-    public $timestamps = false;
+    protected $table = 'ingetin_donation_stats';
 
     protected $fillable = [
         'id',

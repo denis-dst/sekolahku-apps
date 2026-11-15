@@ -44,13 +44,6 @@ return [
             'transaction_mode' => 'DEFERRED',
         ],
 
-        'ingetin' => [
-            'driver' => 'sqlite',
-            'database' => env('INGETIN_DB_DATABASE', database_path('ingetin.sqlite')),
-            'prefix' => '',
-            'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
-        ],
-
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DB_URL'),

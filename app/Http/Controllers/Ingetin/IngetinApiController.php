@@ -9,9 +9,22 @@ use App\Models\Ingetin\IngetinHadith;
 use App\Models\Ingetin\IngetinDonationStat;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Artisan;
 
 class IngetinApiController extends Controller
 {
+    private function ensureTablesExist(): void
+    {
+        try {
+            if (!Schema::hasTable('ingetin_settings')) {
+                Artisan::call('migrate', ['--force' => true]);
+            }
+        } catch (\Throwable $e) {
+            // Silently continue
+        }
+    }
+
     private function jsonSuccess(array $data, int $status = 200): JsonResponse
     {
         return response()->json($data, $status, [
@@ -26,6 +39,7 @@ class IngetinApiController extends Controller
      */
     public function settings(Request $request): JsonResponse
     {
+        $this->ensureTablesExist();
         $stats = IngetinDonationStat::first() ?? new IngetinDonationStat([
             'total_donors' => 2847,
             'total_amount_text' => '47.2jt',
@@ -74,6 +88,7 @@ class IngetinApiController extends Controller
      */
     public function dzikir(Request $request): JsonResponse
     {
+        $this->ensureTablesExist();
         $category = strtolower(trim($request->query('category', 'all')));
 
         $query = IngetinDzikir::where('is_active', 1);
@@ -112,6 +127,7 @@ class IngetinApiController extends Controller
      */
     public function hadith(Request $request): JsonResponse
     {
+        $this->ensureTablesExist();
         $dayOfYear = (int)date('z');
         $hadiths = IngetinHadith::where('is_active', 1)->orderBy('id', 'asc')->get();
 

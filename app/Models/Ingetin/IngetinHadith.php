@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class IngetinHadith extends Model
 {
-    protected $connection = 'ingetin';
-    protected $table = 'hadith';
-    public $timestamps = false;
+    protected $table = 'ingetin_hadiths';
 
     protected $fillable = [
         'text',

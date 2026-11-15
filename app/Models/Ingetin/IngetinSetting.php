@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class IngetinSetting extends Model
 {
-    protected $connection = 'ingetin';
-    protected $table = 'settings';
+    protected $table = 'ingetin_settings';
     protected $primaryKey = 'key';
     public $incrementing = false;
     protected $keyType = 'string';
@@ -20,8 +19,12 @@ class IngetinSetting extends Model
 
     public static function getVal(string $key, $default = '')
     {
-        $setting = static::where('key', $key)->first();
-        return $setting ? $setting->value : $default;
+        try {
+            $setting = static::where('key', $key)->first();
+            return $setting ? $setting->value : $default;
+        } catch (\Throwable $e) {
+            return $default;
+        }
     }
 
     public static function setVal(string $key, $value)

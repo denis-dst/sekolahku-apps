@@ -6,9 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class IngetinDzikir extends Model
 {
-    protected $connection = 'ingetin';
-    protected $table = 'dzikir';
-    public $timestamps = false;
+    protected $table = 'ingetin_dzikirs';
 
     protected $fillable = [
         'category',

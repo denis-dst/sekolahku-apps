@@ -10,9 +10,22 @@ use App\Models\Ingetin\IngetinDonationStat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Artisan;
 
 class IngetinAdminController extends Controller
 {
+    private function ensureTablesExist(): void
+    {
+        try {
+            if (!Schema::hasTable('ingetin_settings')) {
+                Artisan::call('migrate', ['--force' => true]);
+            }
+        } catch (\Throwable $e) {
+            // Silently handle if migration cannot run
+        }
+    }
+
     private function isAuthenticated(): bool
     {
         return session('ingetin_admin_logged') === true || Auth::check();
@@ -23,6 +36,8 @@ class IngetinAdminController extends Controller
      */
     public function showLogin()
     {
+        $this->ensureTablesExist();
+
         if ($this->isAuthenticated()) {
             return redirect()->route('ingetin.dashboard');
         }
@@ -34,6 +49,7 @@ class IngetinAdminController extends Controller
      */
     public function login(Request $request)
     {
+        $this->ensureTablesExist();
         $currentPin = IngetinSetting::getVal('admin_pin', '123456');
 
         // Check if login via PIN
@@ -73,6 +89,8 @@ class IngetinAdminController extends Controller
      */
     public function dashboard(Request $request)
     {
+        $this->ensureTablesExist();
+
         if (!$this->isAuthenticated()) {
             return redirect()->route('ingetin.login')->with('error', 'Silakan login terlebih dahulu.');
         }
