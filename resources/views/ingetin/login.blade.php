@@ -7,7 +7,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -15,90 +15,74 @@
     <style>
         :root {
             --brand-primary: #059669;
-            --brand-dark: #064e3b;
-            --brand-neon: #10b981;
-            --brand-bg: #091312;
-            --card-glass: rgba(15, 23, 22, 0.88);
-            --card-border: rgba(16, 185, 129, 0.22);
+            --brand-primary-hover: #047857;
+            --brand-light: #ecfdf5;
+            --brand-border: #a7f3d0;
+            --bg-body: #f8fafc;
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--brand-bg);
+            background-color: var(--bg-body);
             background-image: 
-                radial-gradient(circle at 15% 20%, rgba(5, 150, 105, 0.22) 0%, transparent 45%),
-                radial-gradient(circle at 85% 80%, rgba(16, 185, 129, 0.18) 0%, transparent 45%),
-                radial-gradient(circle at 50% 50%, rgba(6, 78, 59, 0.35) 0%, transparent 60%);
+                radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(5, 150, 105, 0.06) 0px, transparent 50%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #f1f5f9;
+            color: #334155;
             padding: 1.5rem;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Ambient animated grid line */
-        .ambient-grid {
-            position: absolute;
-            inset: 0;
-            background-image: linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            pointer-events: none;
-            z-index: 0;
         }
 
         .login-card {
-            background: var(--card-glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--card-border);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
             border-radius: 1.5rem;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(16, 185, 129, 0.12);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.03);
             width: 100%;
             max-width: 440px;
-            position: relative;
-            z-index: 1;
-            padding: 2.5rem 2.25rem;
-            transition: all 0.3s ease;
+            padding: 2.75rem 2.25rem;
         }
 
-        .login-card:hover {
-            border-color: rgba(16, 185, 129, 0.4);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(16, 185, 129, 0.2);
-        }
-
-        .brand-logo-glow {
+        .brand-logo-mark {
             width: 68px;
             height: 68px;
-            background: linear-gradient(135deg, #10b981, #047857);
+            background: linear-gradient(135deg, #10b981 0%, #047857 100%);
             border-radius: 1.25rem;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.25);
             margin: 0 auto 1.25rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         h1.brand-title {
             font-family: 'Outfit', sans-serif;
-            font-weight: 800;
+            font-weight: 700;
             font-size: 1.75rem;
-            letter-spacing: -0.5px;
+            color: #0f172a;
             margin-bottom: 0.25rem;
-            background: linear-gradient(135deg, #ffffff, #a7f3d0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        }
+
+        .badge-system {
+            background: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+            border-radius: 2rem;
+            padding: 0.35rem 0.85rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         .pin-input {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1.5px solid rgba(16, 185, 129, 0.3);
+            background: #f8fafc;
+            border: 1.5px solid #cbd5e1;
             border-radius: 0.85rem;
-            color: #ffffff;
+            color: #0f172a;
             font-size: 1.6rem;
             letter-spacing: 8px;
             text-align: center;
@@ -108,111 +92,117 @@
         }
 
         .pin-input:focus {
-            background: rgba(15, 23, 42, 0.85);
-            border-color: #10b981;
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.25);
-            color: #ffffff;
+            background: #ffffff;
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.15);
+            color: #0f172a;
             outline: none;
         }
 
-        .form-control-custom {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1.5px solid rgba(148, 163, 184, 0.2);
+        .form-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 0.4rem;
+        }
+
+        .form-control {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
             border-radius: 0.75rem;
-            color: #ffffff;
-            padding: 0.65rem 0.95rem;
+            color: #0f172a;
+            padding: 0.7rem 0.95rem;
+            font-size: 0.92rem;
         }
 
-        .form-control-custom:focus {
-            background: rgba(15, 23, 42, 0.85);
-            border-color: #10b981;
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
-            color: #ffffff;
+        .form-control:focus {
+            background-color: #ffffff;
+            border-color: var(--brand-primary);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+            color: #0f172a;
         }
 
-        .btn-neon {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        .btn-brand {
+            background-color: var(--brand-primary);
             border: none;
             color: #ffffff;
-            font-weight: 700;
+            font-weight: 600;
             padding: 0.85rem 1.5rem;
             border-radius: 0.85rem;
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
-            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
+            transition: all 0.2s ease;
         }
 
-        .btn-neon:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 28px rgba(16, 185, 129, 0.5);
+        .btn-brand:hover {
+            background-color: var(--brand-primary-hover);
             color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(5, 150, 105, 0.35);
         }
 
-        .nav-pills-custom .nav-link {
-            color: #94a3b8;
-            border-radius: 0.75rem;
+        .nav-pills-clean {
+            background: #f1f5f9;
+            padding: 4px;
+            border-radius: 0.85rem;
+            gap: 4px;
+        }
+
+        .nav-pills-clean .nav-link {
+            color: #64748b;
+            border-radius: 0.65rem;
             font-weight: 600;
             font-size: 0.85rem;
-            padding: 0.5rem 1rem;
+            padding: 0.55rem 1rem;
             transition: all 0.2s;
+            border: none;
         }
 
-        .nav-pills-custom .nav-link.active {
-            background-color: rgba(16, 185, 129, 0.2);
-            color: #34d399;
-            border: 1px solid rgba(16, 185, 129, 0.4);
-        }
-
-        .badge-system {
-            background: rgba(16, 185, 129, 0.15);
-            color: #6ee7b7;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            border-radius: 2rem;
-            padding: 0.35rem 0.85rem;
-            font-size: 0.75rem;
-            font-weight: 600;
+        .nav-pills-clean .nav-link.active {
+            background: #ffffff;
+            color: var(--brand-primary);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
         }
     </style>
 </head>
 <body>
-    <div class="ambient-grid"></div>
 
     <div class="login-card text-center">
         <!-- Brand Icon -->
-        <div class="brand-logo-glow">
-            <i class="bi bi-moon-stars-fill text-white"></i>
+        <div class="brand-logo-mark">
+            <i class="bi bi-moon-stars-fill"></i>
         </div>
 
-        <span class="badge-system mb-2 d-inline-block">
-            <i class="bi bi-shield-check me-1"></i> SEKOLAHKU-APPS INTEGRATION
+        <span class="badge-system mb-2.5 d-inline-block">
+            <i class="bi bi-shield-check me-1"></i> SEKOLAHKU APPS
         </span>
 
         <h1 class="brand-title">Ingetin Hub</h1>
-        <p class="text-slate-400 small mb-4" style="color: #94a3b8;">
-            Akses Panel Kontrol Backend & Layanan REST API Mobile
+        <p class="text-muted small mb-4">
+            Panel Kontrol Backend & Layanan REST API Mobile
         </p>
 
         @if(session('error'))
-            <div class="alert alert-danger py-2 px-3 text-start small mb-3 border-0 rounded-3" style="background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3);">
+            <div class="alert alert-danger py-2 px-3 text-start small mb-3 border-0 rounded-3" style="background: #fef2f2; color: #991b1b; border: 1px solid #fecaca !important;">
                 <i class="bi bi-exclamation-triangle-fill me-1"></i> {{ session('error') }}
             </div>
         @endif
 
         @if(session('info'))
-            <div class="alert alert-info py-2 px-3 text-start small mb-3 border-0 rounded-3" style="background: rgba(59, 130, 246, 0.15); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.3);">
+            <div class="alert alert-info py-2 px-3 text-start small mb-3 border-0 rounded-3" style="background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe !important;">
                 <i class="bi bi-info-circle-fill me-1"></i> {{ session('info') }}
             </div>
         @endif
 
         <!-- Tab Nav -->
-        <ul class="nav nav-pills nav-pills-custom justify-content-center mb-4 p-1 rounded-3" style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(148, 163, 184, 0.15);" id="loginTab" role="tablist">
+        <ul class="nav nav-pills nav-pills-clean justify-content-center mb-4" id="loginTab" role="tablist">
             <li class="nav-item flex-fill" role="presentation">
                 <button class="nav-link w-100 active" id="pin-tab" data-bs-toggle="pill" data-bs-target="#tab-pin" type="button" role="tab">
-                    <i class="bi bi-key-fill me-1"></i> PIN Cepat
+                    <i class="bi bi-key me-1"></i> PIN Cepat
                 </button>
             </li>
             <li class="nav-item flex-fill" role="presentation">
                 <button class="nav-link w-100" id="account-tab" data-bs-toggle="pill" data-bs-target="#tab-account" type="button" role="tab">
-                    <i class="bi bi-person-badge-fill me-1"></i> Akun SekolahKu
+                    <i class="bi bi-person-badge me-1"></i> Akun SekolahKu
                 </button>
             </li>
         </ul>
@@ -223,7 +213,7 @@
                 <form action="{{ route('ingetin.login.post') }}" method="POST">
                     @csrf
                     <div class="mb-3 text-center">
-                        <label class="form-label small text-slate-300 fw-semibold mb-2" style="color: #cbd5e1;">Masukkan PIN Admin Ingetin</label>
+                        <label class="form-label mb-2">Masukkan PIN Admin Ingetin</label>
                         <input type="password" 
                                name="pin" 
                                class="form-control pin-input" 
@@ -231,12 +221,12 @@
                                placeholder="••••••" 
                                autofocus 
                                required>
-                        <div class="text-xs mt-2" style="color: #64748b; font-size: 0.75rem;">
-                            Default PIN: <strong class="text-emerald-400" style="color: #34d399;">123456</strong> (dapat diubah di panel)
+                        <div class="text-muted mt-2" style="font-size: 0.78rem;">
+                            Default PIN: <strong class="text-success">123456</strong> (dapat diubah di panel)
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-neon w-100 mt-3 d-flex align-items-center justify-content-center gap-2">
+                    <button type="submit" class="btn btn-brand w-100 mt-3 d-flex align-items-center justify-content-center gap-2">
                         <i class="bi bi-box-arrow-in-right fs-5"></i>
                         <span>Buka Panel Ingetin</span>
                     </button>
@@ -248,14 +238,14 @@
                 <form action="{{ route('ingetin.login.post') }}" method="POST">
                     @csrf
                     <div class="mb-3">
-                        <label class="form-label small text-slate-300" style="color: #cbd5e1;">Email SekolahKu</label>
-                        <input type="email" name="email" class="form-control form-control-custom" placeholder="admin@sekolahku.id" value="{{ old('email') }}">
+                        <label class="form-label">Email SekolahKu</label>
+                        <input type="email" name="email" class="form-control" placeholder="admin@sekolahku.id" value="{{ old('email') }}">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label small text-slate-300" style="color: #cbd5e1;">Password</label>
-                        <input type="password" name="password" class="form-control form-control-custom" placeholder="••••••••">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="••••••••">
                     </div>
-                    <button type="submit" class="btn btn-neon w-100 mt-2 d-flex align-items-center justify-content-center gap-2">
+                    <button type="submit" class="btn btn-brand w-100 mt-2 d-flex align-items-center justify-content-center gap-2">
                         <i class="bi bi-box-arrow-in-right fs-5"></i>
                         <span>Login dengan SekolahKu</span>
                     </button>
@@ -263,8 +253,8 @@
             </div>
         </div>
 
-        <div class="mt-4 pt-3 border-top border-slate-800 text-center" style="border-color: rgba(148, 163, 184, 0.15) !important;">
-            <a href="{{ url('/') }}" class="text-decoration-none text-xs d-inline-flex align-items-center gap-1" style="color: #64748b; font-size: 0.78rem;">
+        <div class="mt-4 pt-3 border-top text-center">
+            <a href="{{ url('/') }}" class="text-decoration-none text-muted d-inline-flex align-items-center gap-1" style="font-size: 0.82rem;">
                 <i class="bi bi-arrow-left"></i> Kembali ke Beranda SekolahKu
             </a>
         </div>
